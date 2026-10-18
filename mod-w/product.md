@@ -1,6 +1,6 @@
 # product.md - brand-ui
 
-**Status:** APPROVED by the Moderator, 2026-10-18 (v0.2, one-day rescope of v0.1)
+**Status:** APPROVED by the Moderator, 2026-10-18 (v0.3, CodeCraft styling-mode clarification; v0.2 was the one-day rescope of v0.1)
 **Date:** 2026-10-18
 **Role:** Product Owner (Definition), Claude chat session
 **Workflow:** MOD-W v5.0.1
@@ -74,9 +74,9 @@ Three brands (see 1.1 for their status), deliberately different on tone, color, 
 |---|---|---|---|
 | ArtAnon Shop | Online art and print shop (real business, third party) | Modern, artistic, minimalistic; palette taken from the supplied logo | Must |
 | IT English Mentor | Freelance English mentoring for IT professionals (Moderator's venture) | Professional, educational, clean | Must |
-| CodeCraft Academy | Open-source tech and code examples (placeholder) | Tech-savvy, innovative, vibrant | Should |
+| CodeCraft Academy | Open-source tech and code examples (placeholder) | Tech-savvy, innovative, vibrant; one brand with Light and Dark styling modes | Should |
 
-All brands share the same component set and the same semantic token names. Only token values differ. If a brand needs a different structure, that is a documented component variant, not a one-off.
+All brands share the same component set and the same semantic token names. Only token values differ. CodeCraft Academy remains one brand: its Light and Dark styling modes use the same token names, typography, spacing and shape, with mode-specific color values. The gallery therefore represents three brands through four rendered scopes: ArtAnon Shop, IT English Mentor, CodeCraft Academy Light and CodeCraft Academy Dark. If a brand needs a different structure, that is a documented component variant, not a one-off.
 
 ---
 
@@ -93,7 +93,7 @@ Priority uses MoSCoW: **M**ust, **S**hould, **C**ould.
 | S-5 | The long-label case: a very long label on button and navigation bar in every brand (see A-4) | M |
 | S-6 | Accessibility checks: contrast, focus, keyboard, labels; one automated scan | M |
 | S-7 | Vitest unit tests; three Playwright tests (brand switch, keyboard operation, long label) | M |
-| S-8 | CodeCraft Academy tokens, so the gallery shows three brands | S |
+| S-8 | CodeCraft Academy tokens with Light and Dark styling-mode value sets, so the gallery shows three brands across four rendered scopes | S |
 | S-9 | Design IDs from `design-spec.md` shown in the gallery next to each component state | S |
 | S-10 | Two further components: alert, teaser or hero | C |
 | S-11 | About panel in the gallery app only, following the About modal pattern of the Moderator's agv-fleet-management-sim project: opens on the first visit only (remembered per browser; if storage is unavailable it opens once per page load), reopens from the top bar, closes by button, backdrop or Esc. Built from library components. | C |
@@ -135,7 +135,7 @@ Each criterion is checkable. QA records pass, fail or not verified, with evidenc
 | AC-10 | The long-label case renders correctly on button and navigation bar in every brand, and the rule (wrap, truncate with a full-text accessible name, or grow) is documented. | M |
 | AC-11 | The build gate (build command and test command, defined by the Tech Lead) passes. | M |
 | AC-12 | The README states that this is a reference spike, states the status of each brand as in 1.1 (including that the ArtAnon work is an unofficial concept), links the shortcuts list, and makes no production, client-delivery or rollout claim. The repository, including `mod-w/design/project/`, contains no ArtAnon logo or other third-party brand asset file; ArtAnon appears as a text wordmark and palette values only. Verified by file search and review. | M |
-| AC-13 | CodeCraft Academy fills the same token names and the gallery shows all three brands. | S |
+| AC-13 | CodeCraft Academy Light and Dark fill the same semantic token names as one brand with two styling-mode value sets; the gallery shows all three brands across four rendered scopes. | S |
 | AC-14 | Adding or changing a brand touches only brand token files, not component code. Confirmed by review. | S |
 | AC-15 | Each component state in the gallery carries the Design ID from `design-spec.md`. | S |
 | AC-16 | With names and logos covered, a reviewer can tell the brands shown apart at thumbnail size. | S |
@@ -154,7 +154,7 @@ Shortcuts accepted in advance. Anything taken beyond this list is recorded by th
 - Open-license fonts only.
 - A narrow public API: only what the four components need.
 - Alert, teaser or hero, About panel, CMS page and deployment are not built unless the Must items are accepted with time to spare.
-- CodeCraft Academy may be dropped without a product change.
+- CodeCraft Academy, including both Light and Dark styling modes, may be dropped without a product change.
 - No npm publishing, versioning or changelog.
 - No RTL or general dark mode.
 - Documentation limited to the MOD-W documents and a short README.

@@ -1,59 +1,76 @@
-You are an expert in TypeScript, Angular, and scalable web application development. You write functional, maintainable, performant, and accessible code following Angular and TypeScript best practices.
+# AGENTS.md
 
-## TypeScript Best Practices
+## Role
 
-- Use strict type checking
-- Prefer type inference when the type is obvious
-- Avoid the `any` type; use `unknown` when type is uncertain
+Default: Codex Tech Lead in MOD-W. Plan and review; do not implement Development Team Steps. The Moderator has final authority. Do not self-approve. A Pass requires diff, command, test, or QA evidence.
 
-## Angular Best Practices
+## Authority order
 
-- Always use standalone components over NgModules
-- Must NOT set `standalone: true` inside Angular decorators. It's the default in Angular v20+.
-- Do NOT set `changeDetection: ChangeDetectionStrategy.OnPush` explicitly. `OnPush` is the default in Angular v22+.
-- Use signals for state management
-- Implement lazy loading for feature routes
-- Do NOT use the `@HostBinding` and `@HostListener` decorators. Put host bindings inside the `host` object of the `@Component` or `@Directive` decorator instead
-- Use `NgOptimizedImage` for all static images.
-  - `NgOptimizedImage` does not work for inline base64 images.
+1. Moderator instruction.
+2. `mod-w/product.md`.
+3. Approved `mod-w/design/design-spec.md` within bounded design authority.
+4. `mod-w/architecture.md`.
+5. `mod-w/domain-language.md`.
+6. `mod-w/roadmap.md`.
+7. Active `mod-w/step-xx.md`.
+8. Relevant code, tests, and evidence.
 
-## Accessibility Requirements
+Technical paths, boundaries, APIs, canonical code terms, and tests belong to the approved architecture. Prototype structure and architecture notes are not authoritative.
 
-- It MUST pass all AXE checks.
-- It MUST follow all WCAG AA minimums, including focus management, color contrast, and ARIA attributes.
+## Artifact ownership
 
-## Components
+The Tech Lead maintains architecture, domain language, roadmap, Steps, role configuration, and technical reviews. Do not edit Product Owner, Designer, prototype, or QA artifacts—especially anything under `mod-w/design/`.
 
-- Keep components small and focused on a single responsibility
-- Use `input()` and `output()` functions instead of decorators
-- Use `model()` for two-way bound properties with `[(prop)]` syntax instead of pairing `input()` with `output()`
-- Use `computed()` for derived state
-- Use `linkedSignal()` for state derived from multiple reactive sources that must stay synchronized
-- Prefer inline templates for small components
-- Prefer Signal Forms (`@angular/forms/signals`) for new forms. They are stable in Angular v22+ and provide signal-based state, type-safe field access, and schema-based validation
-- When not using Signal Forms, prefer Reactive forms instead of Template-driven ones
-- Do NOT use `ngClass`, use `class` bindings instead
-- Do NOT use `ngStyle`, use `style` bindings instead
-- Do NOT import `CommonModule`, import only the directives and pipes the template uses, such as `AsyncPipe` or `DatePipe`
-- When using external templates/styles, use paths relative to the component TS file.
+## Planning and review
 
-## State Management
+- Keep Steps small, coherent, and verifiable.
+- Cite Product requirements and relevant Design IDs.
+- Record Reference Implementation disposition and prototype divergences.
+- Do not silently resolve conflicts or expand scope.
+- Treat every check as unmet until implementation evidence proves it.
+- Review public API, strict typing, native semantics, accessibility, token discipline, tests, security, provenance, and scope.
+- During review, write only `mod-w/review.md` unless another planning change is authorized.
 
-- Use signals for local component state
-- Use `computed()` for derived state
-- Keep state transformations pure and predictable
-- Do NOT use `mutate` on signals, use `update` or `set` instead
+## Project invariants
 
-## Templates
+- Angular 22.2, Node 26, TypeScript 6; standalone, zoneless, signals-based.
+- Three brands render as four scopes; CodeCraft Light/Dark are modes of one brand.
+- CSS is the only token-value source; gallery/tests read computed values.
+- Theme attachment works on the application root and arbitrary hosts.
+- Components expose no gallery preview API or `.is-*` forced-state classes.
+- Brand switching changes tokens, not component structure.
+- Prototype is visual evidence and rejected as a Reference Implementation.
+- Fonts are self-hosted only with matching OFL/provenance evidence.
+- CodeCraft bevel is progressive enhancement with rounded fallback.
+- ArtAnon logo, artwork, photography, and other third-party brand assets are prohibited.
+- Could items S-10 to S-13 are excluded; CodeCraft is the first approved cut.
+- STEP-02 cannot start until the Moderator ends the study break.
 
-- Keep templates simple and avoid complex logic
-- Use native control flow (`@if`, `@for`, `@switch`) instead of `*ngIf`, `*ngFor`, `*ngSwitch`
-- Use the async pipe to handle observables
-- Do not assume globals like (`new Date()`) are available.
+## Angular and TypeScript review criteria
 
-## Services
+- Strict type checking; prefer inference when obvious and use `unknown`, not `any`, for uncertain values.
+- Standalone without explicit `standalone: true` or explicit OnPush.
+- Signals for local state; signal APIs as appropriate; no `mutate`.
+- Use `input()` and `output()` rather than decorators, `model()` for two-way properties, `computed()` for derived state, and `linkedSignal()` for synchronized state derived from multiple reactive sources.
+- `inject()` rather than constructor injection.
+- Host metadata rather than `@HostBinding`/`@HostListener`.
+- Native control flow; no `ngClass`, `ngStyle`, or blanket `CommonModule`.
+- Import only the directives and pipes a template uses. Do not assume globals such as `new Date()` are available in templates.
+- Prefer Signal Forms for new forms; when they do not fit, use Reactive Forms rather than template-driven forms.
+- Keep components and services focused on one responsibility. Keep state transformations pure and predictable.
+- New singleton services use the Angular 22 service convention established by the approved Step and remain root-provided.
+- Feature routes are lazy-loaded; external template/style paths are relative to their component TypeScript file.
+- Native semantics, WCAG 2.2 AA, visible focus, correct ARIA, axe compliance.
+- `NgOptimizedImage` for authorized static images; not inline base64.
 
-- Design services around a single responsibility
-- Use the `providedIn: 'root'` option for singleton services
-- Prefer the `@Service` decorator over `@Injectable({providedIn: 'root'})` for new singleton services (Angular v22+)
-- Use the `inject()` function instead of constructor injection
+## Review output
+
+Write `mod-w/review.md` with verdict, scope check, Must-fix/later findings, acceptance and Design-ID evidence mapping, Reference Implementation compliance, and next action.
+
+## Answer depth
+
+Use minimal depth for reviews and options for architecture or Step design.
+
+---
+
+MOD-W v5.0.1

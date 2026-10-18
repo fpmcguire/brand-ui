@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>brand-ui gallery</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif&family=Sora:wght@400;500;600&family=Spectral:wght@400;500;600&family=Work+Sans:wght@400;500;600&display=swap">
+<style>
+body{margin:0;background:#E9E8E4;color:#1B1B1B;font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+
+/* ============ BRAND TOKENS (same names, different values: AC-1) ============ */
+[data-brand="artanon"]{
+--bu-color-bg:#FDFBF7;--bu-color-surface:#FFFFFF;--bu-color-surface-sunken:#EFE8DB;
+--bu-color-text:#2B2420;--bu-color-text-muted:#665A50;
+--bu-color-border:#DCD3C4;--bu-color-border-strong:#857868;
+--bu-color-primary:#1E5FA0;--bu-color-on-primary:#FFFFFF;--bu-color-primary-hover:#174D85;--bu-color-primary-active:#103A66;--bu-color-primary-tint:#E6EDF5;
+--bu-color-accent:#E0A93B;--bu-color-on-accent:#2B2420;
+--bu-color-focus:#1E5FA0;--bu-color-danger:#B3261E;
+--bu-color-disabled-bg:#ECE6DA;--bu-color-disabled-text:#8F8578;
+--bu-font-display:'Instrument Serif',Georgia,serif;--bu-font-body:'Work Sans',system-ui,sans-serif;--bu-font-ui:'Work Sans',system-ui,sans-serif;
+--bu-font-mono:ui-monospace,'SFMono-Regular',Menlo,monospace;
+--bu-weight-display:400;--bu-weight-ui:500;--bu-ls-ui:0.02em;--bu-tt-ui:none;
+--bu-size-body:1rem;--bu-size-ui:1rem;--bu-size-small:0.875rem;--bu-size-title:1.75rem;
+--bu-space-1:4px;--bu-space-2:8px;--bu-space-3:16px;--bu-space-4:24px;--bu-space-5:32px;--bu-space-6:48px;
+--bu-radius-control:2px;--bu-radius-card:2px;--bu-radius-round:9999px;
+--bu-elevation-card:none;--bu-elevation-raised:none;
+--bu-border-w:1px;--bu-indicator-w:3px;--bu-focus-w:2px;--bu-focus-offset:2px;
+--bu-radius-tr-control:2px;--bu-radius-tr-card:2px;--bu-radius-tr-panel:0px;--bu-corner-shape-card:round;
+--bu-control-h:44px;--bu-nav-item-max:16rem;
+}
+[data-brand="mentor"]{
+--bu-color-bg:#F5F9FA;--bu-color-surface:#FFFFFF;--bu-color-surface-sunken:#E6EEF1;
+--bu-color-text:#14232B;--bu-color-text-muted:#46606B;
+--bu-color-border:#D3E0E5;--bu-color-border-strong:#668491;
+--bu-color-primary:#0E7490;--bu-color-on-primary:#FFFFFF;--bu-color-primary-hover:#0B5F77;--bu-color-primary-active:#084A5D;--bu-color-primary-tint:#E1F1F5;
+--bu-color-accent:#F5B14C;--bu-color-on-accent:#1A1A1F;
+--bu-color-focus:#0E7490;--bu-color-danger:#B42318;
+--bu-color-disabled-bg:#E9EEF0;--bu-color-disabled-text:#8196A0;
+--bu-font-display:'Hanken Grotesk',system-ui,sans-serif;--bu-font-body:'Hanken Grotesk',system-ui,sans-serif;--bu-font-ui:'Hanken Grotesk',system-ui,sans-serif;
+--bu-font-mono:ui-monospace,'SFMono-Regular',Menlo,monospace;
+--bu-weight-display:700;--bu-weight-ui:600;--bu-ls-ui:0;--bu-tt-ui:none;
+--bu-size-body:1rem;--bu-size-ui:1rem;--bu-size-small:0.875rem;--bu-size-title:1.25rem;
+--bu-space-1:4px;--bu-space-2:8px;--bu-space-3:12px;--bu-space-4:16px;--bu-space-5:24px;--bu-space-6:32px;
+--bu-radius-control:8px;--bu-radius-card:12px;--bu-radius-round:9999px;
+--bu-elevation-card:0 1px 2px rgba(20,35,43,0.08),0 2px 8px rgba(20,35,43,0.06);--bu-elevation-raised:0 2px 4px rgba(20,35,43,0.10),0 8px 24px rgba(20,35,43,0.12);
+--bu-border-w:1px;--bu-indicator-w:3px;--bu-focus-w:3px;--bu-focus-offset:2px;
+--bu-radius-tr-control:8px;--bu-radius-tr-card:12px;--bu-radius-tr-panel:0px;--bu-corner-shape-card:round;
+--bu-control-h:44px;--bu-nav-item-max:16rem;
+}
+[data-brand="codecraft-light"]{
+--bu-color-bg:#F3EBDB;--bu-color-surface:#FBF7EE;--bu-color-surface-sunken:#E8DECA;
+--bu-color-text:#3B2E1E;--bu-color-text-muted:#6B5B45;
+--bu-color-border:#CBC1B2;--bu-color-border-strong:#8C7C64;
+--bu-color-primary:#A5372A;--bu-color-on-primary:#FBF7EE;--bu-color-primary-hover:#8C2D22;--bu-color-primary-active:#73241B;--bu-color-primary-tint:#EBDCCB;
+--bu-color-accent:#D4B483;--bu-color-on-accent:#3B2E1E;
+--bu-color-focus:#3B2E1E;--bu-color-danger:#8C1D2C;
+--bu-color-disabled-bg:#E6DDCB;--bu-color-disabled-text:#9A8C76;
+--bu-font-display:'Spectral',Georgia,serif;--bu-font-body:'Sora',system-ui,sans-serif;--bu-font-ui:'IBM Plex Mono',ui-monospace,monospace;
+--bu-font-mono:'IBM Plex Mono',ui-monospace,monospace;
+--bu-weight-display:500;--bu-weight-ui:500;--bu-ls-ui:0.02em;--bu-tt-ui:none;
+--bu-size-body:0.9375rem;--bu-size-ui:0.875rem;--bu-size-small:0.8125rem;--bu-size-title:1.375rem;
+--bu-space-1:4px;--bu-space-2:8px;--bu-space-3:12px;--bu-space-4:16px;--bu-space-5:24px;--bu-space-6:40px;
+--bu-radius-control:0px;--bu-radius-card:0px;--bu-radius-round:9999px;
+--bu-elevation-card:none;--bu-elevation-raised:none;
+--bu-border-w:1px;--bu-indicator-w:2px;--bu-focus-w:2px;--bu-focus-offset:2px;
+--bu-radius-tr-control:0px;--bu-radius-tr-card:16px;--bu-radius-tr-panel:32px;--bu-corner-shape-card:bevel;
+--bu-control-h:44px;--bu-nav-item-max:16rem;
+}
+[data-brand="codecraft-dark"]{
+--bu-color-bg:#1C1611;--bu-color-surface:#271F18;--bu-color-surface-sunken:#15100C;
+--bu-color-text:#F3EBDB;--bu-color-text-muted:#B8AB94;
+--bu-color-border:#40362B;--bu-color-border-strong:#8F8068;
+--bu-color-primary:#E2705A;--bu-color-on-primary:#1C1611;--bu-color-primary-hover:#EE8570;--bu-color-primary-active:#CF5F4A;--bu-color-primary-tint:#3A241D;
+--bu-color-accent:#D4B483;--bu-color-on-accent:#1C1611;
+--bu-color-focus:#F3EBDB;--bu-color-danger:#F2929B;
+--bu-color-disabled-bg:#2A231B;--bu-color-disabled-text:#7A6D5A;
+--bu-font-display:'Spectral',Georgia,serif;--bu-font-body:'Sora',system-ui,sans-serif;--bu-font-ui:'IBM Plex Mono',ui-monospace,monospace;
+--bu-font-mono:'IBM Plex Mono',ui-monospace,monospace;
+--bu-weight-display:500;--bu-weight-ui:500;--bu-ls-ui:0.02em;--bu-tt-ui:none;
+--bu-size-body:0.9375rem;--bu-size-ui:0.875rem;--bu-size-small:0.8125rem;--bu-size-title:1.375rem;
+--bu-space-1:4px;--bu-space-2:8px;--bu-space-3:12px;--bu-space-4:16px;--bu-space-5:24px;--bu-space-6:40px;
+--bu-radius-control:0px;--bu-radius-card:0px;--bu-radius-round:9999px;
+--bu-elevation-card:none;--bu-elevation-raised:none;
+--bu-border-w:1px;--bu-indicator-w:2px;--bu-focus-w:2px;--bu-focus-offset:2px;
+--bu-radius-tr-control:0px;--bu-radius-tr-card:16px;--bu-radius-tr-panel:32px;--bu-corner-shape-card:bevel;
+--bu-control-h:44px;--bu-nav-item-max:16rem;
+}
+
+/* ============ LIBRARY COMPONENT STYLES: tokens only (AC-3) ============ */
+@keyframes bu-spin{to{transform:rotate(360deg)}}
+@keyframes bu-pulse{0%,100%{opacity:1}50%{opacity:0.45}}
+@media (prefers-reduced-motion:reduce){.bu-spinner,.bu-skeleton{animation:none}}
+.bu-visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.bu-btn{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:var(--bu-space-2);max-width:100%;min-height:var(--bu-control-h);padding:var(--bu-space-2) var(--bu-space-5);border:var(--bu-border-w) solid transparent;border-radius:var(--bu-radius-control);font-family:var(--bu-font-ui);font-size:var(--bu-size-ui);font-weight:var(--bu-weight-ui);letter-spacing:var(--bu-ls-ui);text-transform:var(--bu-tt-ui);line-height:1.3;text-align:center;text-wrap:balance;overflow-wrap:break-word;hyphens:auto;cursor:pointer}
+.bu-btn--primary{background:var(--bu-color-primary);color:var(--bu-color-on-primary);border-color:var(--bu-color-primary)}
+.bu-btn--primary:hover:not(:disabled),.bu-btn--primary.is-hover{background:var(--bu-color-primary-hover);border-color:var(--bu-color-primary-hover)}
+.bu-btn--primary:active:not(:disabled),.bu-btn--primary.is-active{background:var(--bu-color-primary-active);border-color:var(--bu-color-primary-active)}
+.bu-btn--secondary{background:transparent;color:var(--bu-color-primary);border-color:var(--bu-color-primary)}
+.bu-btn--secondary:hover:not(:disabled),.bu-btn--secondary.is-hover{background:var(--bu-color-primary-tint)}
+.bu-btn--secondary:active:not(:disabled),.bu-btn--secondary.is-active{background:var(--bu-color-primary-tint);border-color:var(--bu-color-primary-active)}
+.bu-btn:focus-visible,.bu-btn.is-focus{outline:var(--bu-focus-w) solid var(--bu-color-focus);outline-offset:var(--bu-focus-offset)}
+.bu-btn:disabled{background:var(--bu-color-disabled-bg);color:var(--bu-color-disabled-text);border-color:var(--bu-color-disabled-bg);cursor:not-allowed}
+.bu-btn[aria-busy="true"]{cursor:progress}
+.bu-spinner{flex:none;box-sizing:border-box;width:var(--bu-space-4);height:var(--bu-space-4);border:var(--bu-indicator-w) solid currentColor;border-right-color:transparent;border-radius:var(--bu-radius-round);animation:bu-spin 0.8s linear infinite}
+
+/* Top-right corner: size from its own token; card shape (round or bevel) from --bu-corner-shape-card. Brands that do not use it set the size equal to their normal radius. Browsers without corner-shape show a rounded corner of the same size. */
+.bu-btn{border-top-right-radius:var(--bu-radius-tr-control)}
+
+.bu-field{display:flex;flex-direction:column;gap:var(--bu-space-2);color:var(--bu-color-text);font-family:var(--bu-font-body)}
+.bu-label{font-family:var(--bu-font-ui);font-size:var(--bu-size-small);font-weight:var(--bu-weight-ui);letter-spacing:var(--bu-ls-ui)}
+.bu-input{box-sizing:border-box;width:100%;min-height:var(--bu-control-h);padding:var(--bu-space-2) var(--bu-space-3);background:var(--bu-color-surface);color:var(--bu-color-text);border:var(--bu-border-w) solid var(--bu-color-border-strong);border-radius:var(--bu-radius-control);font-family:var(--bu-font-body);font-size:var(--bu-size-body)}
+.bu-input::placeholder{color:var(--bu-color-text-muted);opacity:1}
+.bu-input:hover:not(:disabled),.bu-input.is-hover{border-color:var(--bu-color-text)}
+.bu-input:focus,.bu-input.is-focus{border-color:var(--bu-color-focus);outline:var(--bu-focus-w) solid var(--bu-color-focus);outline-offset:0}
+.bu-input[aria-invalid="true"]{border-color:var(--bu-color-danger)}
+.bu-input:disabled{background:var(--bu-color-disabled-bg);color:var(--bu-color-disabled-text);border-color:var(--bu-color-border);cursor:not-allowed}
+.bu-help{margin:0;color:var(--bu-color-text-muted);font-size:var(--bu-size-small)}
+.bu-error{display:flex;align-items:flex-start;gap:var(--bu-space-2);margin:0;color:var(--bu-color-danger);font-size:var(--bu-size-small)}
+.bu-error svg{flex:none;width:var(--bu-space-4);height:var(--bu-space-4)}
+
+.bu-card{position:relative;box-sizing:border-box;display:flex;flex-direction:column;min-width:0;overflow:hidden;background:var(--bu-color-surface);color:var(--bu-color-text);border:var(--bu-border-w) solid var(--bu-color-border);border-radius:var(--bu-radius-card);box-shadow:var(--bu-elevation-card);font-family:var(--bu-font-body);font-size:var(--bu-size-body)}
+/* Must follow the .bu-card base rule: its border-radius shorthand would otherwise reset this corner. */
+.bu-card{border-top-right-radius:var(--bu-radius-tr-card);corner-top-right-shape:var(--bu-corner-shape-card)}
+.bu-card__media{box-sizing:border-box;aspect-ratio:4/3;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;padding:var(--bu-space-3);background:var(--bu-color-surface-sunken);color:var(--bu-color-text-muted);font-size:var(--bu-size-small)}
+.bu-card__tag{padding:var(--bu-space-1) var(--bu-space-2);background:var(--bu-color-accent);color:var(--bu-color-on-accent);border-radius:var(--bu-radius-control);font-family:var(--bu-font-ui);font-weight:var(--bu-weight-ui)}
+.bu-card__body{display:flex;flex-direction:column;gap:var(--bu-space-2);padding:var(--bu-space-4)}
+.bu-card__title{margin:0;font-family:var(--bu-font-display);font-weight:var(--bu-weight-display);font-size:var(--bu-size-title);line-height:1.15}
+.bu-card__text{margin:0}
+.bu-card__code{box-sizing:border-box;margin:0;padding:var(--bu-space-3);background:var(--bu-color-bg);color:var(--bu-color-text);border:var(--bu-border-w) solid var(--bu-color-border);border-radius:var(--bu-radius-control);font-family:var(--bu-font-mono);font-size:var(--bu-size-small);line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+.bu-card__meta{margin:0;color:var(--bu-color-text-muted);font-size:var(--bu-size-small)}
+.bu-card--interactive{cursor:pointer}
+.bu-card--interactive:hover,.bu-card--interactive.is-hover{border-color:var(--bu-color-border-strong);box-shadow:var(--bu-elevation-raised)}
+.bu-card--interactive:hover .bu-card__link,.bu-card--interactive.is-hover .bu-card__link{text-decoration:underline;text-decoration-thickness:var(--bu-indicator-w)}
+.bu-card--interactive:active,.bu-card--interactive.is-active{border-color:var(--bu-color-primary);box-shadow:var(--bu-elevation-card)}
+.bu-card--interactive:has(.bu-card__link:focus-visible),.bu-card.is-focus{outline:var(--bu-focus-w) solid var(--bu-color-focus);outline-offset:var(--bu-focus-offset)}
+.bu-card__link{color:inherit;text-decoration:none}
+.bu-card__link:focus-visible{outline:none}
+.bu-card__link::after{content:"";position:absolute;inset:0}
+.bu-skeleton{background:var(--bu-color-surface-sunken);border-radius:var(--bu-radius-control);animation:bu-pulse 1.4s ease-in-out infinite}
+.bu-card__media.bu-skeleton{border-radius:0}
+.bu-skeleton--title{width:60%;height:var(--bu-space-5)}
+.bu-skeleton--line{width:100%;height:var(--bu-space-3)}
+.bu-skeleton--short{width:40%}
+
+.bu-nav{box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;gap:var(--bu-space-2) var(--bu-space-5);padding:var(--bu-space-2) var(--bu-space-4);background:var(--bu-color-surface);color:var(--bu-color-text);border:var(--bu-border-w) solid var(--bu-color-border);border-radius:var(--bu-radius-card);font-family:var(--bu-font-ui);font-size:var(--bu-size-ui);font-weight:var(--bu-weight-ui);letter-spacing:var(--bu-ls-ui)}
+.bu-nav__brand{font-family:var(--bu-font-display);font-weight:var(--bu-weight-display);font-size:var(--bu-size-title);letter-spacing:0}
+.bu-nav__list{display:flex;flex-wrap:wrap;gap:var(--bu-space-1);margin:0;padding:0;list-style:none}
+.bu-nav__link{box-sizing:border-box;display:inline-flex;align-items:center;max-width:var(--bu-nav-item-max);min-height:var(--bu-control-h);padding:var(--bu-space-2) var(--bu-space-3);color:inherit;text-decoration:none;border-radius:var(--bu-radius-control);cursor:pointer}
+.bu-nav__label{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;overflow-wrap:anywhere}
+.bu-nav__link:hover:not([aria-disabled="true"]),.bu-nav__link.is-hover{background:var(--bu-color-primary-tint)}
+.bu-nav__link[aria-current="page"]{box-shadow:inset 0 calc(-1 * var(--bu-indicator-w)) 0 var(--bu-color-primary)}
+.bu-nav__link:focus-visible,.bu-nav__link.is-focus{outline:var(--bu-focus-w) solid var(--bu-color-focus);outline-offset:calc(-1 * var(--bu-focus-w))}
+.bu-nav__link[aria-disabled="true"]{color:var(--bu-color-disabled-text);cursor:not-allowed}
+
+/* ============ GALLERY CHROME (review surface, not part of the library) ============ */
+.g-root{display:flex;flex-direction:column;gap:24px;padding-bottom:24px}
+.g-skip{position:absolute;left:-9999px;top:8px;background:#1B1B1B;color:#fff;padding:8px 12px;z-index:5}
+.g-skip:focus{left:8px}
+.g-top{position:sticky;top:0;z-index:4;background:#1B1B1B;color:#F4F3EF;padding:16px 40px;display:flex;flex-direction:column;gap:8px}
+.g-top__row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px}
+.g-kicker{margin:0;font-size:0.8125rem;letter-spacing:0.04em;color:#C9C8C2}
+.g-h1{margin:0;font-size:1.375rem;font-weight:600}
+.g-controls{display:flex;flex-wrap:wrap;align-items:center;gap:16px}
+.g-seggroup{display:flex;flex-wrap:wrap;gap:4px}
+.g-seg{box-sizing:border-box;min-height:44px;padding:8px 14px;border:1px solid #8A8983;background:transparent;color:#F4F3EF;font:inherit;font-size:0.9375rem;cursor:pointer;border-radius:4px}
+.g-seg:hover{background:#34332F}
+.g-seg.is-on{background:#F4F3EF;color:#1B1B1B;border-color:#F4F3EF}
+.g-seg:focus-visible,.g-check input:focus-visible{outline:3px solid #7DD3FC;outline-offset:2px}
+.g-check{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-size:0.9375rem;cursor:pointer}
+.g-check input{width:20px;height:20px;margin:0}
+.g-note{margin:0;font-size:0.8125rem;line-height:1.5;color:#C9C8C2;max-width:96ch}
+.g-main{display:flex;flex-direction:column;gap:24px;max-width:1360px;width:100%;box-sizing:border-box;margin:0 auto}
+.g-panel{border-radius:0;border-top-right-radius:var(--bu-radius-tr-panel);box-sizing:border-box;display:flex;flex-direction:column;gap:56px;padding:48px 40px;background:var(--bu-color-bg);color:var(--bu-color-text);font-family:var(--bu-font-body);font-size:var(--bu-size-body)}
+.g-panel__head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 32px}
+.g-panel__title{margin:0;font-family:var(--bu-font-display);font-weight:var(--bu-weight-display);font-size:2.5rem;line-height:1.05}
+.g-sec{display:flex;flex-direction:column;gap:20px}
+.g-sec__title{margin:0;font-family:var(--bu-font-display);font-weight:var(--bu-weight-display);font-size:var(--bu-size-title);line-height:1.15}
+.g-cap{margin:0;font-family:var(--bu-font-body);font-size:0.8125rem;line-height:1.5;color:var(--bu-color-text-muted)}
+.g-id{display:inline-block;margin-left:6px;padding:1px 6px;background:var(--bu-color-surface-sunken);color:var(--bu-color-text);border:1px solid var(--bu-color-border-strong);font-family:ui-monospace,'IBM Plex Mono',monospace;font-size:0.6875rem;line-height:1.5;border-radius:3px;vertical-align:baseline}
+.g-states{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:24px;align-items:start}
+.g-states--wide{grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr))}
+.g-states--cards{grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr))}
+.g-state{display:flex;flex-direction:column;gap:10px;min-width:0}
+.g-stack{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.g-sw-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));gap:12px;margin:0;padding:0;list-style:none}
+.g-sw{display:flex;flex-direction:column;gap:4px;min-width:0}
+.g-sw__chip{display:block;height:52px;border-radius:4px;box-shadow:inset 0 0 0 1px rgba(128,128,128,0.55)}
+.g-sw__name{font-size:0.8125rem;font-weight:600}
+.g-sw__hex{font-family:ui-monospace,'IBM Plex Mono',monospace;font-size:0.75rem;color:var(--bu-color-text-muted)}
+.g-type{display:flex;flex-direction:column;gap:12px}
+.g-type__display{margin:0;font-family:var(--bu-font-display);font-weight:var(--bu-weight-display);font-size:2rem;line-height:1.1}
+.g-type__body{margin:0;max-width:62ch}
+.g-type__ui{margin:0;font-family:var(--bu-font-ui);font-weight:var(--bu-weight-ui);letter-spacing:var(--bu-ls-ui);font-size:var(--bu-size-ui)}
+.g-scale{display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start}
+.g-scale__col{display:flex;flex-direction:column;gap:8px}
+.g-bar{height:12px;background:var(--bu-color-primary)}
+.g-barrow{display:flex;align-items:center;gap:12px}
+.g-demo{box-sizing:border-box;width:112px;height:72px;background:var(--bu-color-surface);border:1px solid var(--bu-color-border-strong)}
+.g-demo--elev{border-color:var(--bu-color-border)}
+.g-box{box-sizing:border-box;display:flex;flex-direction:column;align-items:stretch;gap:10px;padding:16px;border:1px dashed var(--bu-color-border-strong);min-width:0}
+.g-box--280{width:280px;max-width:100%}
+.g-box--180{width:180px;max-width:100%}
+.g-box--360{width:360px;max-width:100%}
+.g-boxes{display:flex;flex-wrap:wrap;align-items:flex-start;gap:24px}
+.g-ev{display:flex;flex-direction:column}
+.g-ev__row{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,0.7fr);gap:12px;padding:8px 0;border-top:1px solid var(--bu-color-border);font-size:0.8125rem;line-height:1.4}
+.g-ev__row--head{font-weight:600;border-top:0}
+.g-ev__hex{font-family:ui-monospace,'IBM Plex Mono',monospace;overflow-wrap:anywhere}
+.g-footer{max-width:1360px;width:100%;box-sizing:border-box;margin:0 auto;padding:0 40px;font-size:0.8125rem;color:#3D3D3A}
+@media (max-width:640px){
+.g-top{padding:12px 16px}
+.g-panel{padding:32px 16px;gap:40px}
+.g-footer{padding:0 16px}
+.g-ev__row{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.g-ev__row--head{display:none}
+}
+</style>
+</helmet>
+
+<div class="g-root">
+<a class="g-skip" href="#main">Skip to gallery</a>
+
+<header class="g-top">
+  <div class="g-top__row">
+    <div>
+      <p class="g-kicker">brand-ui · reference spike · prototype</p>
+      <h1 class="g-h1">Component gallery</h1>
+    </div>
+    <div class="g-controls">
+      <div class="g-seggroup" role="group" aria-label="Brand">
+        <sc-for list="{{brandButtons}}" as="b" hint-placeholder-count="4">
+          <button type="button" class="g-seg {{b.cls}}" aria-pressed="{{b.pressed}}" onClick="{{b.select}}">{{b.label}}</button>
+        </sc-for>
+      </div>
+      <label class="g-check"><input type="checkbox" checked="{{ids}}" onChange="{{toggleIds}}"> Design IDs</label>
+    </div>
+  </div>
+  <p class="g-note">Non-authoritative research prototype. ArtAnon Shop is an unofficial concept exploration of an existing identity: no affiliation, no delivery claim, text wordmark and palette values only. All content is sample content; [BRACKETED] values are intentional placeholders.
+    <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-004</span><span class="g-id">DS-005</span></sc-if></p>
+</header>
+
+<main id="main" class="g-main">
+<sc-for list="{{panels}}" as="panel" hint-placeholder-count="1">
+<section class="g-panel" lang="en" data-brand="{{panel.key}}" aria-labelledby="h-{{panel.key}}">
+
+  <div class="g-panel__head">
+    <div>
+      <p class="g-cap">{{panel.industry}}</p>
+      <h2 class="g-panel__title" id="h-{{panel.key}}">{{panel.name}}</h2>
+    </div>
+    <p class="g-cap">{{panel.direction}}</p>
+  </div>
+
+  <!-- ===== Tokens ===== -->
+  <div class="g-sec">
+    <h3 class="g-sec__title">Tokens</h3>
+    <p class="g-cap">Color <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-001</span></sc-if></p>
+    <ul class="g-sw-grid">
+      <li class="g-sw"><span class="g-sw__chip" style="background: var(--bu-color-bg)"></span><span class="g-sw__name">bg</span><span class="g-sw__hex">{{panel.hex.bg}}</span></li>
+      <li class="g-sw"><span class="g-sw__chip" style="background: var(--bu-color-surface)"></span><span class="g-sw__name">surface</span><span class="g-sw__hex">{{panel.hex.surface}}</span></li>
+      <li class="g-sw"><span class="g-sw__chip" style="background: var(--bu-color-surface-sunken)"></span><span class="g-sw__name">surface-sunken</span><span class="g-sw__hex">{{panel.hex.surfaceSunken}}</span></li>
+      <li class="g-sw"><span class="g-sw__chip" style="background: var(--bu-color-text)"></span><span class="g-sw__name">text</span><span class="g-sw__hex">{{panel.hex.text}}</span></li>
+      <li class="g-sw"><span class="g-sw__chip" style="background: var(--bu-color-text-muted)"></span><span class="g-sw__name">text-muted</span><span class="g-sw__hex">{{panel.hex.textMuted}}</span></li>
+      <li class="g-sw"><span class="g-sw__chip" style="background: var(--bu-color-border)"></span><span class="g-sw__name">border</span><span class="g-sw__hex">{{panel.hex.border}}</span></li>
+      <li class="g-sw"><span class="g-sw__chip" style="background: var(--bu-color-border-strong)"></span><span class="g-sw__name">border-strong</span><span class="g-sw__hex">{{panel.hex.borderStrong}}</span></li>
+      <li class="g-sw"><span class="g-sw__chip" style="background: var(--bu-color-primary)"></span><span class="g-sw__name">primary</span><span class="g-sw__hex">{{panel.hex.primary}}</span></li>
+      <li class="g-sw"><span class="g-sw__chip" style="background: var(--bu-color-on-primary)"></span><span class="g-sw__name">on-primary</span><span class="g-sw__hex">{{panel.hex.onPrimary}}</span></li>
+      <li class="g-sw"><span class="g-sw__chip" style="background: var(--bu-color-primary-hover)"></span><span class="g-sw__name">primary-hover</span><span class="g-sw__hex">{{panel.hex.primaryHover}}</span></li>
+      <li class="g-sw"><span class="g-sw__chip" style="background: var(--bu-color-primary-active)"></span><span class="g-sw__name">primary-active</span><span class="g-sw__hex">{{panel.hex.primaryActive}}</span></li>
+      <li class="g-sw"><span class="g-sw__chip" style="background: var(--bu-color-primary-tint)"></span><span class="g-sw__name">primary-tint</span><span class="g-sw__hex">{{panel.hex.primaryTint}}</span></li>
+      <li class="g-sw"><span class="g-sw__chip" style="background: var(--bu-color-accent)"></span><span class="g-sw__name">accent</span><span class="g-sw__hex">{{panel.hex.accent}}</span></li>
+      <li class="g-sw"><span class="g-sw__chip" style="background: var(--bu-color-on-accent)"></span><span class="g-sw__name">on-accent</span><span class="g-sw__hex">{{panel.hex.onAccent}}</span></li>
+      <li class="g-sw"><span class="g-sw__chip" style="background: var(--bu-color-focus)"></span><span class="g-sw__name">focus</span><span class="g-sw__hex">{{panel.hex.focus}}</span></li>
+      <li class="g-sw"><span class="g-sw__chip" style="background: var(--bu-color-danger)"></span><span class="g-sw__name">danger</span><span class="g-sw__hex">{{panel.hex.danger}}</span></li>
+      <li class="g-sw"><span class="g-sw__chip" style="background: var(--bu-color-disabled-bg)"></span><span class="g-sw__name">disabled-bg</span><span class="g-sw__hex">{{panel.hex.disabledBg}}</span></li>
+      <li class="g-sw"><span class="g-sw__chip" style="background: var(--bu-color-disabled-text)"></span><span class="g-sw__name">disabled-text</span><span class="g-sw__hex">{{panel.hex.disabledText}}</span></li>
+    </ul>
+
+    <p class="g-cap">Type <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-002</span></sc-if> · display {{panel.fonts.display}} · body {{panel.fonts.body}} · UI {{panel.fonts.ui}} · mono {{panel.fonts.mono}}</p>
+    <div class="g-type">
+      <p class="g-type__display">{{panel.typeDisplay}}</p>
+      <p class="g-type__body">{{panel.typeBody}}</p>
+      <p class="g-type__ui">{{panel.typeUi}}</p>
+    </div>
+
+    <p class="g-cap">Space, radius, elevation <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-003</span></sc-if></p>
+    <div class="g-scale">
+      <div class="g-scale__col">
+        <div class="g-barrow"><span class="g-bar" style="width: var(--bu-space-1)"></span><span class="g-cap">space-1 · {{panel.space.s1}}</span></div>
+        <div class="g-barrow"><span class="g-bar" style="width: var(--bu-space-2)"></span><span class="g-cap">space-2 · {{panel.space.s2}}</span></div>
+        <div class="g-barrow"><span class="g-bar" style="width: var(--bu-space-3)"></span><span class="g-cap">space-3 · {{panel.space.s3}}</span></div>
+        <div class="g-barrow"><span class="g-bar" style="width: var(--bu-space-4)"></span><span class="g-cap">space-4 · {{panel.space.s4}}</span></div>
+        <div class="g-barrow"><span class="g-bar" style="width: var(--bu-space-5)"></span><span class="g-cap">space-5 · {{panel.space.s5}}</span></div>
+        <div class="g-barrow"><span class="g-bar" style="width: var(--bu-space-6)"></span><span class="g-cap">space-6 · {{panel.space.s6}}</span></div>
+      </div>
+      <div class="g-scale__col">
+        <div class="g-demo" style="border-radius: var(--bu-radius-control)"></div>
+        <p class="g-cap">radius-control · {{panel.radiusControl}}</p>
+      </div>
+      <div class="g-scale__col">
+        <div class="g-demo" style="border-radius: var(--bu-radius-card)"></div>
+        <p class="g-cap">radius-card · {{panel.radiusCard}}</p>
+      </div>
+      <div class="g-scale__col">
+        <div class="g-demo g-demo--elev" style="box-shadow: var(--bu-elevation-card)"></div>
+        <p class="g-cap">elevation-card · {{panel.elevCard}}</p>
+      </div>
+      <div class="g-scale__col">
+        <div class="g-demo g-demo--elev" style="box-shadow: var(--bu-elevation-raised)"></div>
+        <p class="g-cap">elevation-raised · {{panel.elevRaised}}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Button ===== -->
+  <div class="g-sec">
+    <h3 class="g-sec__title">Button</h3>
+    <p class="g-cap">Variants: primary, secondary. Forced states use the is-hover, is-active and is-focus classes; real :hover, :active and :focus-visible behave the same.</p>
+    <div class="g-states">
+      <div class="g-state">
+        <p class="g-cap">Default <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-010</span></sc-if></p>
+        <div class="g-stack">
+          <button type="button" class="bu-btn bu-btn--primary">{{panel.btnA}}</button>
+          <button type="button" class="bu-btn bu-btn--secondary">{{panel.btnB}}</button>
+        </div>
+      </div>
+      <div class="g-state">
+        <p class="g-cap">Hover <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-011</span></sc-if></p>
+        <div class="g-stack">
+          <button type="button" class="bu-btn bu-btn--primary is-hover">{{panel.btnA}}</button>
+          <button type="button" class="bu-btn bu-btn--secondary is-hover">{{panel.btnB}}</button>
+        </div>
+      </div>
+      <div class="g-state">
+        <p class="g-cap">Active <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-012</span></sc-if></p>
+        <div class="g-stack">
+          <button type="button" class="bu-btn bu-btn--primary is-active">{{panel.btnA}}</button>
+          <button type="button" class="bu-btn bu-btn--secondary is-active">{{panel.btnB}}</button>
+        </div>
+      </div>
+      <div class="g-state">
+        <p class="g-cap">Focus <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-013</span></sc-if></p>
+        <div class="g-stack">
+          <button type="button" class="bu-btn bu-btn--primary is-focus">{{panel.btnA}}</button>
+          <button type="button" class="bu-btn bu-btn--secondary is-focus">{{panel.btnB}}</button>
+        </div>
+      </div>
+      <div class="g-state">
+        <p class="g-cap">Disabled <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-014</span></sc-if></p>
+        <div class="g-stack">
+          <button type="button" class="bu-btn bu-btn--primary" disabled="{{ true }}">{{panel.btnA}}</button>
+          <button type="button" class="bu-btn bu-btn--secondary" disabled="{{ true }}">{{panel.btnB}}</button>
+        </div>
+      </div>
+      <div class="g-state">
+        <p class="g-cap">Loading <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-015</span></sc-if></p>
+        <div class="g-stack">
+          <button type="button" class="bu-btn bu-btn--primary" aria-busy="true"><span class="bu-spinner" aria-hidden="true"></span>{{panel.btnLoading}}</button>
+          <button type="button" class="bu-btn bu-btn--secondary" aria-busy="true"><span class="bu-spinner" aria-hidden="true"></span>{{panel.btnLoading}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Text input ===== -->
+  <div class="g-sec">
+    <h3 class="g-sec__title">Text input</h3>
+    <div class="g-states g-states--wide">
+      <div class="g-state">
+        <p class="g-cap">Default (empty) <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-020</span></sc-if></p>
+        <div class="bu-field">
+          <label class="bu-label" for="in-default-{{panel.key}}">{{panel.inLabel}}</label>
+          <input class="bu-input" id="in-default-{{panel.key}}" type="text" placeholder="{{panel.inPlaceholder}}" aria-describedby="help-default-{{panel.key}}">
+          <p class="bu-help" id="help-default-{{panel.key}}">Sample helper text.</p>
+        </div>
+      </div>
+      <div class="g-state">
+        <p class="g-cap">Hover <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-021</span></sc-if></p>
+        <div class="bu-field">
+          <label class="bu-label" for="in-hover-{{panel.key}}">{{panel.inLabel}}</label>
+          <input class="bu-input is-hover" id="in-hover-{{panel.key}}" type="text" placeholder="{{panel.inPlaceholder}}" aria-describedby="help-hover-{{panel.key}}">
+          <p class="bu-help" id="help-hover-{{panel.key}}">Sample helper text.</p>
+        </div>
+      </div>
+      <div class="g-state">
+        <p class="g-cap">Focus <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-022</span></sc-if></p>
+        <div class="bu-field">
+          <label class="bu-label" for="in-focus-{{panel.key}}">{{panel.inLabel}}</label>
+          <input class="bu-input is-focus" id="in-focus-{{panel.key}}" type="text" placeholder="{{panel.inPlaceholder}}" aria-describedby="help-focus-{{panel.key}}">
+          <p class="bu-help" id="help-focus-{{panel.key}}">Sample helper text.</p>
+        </div>
+      </div>
+      <div class="g-state">
+        <p class="g-cap">Filled <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-023</span></sc-if></p>
+        <div class="bu-field">
+          <label class="bu-label" for="in-filled-{{panel.key}}">{{panel.inLabel}}</label>
+          <input class="bu-input" id="in-filled-{{panel.key}}" type="text" defaultValue="{{panel.inValue}}" aria-describedby="help-filled-{{panel.key}}">
+          <p class="bu-help" id="help-filled-{{panel.key}}">Sample helper text.</p>
+        </div>
+      </div>
+      <div class="g-state">
+        <p class="g-cap">Error <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-024</span></sc-if></p>
+        <div class="bu-field">
+          <label class="bu-label" for="in-error-{{panel.key}}">{{panel.inLabel}}</label>
+          <input class="bu-input" id="in-error-{{panel.key}}" type="text" defaultValue="not-a-valid-value" aria-invalid="true" aria-describedby="err-error-{{panel.key}}">
+          <p class="bu-error" id="err-error-{{panel.key}}"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><path d="M8 4.5v4.2M8 11.2v.1"/></svg><span>{{panel.inError}}</span></p>
+        </div>
+      </div>
+      <div class="g-state">
+        <p class="g-cap">Disabled <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-025</span></sc-if></p>
+        <div class="bu-field">
+          <label class="bu-label" for="in-disabled-{{panel.key}}">{{panel.inLabel}}</label>
+          <input class="bu-input" id="in-disabled-{{panel.key}}" type="text" disabled="{{ true }}" defaultValue="{{panel.inValue}}" aria-describedby="help-disabled-{{panel.key}}">
+          <p class="bu-help" id="help-disabled-{{panel.key}}">Sample helper text.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Card ===== -->
+  <div class="g-sec">
+    <h3 class="g-sec__title">Card</h3>
+    <p class="g-cap">Interactive cards use one stretched link on the title. Image areas are labelled placeholders; no artwork is embedded.</p>
+    <div class="g-states g-states--cards">
+      <div class="g-state">
+        <p class="g-cap">Static <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-030</span></sc-if></p>
+        <article class="bu-card">
+          <div class="bu-card__media"><span class="bu-card__tag">Sample</span><span>Image placeholder</span></div>
+          <div class="bu-card__body">
+            <h4 class="bu-card__title">{{panel.cardTitle}}</h4>
+            <p class="bu-card__text">{{panel.cardText}}</p>
+            <sc-if value="{{panel.hasCode}}" hint-placeholder-val="{{ false }}"><pre class="bu-card__code"><code>{{panel.cardCode}}</code></pre></sc-if>
+            <p class="bu-card__meta">{{panel.cardMeta}}</p>
+          </div>
+        </article>
+      </div>
+      <div class="g-state">
+        <p class="g-cap">Interactive, default <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-031</span></sc-if></p>
+        <article class="bu-card bu-card--interactive">
+          <div class="bu-card__media"><span class="bu-card__tag">Sample</span><span>Image placeholder</span></div>
+          <div class="bu-card__body">
+            <h4 class="bu-card__title"><a class="bu-card__link" href="#h-{{panel.key}}">{{panel.cardTitle}}</a></h4>
+            <p class="bu-card__text">{{panel.cardText}}</p>
+            <sc-if value="{{panel.hasCode}}" hint-placeholder-val="{{ false }}"><pre class="bu-card__code"><code>{{panel.cardCode}}</code></pre></sc-if>
+            <p class="bu-card__meta">{{panel.cardMeta}}</p>
+          </div>
+        </article>
+      </div>
+      <div class="g-state">
+        <p class="g-cap">Interactive, hover <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-032</span></sc-if></p>
+        <article class="bu-card bu-card--interactive is-hover">
+          <div class="bu-card__media"><span class="bu-card__tag">Sample</span><span>Image placeholder</span></div>
+          <div class="bu-card__body">
+            <h4 class="bu-card__title"><a class="bu-card__link" href="#h-{{panel.key}}">{{panel.cardTitle}}</a></h4>
+            <p class="bu-card__text">{{panel.cardText}}</p>
+            <sc-if value="{{panel.hasCode}}" hint-placeholder-val="{{ false }}"><pre class="bu-card__code"><code>{{panel.cardCode}}</code></pre></sc-if>
+            <p class="bu-card__meta">{{panel.cardMeta}}</p>
+          </div>
+        </article>
+      </div>
+      <div class="g-state">
+        <p class="g-cap">Interactive, focus <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-033</span></sc-if></p>
+        <article class="bu-card bu-card--interactive is-focus">
+          <div class="bu-card__media"><span class="bu-card__tag">Sample</span><span>Image placeholder</span></div>
+          <div class="bu-card__body">
+            <h4 class="bu-card__title"><a class="bu-card__link" href="#h-{{panel.key}}">{{panel.cardTitle}}</a></h4>
+            <p class="bu-card__text">{{panel.cardText}}</p>
+            <sc-if value="{{panel.hasCode}}" hint-placeholder-val="{{ false }}"><pre class="bu-card__code"><code>{{panel.cardCode}}</code></pre></sc-if>
+            <p class="bu-card__meta">{{panel.cardMeta}}</p>
+          </div>
+        </article>
+      </div>
+      <div class="g-state">
+        <p class="g-cap">Interactive, active <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-034</span></sc-if></p>
+        <article class="bu-card bu-card--interactive is-active">
+          <div class="bu-card__media"><span class="bu-card__tag">Sample</span><span>Image placeholder</span></div>
+          <div class="bu-card__body">
+            <h4 class="bu-card__title"><a class="bu-card__link" href="#h-{{panel.key}}">{{panel.cardTitle}}</a></h4>
+            <p class="bu-card__text">{{panel.cardText}}</p>
+            <sc-if value="{{panel.hasCode}}" hint-placeholder-val="{{ false }}"><pre class="bu-card__code"><code>{{panel.cardCode}}</code></pre></sc-if>
+            <p class="bu-card__meta">{{panel.cardMeta}}</p>
+          </div>
+        </article>
+      </div>
+      <div class="g-state">
+        <p class="g-cap">Loading <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-035</span></sc-if></p>
+        <article class="bu-card" aria-busy="true">
+          <div class="bu-card__media bu-skeleton"><span class="bu-visually-hidden">Loading</span></div>
+          <div class="bu-card__body">
+            <div class="bu-skeleton bu-skeleton--title"></div>
+            <div class="bu-skeleton bu-skeleton--line"></div>
+            <div class="bu-skeleton bu-skeleton--line bu-skeleton--short"></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Navigation bar ===== -->
+  <div class="g-sec">
+    <h3 class="g-sec__title">Navigation bar</h3>
+    <p class="g-cap">Item states, left to right: default, hover, current page, focus, disabled.
+      <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-040</span><span class="g-id">DS-041</span><span class="g-id">DS-042</span><span class="g-id">DS-043</span><span class="g-id">DS-044</span></sc-if></p>
+    <nav class="bu-nav" aria-label="{{panel.name}} navigation, item states">
+      <span class="bu-nav__brand">{{panel.wordmark}}</span>
+      <ul class="bu-nav__list">
+        <li><a class="bu-nav__link" href="#h-{{panel.key}}"><span class="bu-nav__label">Default</span></a></li>
+        <li><a class="bu-nav__link is-hover" href="#h-{{panel.key}}"><span class="bu-nav__label">Hover</span></a></li>
+        <li><a class="bu-nav__link" href="#h-{{panel.key}}" aria-current="page"><span class="bu-nav__label">Current</span></a></li>
+        <li><a class="bu-nav__link is-focus" href="#h-{{panel.key}}"><span class="bu-nav__label">Focus</span></a></li>
+        <li><a class="bu-nav__link" role="link" aria-disabled="true"><span class="bu-nav__label">Disabled</span></a></li>
+      </ul>
+    </nav>
+    <p class="g-cap">Working sample: tab through it, Enter follows a link. <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-040</span></sc-if></p>
+    <nav class="bu-nav" aria-label="{{panel.name}} navigation, working sample">
+      <span class="bu-nav__brand">{{panel.wordmark}}</span>
+      <ul class="bu-nav__list">
+        <li><a class="bu-nav__link" href="#h-{{panel.key}}" aria-current="page"><span class="bu-nav__label">{{panel.navItems.a}}</span></a></li>
+        <li><a class="bu-nav__link" href="#h-{{panel.key}}"><span class="bu-nav__label">{{panel.navItems.b}}</span></a></li>
+        <li><a class="bu-nav__link" href="#h-{{panel.key}}"><span class="bu-nav__label">{{panel.navItems.c}}</span></a></li>
+        <li><a class="bu-nav__link" href="#h-{{panel.key}}"><span class="bu-nav__label">{{panel.navItems.d}}</span></a></li>
+      </ul>
+    </nav>
+    <p class="g-cap">Narrow width, 360 px: the bar wraps; there is no collapsed menu. <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-045</span></sc-if></p>
+    <div class="g-box g-box--360">
+      <nav class="bu-nav" aria-label="{{panel.name}} navigation, narrow width">
+        <span class="bu-nav__brand">{{panel.wordmark}}</span>
+        <ul class="bu-nav__list">
+          <li><a class="bu-nav__link" href="#h-{{panel.key}}" aria-current="page"><span class="bu-nav__label">{{panel.navItems.a}}</span></a></li>
+          <li><a class="bu-nav__link" href="#h-{{panel.key}}"><span class="bu-nav__label">{{panel.navItems.b}}</span></a></li>
+          <li><a class="bu-nav__link" href="#h-{{panel.key}}"><span class="bu-nav__label">{{panel.navItems.c}}</span></a></li>
+          <li><a class="bu-nav__link" href="#h-{{panel.key}}"><span class="bu-nav__label">{{panel.navItems.d}}</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- ===== Long-label case ===== -->
+  <div class="g-sec">
+    <h3 class="g-sec__title">Long label</h3>
+    <p class="g-cap">Rule for button <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-050</span></sc-if>: the label wraps and the button grows in height; it never truncates and never exceeds its container. Rule for navigation item <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-051</span></sc-if>: the label wraps to two lines, then truncates with an ellipsis; the full text stays in the page as the link's accessible name and is repeated as a tooltip.</p>
+    <div class="g-boxes">
+      <div class="g-box g-box--280">
+        <p class="g-cap">Container 280 px</p>
+        <button type="button" class="bu-btn bu-btn--primary">{{panel.btnLong}}</button>
+        <button type="button" class="bu-btn bu-btn--secondary">{{panel.btnLong}}</button>
+      </div>
+      <div class="g-box g-box--180">
+        <p class="g-cap">Container 180 px</p>
+        <button type="button" class="bu-btn bu-btn--primary">{{panel.btnLong}}</button>
+      </div>
+    </div>
+    <nav class="bu-nav" aria-label="{{panel.name}} navigation, long label">
+      <span class="bu-nav__brand">{{panel.wordmark}}</span>
+      <ul class="bu-nav__list">
+        <li><a class="bu-nav__link" href="#h-{{panel.key}}" aria-current="page"><span class="bu-nav__label">{{panel.navItems.a}}</span></a></li>
+        <li><a class="bu-nav__link" href="#h-{{panel.key}}" title="{{panel.navLong}}"><span class="bu-nav__label">{{panel.navLong}}</span></a></li>
+        <li><a class="bu-nav__link" href="#h-{{panel.key}}"><span class="bu-nav__label">{{panel.navItems.d}}</span></a></li>
+      </ul>
+    </nav>
+    <div class="g-box g-box--360">
+      <p class="g-cap">Container 360 px</p>
+      <nav class="bu-nav" aria-label="{{panel.name}} navigation, long label, narrow width">
+        <span class="bu-nav__brand">{{panel.wordmark}}</span>
+        <ul class="bu-nav__list">
+          <li><a class="bu-nav__link" href="#h-{{panel.key}}" title="{{panel.navLong}}"><span class="bu-nav__label">{{panel.navLong}}</span></a></li>
+          <li><a class="bu-nav__link" href="#h-{{panel.key}}"><span class="bu-nav__label">{{panel.navItems.d}}</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- ===== Contrast evidence ===== -->
+  <div class="g-sec">
+    <h3 class="g-sec__title">Contrast evidence <sc-if value="{{ids}}" hint-placeholder-val="{{ true }}"><span class="g-id">DS-060</span></sc-if></h3>
+    <p class="g-cap">Every foreground and background pair the components use. Ratios computed with the WCAG 2.2 relative-luminance formula. Disabled controls are exempt from contrast requirements. This list is prototype evidence; the real check is an automated test (AC-7).</p>
+    <div class="g-ev">
+      <div class="g-ev__row g-ev__row--head"><span>Pair</span><span>Foreground</span><span>Background</span><span>Ratio</span><span>Required</span><span>Result</span></div>
+      <sc-for list="{{panel.contrast}}" as="row" hint-placeholder-count="20">
+        <div class="g-ev__row"><span>{{row.pair}}</span><span class="g-ev__hex">{{row.fg}}</span><span class="g-ev__hex">{{row.bg}}</span><span>{{row.ratio}}</span><span>{{row.need}}</span><span>{{row.result}}</span></div>
+      </sc-for>
+    </div>
+  </div>
+
+</section>
+</sc-for>
+</main>
+
+<footer class="g-footer">
+  <p>MOD-W v5.0.1 · Designer + Prototyper output · evidence for design-spec.md, not production code.</p>
+</footer>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"brand":{"editor":"enum","options":["artanon","mentor","codecraft-light","codecraft-dark","all"],"default":"artanon"},"$preview":{"width":1360,"height":3900}}'>
+const PAIRS = [
+  ['Text on page background', 4.5], ['Text on surface (card, input, nav)', 4.5], ['Nav label on hover tint', 4.5],
+  ['Muted text on surface', 4.5], ['Muted text on sunken (image placeholder)', 4.5],
+  ['Primary button label', 4.5], ['Primary button label, hover', 4.5], ['Primary button label, active', 4.5],
+  ['Secondary button text on background', 4.5], ['Secondary button text on hover tint', 4.5],
+  ['Card tag label on accent', 4.5], ['Error text on surface', 4.5], ['Error text on background', 4.5],
+  ['Input border on surface', 3], ['Input border on background', 3], ['Secondary button border on background', 3],
+  ['Focus ring on background', 3], ['Focus ring on surface', 3], ['Error border on surface', 3], ['Nav current indicator on surface', 3]
+];
+
+const BRANDS = {
+  artanon: {
+    key: 'artanon', name: 'ArtAnon Shop', wordmark: 'ArtAnon',
+    industry: 'Online art and print shop · Must · unofficial concept exploration',
+    direction: 'Option A1, Gallery wall: light warm-white ground, serif display, sharp corners, no shadows, airy spacing.',
+    hex: { bg:'#FDFBF7', surface:'#FFFFFF', surfaceSunken:'#EFE8DB', text:'#2B2420', textMuted:'#665A50', border:'#DCD3C4', borderStrong:'#857868', primary:'#1E5FA0', onPrimary:'#FFFFFF', primaryHover:'#174D85', primaryActive:'#103A66', primaryTint:'#E6EDF5', accent:'#E0A93B', onAccent:'#2B2420', focus:'#1E5FA0', danger:'#B3261E', disabledBg:'#ECE6DA', disabledText:'#8F8578' },
+    c: [['#2B2420','#FDFBF7','14.77'],['#2B2420','#FFFFFF','15.26'],['#2B2420','#E6EDF5','12.93'],['#665A50','#FFFFFF','6.68'],['#665A50','#EFE8DB','5.48'],['#FFFFFF','#1E5FA0','6.56'],['#FFFFFF','#174D85','8.62'],['#FFFFFF','#103A66','11.54'],['#1E5FA0','#FDFBF7','6.35'],['#1E5FA0','#E6EDF5','5.56'],['#2B2420','#E0A93B','7.20'],['#B3261E','#FFFFFF','6.54'],['#B3261E','#FDFBF7','6.32'],['#857868','#FFFFFF','4.30'],['#857868','#FDFBF7','4.16'],['#1E5FA0','#FDFBF7','6.35'],['#1E5FA0','#FDFBF7','6.35'],['#1E5FA0','#FFFFFF','6.56'],['#B3261E','#FFFFFF','6.54'],['#1E5FA0','#FFFFFF','6.56']],
+    fonts: { display: 'Instrument Serif 400', body: 'Work Sans 400', ui: 'Work Sans 500', mono: 'system monospace' },
+    typeDisplay: 'Sample display line, mixed media on panel',
+    typeBody: 'Body text sample. Original works are shown on a quiet ground so the artwork leads. This is sample text.',
+    typeUi: 'UI label sample',
+    space: { s1:'4px', s2:'8px', s3:'16px', s4:'24px', s5:'32px', s6:'48px' },
+    radiusControl: '2px', radiusCard: '2px', elevCard: 'none', elevRaised: 'none',
+    btnA: 'View artwork', btnB: 'Save for later', btnLoading: 'Saving', btnLong: 'Add this original artwork to my collection and arrange insured delivery',
+    inLabel: 'Email address', inPlaceholder: 'name@example.com', inValue: 'person@example.com', inError: 'Enter an email address in the format name@example.com.',
+    cardTitle: 'Sample artwork title', cardText: 'Mixed media on panel. Sample description text.', cardMeta: 'SKU [SKU] · [SIZE] · [PRICE]', hasCode: false, cardCode: '',
+    navItems: { a: 'Shop', b: 'Collections', c: 'About', d: 'Contact' }, navLong: 'Commissions, framing and insured delivery information'
+  },
+  mentor: {
+    key: 'mentor', name: 'IT English Mentor', wordmark: 'IT English Mentor',
+    industry: 'Freelance English mentoring for IT professionals · Must',
+    direction: 'Option M1, Clean desk: cool white, deep teal, amber as highlight only, soft elevation.',
+    hex: { bg:'#F5F9FA', surface:'#FFFFFF', surfaceSunken:'#E6EEF1', text:'#14232B', textMuted:'#46606B', border:'#D3E0E5', borderStrong:'#668491', primary:'#0E7490', onPrimary:'#FFFFFF', primaryHover:'#0B5F77', primaryActive:'#084A5D', primaryTint:'#E1F1F5', accent:'#F5B14C', onAccent:'#1A1A1F', focus:'#0E7490', danger:'#B42318', disabledBg:'#E9EEF0', disabledText:'#8196A0' },
+    c: [['#14232B','#F5F9FA','15.18'],['#14232B','#FFFFFF','16.09'],['#14232B','#E1F1F5','13.87'],['#46606B','#FFFFFF','6.68'],['#46606B','#E6EEF1','5.68'],['#FFFFFF','#0E7490','5.36'],['#FFFFFF','#0B5F77','7.20'],['#FFFFFF','#084A5D','9.78'],['#0E7490','#F5F9FA','5.05'],['#0E7490','#E1F1F5','4.62'],['#1A1A1F','#F5B14C','9.31'],['#B42318','#FFFFFF','6.57'],['#B42318','#F5F9FA','6.20'],['#668491','#FFFFFF','3.98'],['#668491','#F5F9FA','3.76'],['#0E7490','#F5F9FA','5.05'],['#0E7490','#F5F9FA','5.05'],['#0E7490','#FFFFFF','5.36'],['#B42318','#FFFFFF','6.57'],['#0E7490','#FFFFFF','5.36']],
+    fonts: { display: 'Hanken Grotesk 700', body: 'Hanken Grotesk 400', ui: 'Hanken Grotesk 600', mono: 'system monospace' },
+    typeDisplay: 'Sample display line, stand-up English',
+    typeBody: 'Body text sample. Clear, structured practice for engineers who work in English every day. This is sample text.',
+    typeUi: 'UI label sample',
+    space: { s1:'4px', s2:'8px', s3:'12px', s4:'16px', s5:'24px', s6:'32px' },
+    radiusControl: '8px', radiusCard: '12px', elevCard: 'soft, 2 layers', elevRaised: 'raised, 2 layers',
+    btnA: 'Book a session', btnB: 'View syllabus', btnLoading: 'Booking', btnLong: 'Book a one-to-one session to practise explaining architecture decisions to my team',
+    inLabel: 'Work email', inPlaceholder: 'name@example.com', inValue: 'person@example.com', inError: 'Enter an email address in the format name@example.com.',
+    cardTitle: 'Sample lesson: stand-up meetings', cardText: 'Practise status updates and blockers in plain English. Sample text.', cardMeta: '[DURATION] · [LEVEL]', hasCode: false, cardCode: '',
+    navItems: { a: 'Lessons', b: 'Approach', c: 'About', d: 'Contact' }, navLong: 'Frequently asked questions about lesson formats and scheduling'
+  },
+  'codecraft-light': {
+    key: 'codecraft-light', name: 'CodeCraft Academy Light', wordmark: 'CodeCraft',
+    industry: 'Open-source tech and code examples (placeholder name) · Should · light mode of the brand',
+    direction: 'Workshop ledger, light mode: parchment ground, brown ink, rust-red action, hairline rules, serif display with mono labels, flat buttons, a notched top-right corner on cards and a rounded one on panels, no shadows.',
+    hex: { bg:'#F3EBDB', surface:'#FBF7EE', surfaceSunken:'#E8DECA', text:'#3B2E1E', textMuted:'#6B5B45', border:'#CBC1B2', borderStrong:'#8C7C64', primary:'#A5372A', onPrimary:'#FBF7EE', primaryHover:'#8C2D22', primaryActive:'#73241B', primaryTint:'#EBDCCB', accent:'#D4B483', onAccent:'#3B2E1E', focus:'#3B2E1E', danger:'#8C1D2C', disabledBg:'#E6DDCB', disabledText:'#9A8C76' },
+    c: [['#3B2E1E','#F3EBDB','11.10'],['#3B2E1E','#FBF7EE','12.31'],['#3B2E1E','#EBDCCB','9.80'],['#6B5B45','#FBF7EE','6.12'],['#6B5B45','#E8DECA','4.90'],['#FBF7EE','#A5372A','6.18'],['#FBF7EE','#8C2D22','7.81'],['#FBF7EE','#73241B','9.83'],['#A5372A','#F3EBDB','5.57'],['#A5372A','#EBDCCB','4.92'],['#3B2E1E','#D4B483','6.68'],['#8C1D2C','#FBF7EE','8.44'],['#8C1D2C','#F3EBDB','7.61'],['#8C7C64','#FBF7EE','3.79'],['#8C7C64','#F3EBDB','3.42'],['#A5372A','#F3EBDB','5.57'],['#3B2E1E','#F3EBDB','11.10'],['#3B2E1E','#FBF7EE','12.31'],['#8C1D2C','#FBF7EE','8.44'],['#A5372A','#FBF7EE','6.18']],
+    fonts: { display: 'Spectral 500', body: 'Sora 400', ui: 'IBM Plex Mono 500', mono: 'IBM Plex Mono 400' },
+    typeDisplay: 'Sample display line: binary search, annotated',
+    typeBody: 'Body text sample. Short, annotated code examples, set plainly and meant to be read closely. This is sample text.',
+    typeUi: 'UI label sample',
+    space: { s1:'4px', s2:'8px', s3:'12px', s4:'16px', s5:'24px', s6:'40px' },
+    radiusControl: '0px', radiusCard: '0px', elevCard: 'none', elevRaised: 'none',
+    btnA: 'Run example', btnB: 'View source', btnLoading: 'Running', btnLong: 'Open this annotated example in the playground and fork it to my own workspace',
+    inLabel: 'Repository URL', inPlaceholder: 'https://example.com/repo', inValue: 'https://example.com/repo', inError: 'Enter a URL that starts with https://',
+    cardTitle: 'Sample example: binary search', cardText: 'A short annotated implementation. Sample text.', cardMeta: '[LANGUAGE] · [LEVEL]', hasCode: true, cardCode: 'const mid = (lo + hi) >> 1;\nif (x > a[mid]) lo = mid + 1;\nelse hi = mid;',
+    navItems: { a: 'Examples', b: 'Patterns', c: 'About', d: 'Contribute' }, navLong: 'Contribution guidelines for new code examples and reviews'
+  },
+  'codecraft-dark': {
+    key: 'codecraft-dark', name: 'CodeCraft Academy Dark', wordmark: 'CodeCraft',
+    industry: 'Open-source tech and code examples (placeholder name) · Should · dark mode of the brand',
+    direction: 'Workshop ledger, dark mode: warm dark-brown ground, cream text, terracotta action, tan accent, same hairline rules, type, flat buttons and notched card corner as the light mode.',
+    hex: { bg:'#1C1611', surface:'#271F18', surfaceSunken:'#15100C', text:'#F3EBDB', textMuted:'#B8AB94', border:'#40362B', borderStrong:'#8F8068', primary:'#E2705A', onPrimary:'#1C1611', primaryHover:'#EE8570', primaryActive:'#CF5F4A', primaryTint:'#3A241D', accent:'#D4B483', onAccent:'#1C1611', focus:'#F3EBDB', danger:'#F2929B', disabledBg:'#2A231B', disabledText:'#7A6D5A' },
+    c: [['#F3EBDB','#1C1611','15.11'],['#F3EBDB','#271F18','13.68'],['#F3EBDB','#3A241D','12.22'],['#B8AB94','#271F18','7.17'],['#B8AB94','#15100C','8.36'],['#1C1611','#E2705A','5.71'],['#1C1611','#EE8570','7.02'],['#1C1611','#CF5F4A','4.60'],['#E2705A','#1C1611','5.71'],['#E2705A','#3A241D','4.62'],['#1C1611','#D4B483','9.09'],['#F2929B','#271F18','7.23'],['#F2929B','#1C1611','7.99'],['#8F8068','#271F18','4.21'],['#8F8068','#1C1611','4.65'],['#E2705A','#1C1611','5.71'],['#F3EBDB','#1C1611','15.11'],['#F3EBDB','#271F18','13.68'],['#F2929B','#271F18','7.23'],['#E2705A','#271F18','5.17']],
+    fonts: { display: 'Spectral 500', body: 'Sora 400', ui: 'IBM Plex Mono 500', mono: 'IBM Plex Mono 400' },
+    typeDisplay: 'Sample display line: binary search, annotated',
+    typeBody: 'Body text sample. Short, annotated code examples, set plainly and meant to be read closely. This is sample text.',
+    typeUi: 'UI label sample',
+    space: { s1:'4px', s2:'8px', s3:'12px', s4:'16px', s5:'24px', s6:'40px' },
+    radiusControl: '0px', radiusCard: '0px', elevCard: 'none', elevRaised: 'none',
+    btnA: 'Run example', btnB: 'View source', btnLoading: 'Running', btnLong: 'Open this annotated example in the playground and fork it to my own workspace',
+    inLabel: 'Repository URL', inPlaceholder: 'https://example.com/repo', inValue: 'https://example.com/repo', inError: 'Enter a URL that starts with https://',
+    cardTitle: 'Sample example: binary search', cardText: 'A short annotated implementation. Sample text.', cardMeta: '[LANGUAGE] · [LEVEL]', hasCode: true, cardCode: 'const mid = (lo + hi) >> 1;\nif (x > a[mid]) lo = mid + 1;\nelse hi = mid;',
+    navItems: { a: 'Examples', b: 'Patterns', c: 'About', d: 'Contribute' }, navLong: 'Contribution guidelines for new code examples and reviews'
+  }
+};
+// c[i] = [foreground, background, ratio], index-aligned with PAIRS.
+const ORDER = [['artanon', 'ArtAnon Shop'], ['mentor', 'IT English Mentor'], ['codecraft-light', 'CodeCraft Academy Light'], ['codecraft-dark', 'CodeCraft Academy Dark'], ['all', 'All brands']];
+
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const brand = s.brand ?? this.props.brand ?? 'artanon';
+    const ids = s.ids ?? true;
+    const keys = brand === 'all' ? ['artanon', 'mentor', 'codecraft-light', 'codecraft-dark'] : [brand];
+    const panels = keys.map((k) => {
+      const b = BRANDS[k];
+      return Object.assign({}, b, {
+        contrast: PAIRS.map((p, i) => ({ pair: p[0], fg: b.c[i][0], bg: b.c[i][1], ratio: b.c[i][2] + ':1', need: p[1] + ':1', result: 'Pass' }))
+      });
+    });
+    return {
+      ids,
+      panels,
+      toggleIds: () => this.setState({ ids: !ids }),
+      brandButtons: ORDER.map((o) => ({
+        label: o[1],
+        pressed: o[0] === brand,
+        cls: o[0] === brand ? 'is-on' : '',
+        select: () => this.setState({ brand: o[0] })
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

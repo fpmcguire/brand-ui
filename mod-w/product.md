@@ -61,7 +61,7 @@ These come from the Moderator and are not open for the Product Owner to change. 
 - Angular CLI workspace with a **library project** and a **gallery app**. Nx is not used; it is a documented later option only.
 - Zoneless, standalone components, signals-based APIs, modern control flow.
 - Brand values are delivered as CSS custom properties and switch at runtime.
-- Public repository `brand-ui`. MOD-W documents live in `mod-w/`.
+- Public repository `brand-ui`. MOD-W documents live in `mod-w/`; the design documents and the prototype live in `mod-w/design/`.
 - One working day end to end.
 
 ---
@@ -134,7 +134,7 @@ Each criterion is checkable. QA records pass, fail or not verified, with evidenc
 | AC-9 | Unit tests cover the theme service and each component. Three Playwright tests cover brand switching, keyboard operation and the long-label case. | M |
 | AC-10 | The long-label case renders correctly on button and navigation bar in every brand, and the rule (wrap, truncate with a full-text accessible name, or grow) is documented. | M |
 | AC-11 | The build gate (build command and test command, defined by the Tech Lead) passes. | M |
-| AC-12 | The README states that this is a reference spike, states the status of each brand as in 1.1 (including that the ArtAnon work is an unofficial concept), links the shortcuts list, and makes no production, client-delivery or rollout claim. The repository, including `prototype/`, contains no ArtAnon logo or other third-party brand asset file; ArtAnon appears as a text wordmark and palette values only. Verified by file search and review. | M |
+| AC-12 | The README states that this is a reference spike, states the status of each brand as in 1.1 (including that the ArtAnon work is an unofficial concept), links the shortcuts list, and makes no production, client-delivery or rollout claim. The repository, including `mod-w/design/project/`, contains no ArtAnon logo or other third-party brand asset file; ArtAnon appears as a text wordmark and palette values only. Verified by file search and review. | M |
 | AC-13 | CodeCraft Academy fills the same token names and the gallery shows all three brands. | S |
 | AC-14 | Adding or changing a brand touches only brand token files, not component code. Confirmed by review. | S |
 | AC-15 | Each component state in the gallery carries the Design ID from `design-spec.md`. | S |
@@ -170,10 +170,10 @@ Shortcuts accepted in advance. Anything taken beyond this list is recorded by th
 | A-2 | The work happens on a spike branch and reaches the default branch only after the end-of-spike decision. The Tech Lead may refine the Git workflow. | Open |
 | A-3 | WCAG 2.2 level AA is the accessibility target. | Decided |
 | A-4 | The awkward case is a very long label on button and navigation, to test wrapping and truncation in every brand. | Decided |
-| A-5 | The Prototype Ceremony runs, owned by Claude Design. It produces `design-spec.md`, a `prototype/` folder and `architecture-notes.md`. | Decided |
+| A-5 | The Prototype Ceremony runs, owned by Claude Design. It produces `mod-w/design/design-spec.md`, `mod-w/design/architecture-notes.md`, `mod-w/design/prototype-README.md` and the prototype in `mod-w/design/project/`. | Decided |
 | A-6 | Product Definition used Claude chat only, without the Perplexity and Gemini cross-checks MOD-W lists as defaults. Recorded as a deviation. | Decided |
 | A-7 | There is no external deadline. The Moderator's own time box is one working day, and the Could items and CodeCraft Academy are what gets cut first. | Decided |
-| A-8 | The ArtAnon logo is never committed to the repo, including `prototype/`. Only palette values and a text wordmark are. The logo is used only as an input in the Designer session. | Decided |
+| A-8 | The ArtAnon logo is never committed to the repo, including `mod-w/design/project/`. Only palette values and a text wordmark are. The logo is used only as an input in the Designer session. | Decided |
 | A-9 | Styling of the Moderator's portfolio site and of any example site is not a source for any brand. IT English Mentor relates to the portfolio only through shared body type and an echo of its teal and amber colors. CodeCraft Academy takes only the content type (open-source code examples) from the Angular design-patterns example, not its layout or styling. | Decided |
 | A-10 | The repository is public. Because no third-party brand asset is committed (A-8), nothing in it needs separate asset licensing. Any brand asset added later goes in one folder with its own all-rights-reserved notice, outside the code license. | Decided |
 | A-11 | Codex Tech Lead review runs after each step, but QA runs once, after Step 2, not after every step. Recorded as a deviation from MOD-W to fit the time box. | Decided |
@@ -187,7 +187,7 @@ Shortcuts accepted in advance. Anything taken beyond this list is recorded by th
 |---|---|---|
 | Moderator | Human | Approvals, final gate |
 | Product Owner | Claude chat | This document |
-| Designer + Prototyper | Claude Design | `design-spec.md`, `prototype/`, `architecture-notes.md` |
+| Designer + Prototyper | Claude Design | `mod-w/design/design-spec.md`, `mod-w/design/project/` (with `prototype-README.md`), `mod-w/design/architecture-notes.md` |
 | Tech Lead | Codex, separate session | `architecture.md`, `roadmap.md`, `step-xx.md`, `domain-language.md`, `CLAUDE.md`, `AGENTS.md`, review |
 | Development Team | Claude Code | Implementation of the approved step |
 | QA | Fresh Claude Code session | `qa.md` (once, after Step 2; see A-11) |

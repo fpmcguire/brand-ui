@@ -1,7 +1,7 @@
 # product.md - brand-ui
 
-**Status:** APPROVED by the Moderator, 2026-10-18 (v0.3, CodeCraft styling-mode clarification; v0.2 was the one-day rescope of v0.1)
-**Date:** 2026-10-18
+**Status:** v0.4 APPROVED by the Moderator and Product Owner, 2026-10-19 (S-11 About panel promoted from excluded to wanted, with an About item in the gallery's top bar; see 5.2). v0.3 was APPROVED by the Moderator, 2026-10-18 (CodeCraft styling-mode clarification; v0.2 was the one-day rescope of v0.1)
+**Date:** 2026-10-19
 **Role:** Product Owner (Definition), Claude chat session
 **Workflow:** MOD-W v5.0.1
 **Project type:** Branch-isolated exploratory build (reference implementation, not production)
@@ -96,7 +96,7 @@ Priority uses MoSCoW: **M**ust, **S**hould, **C**ould.
 | S-8 | CodeCraft Academy tokens with Light and Dark styling-mode value sets, so the gallery shows three brands across four rendered scopes | S |
 | S-9 | Design IDs from `design-spec.md` shown in the gallery next to each component state | S |
 | S-10 | Two further components: alert, teaser or hero | C |
-| S-11 | About panel in the gallery app only, following the About modal pattern of the Moderator's agv-fleet-management-sim project: opens on the first visit only (remembered per browser; if storage is unavailable it opens once per page load), reopens from the top bar, closes by button, backdrop or Esc. Built from library components. | C |
+| S-11 | About panel in the gallery app only (not a library component, see 5.2). It explains the brand-ui project, the ui library, and how the gallery displays the library. It follows the About modal pattern of the Moderator's agv-fleet-management-sim project: opens on the first visit only (remembered per browser; if storage is unavailable it opens once per page load), reopens from the top bar, closes by button, backdrop or Esc. Its controls are built from library components. **Promoted by the Moderator, 2026-10-19.** | C |
 | S-12 | One gallery page rendered from mock headless-CMS style JSON | C |
 | S-13 | Static deployment of the gallery (no indexing, no third-party brand asset) | C |
 
@@ -114,6 +114,26 @@ Priority uses MoSCoW: **M**ust, **S**hould, **C**ould.
 - Any claim that this is delivered brand work for ArtAnon Shop, or an official rebrand of any real business.
 - Fabricated testimonials, prices, course claims or contact details under a real brand name. Sample content is neutral and labeled as sample.
 - Any claim that this project validates MW-OBS-022 or MW-OBS-023.
+
+### 5.2 About panel (S-11)
+
+**Why it is wanted.** A first-time reader of the gallery cannot tell what brand-ui is for, what the library is, or how the gallery relates to it. The panel answers that on the page itself, so the gallery is understandable without opening the repository.
+
+**What it is.** A popup dialog owned by the gallery app. It is **not** part of the `ui` library, is not exported from `ui`, and is not one of the four components. The gallery may build its close and reopen controls from library components, and the panel itself consumes `ui` the way any outside consumer would (AC-4).
+
+**Content it must explain** (plain language, short; wording to match the README, AC-12 and AC-17):
+
+1. **The project.** brand-ui is a reference spike, not production software. Its two purposes are domain learning (how an agency serves unrelated clients from one component base) and workflow evidence. No production, client-delivery, rollout or official-rebrand claim.
+2. **The brands and their status** exactly as in 1.1: ArtAnon Shop (unofficial concept exploration, no affiliation), IT English Mentor (Moderator's venture), CodeCraft Academy (placeholder name). Three brands across four scopes; Light and Dark are modes of one brand.
+3. **The ui library.** What it contains (four components, theme service and theme scope), and the central idea: every brand fills the same semantic token names, components hold no brand values, and switching brand changes tokens only.
+4. **The gallery's relationship to the library.** The gallery is a separate review application. It imports the library through its public entry point only, as an outside consumer would. Everything the gallery adds is its own and is not library API: the brand switcher, the persistent hover, focus and active specimens, the token read-outs, the contrast evidence and the Design IDs. The library does not depend on the gallery.
+5. **How to use the gallery.** The brand scope switcher and All brands, the Design IDs checkbox, what each panel section shows, and how to reopen the About panel.
+
+**Out of scope for the panel.** Tutorials, installation steps, marketing claims, any ArtAnon logo or third-party asset, and any statement that the project validates MW-OBS-022 or MW-OBS-023.
+
+**Top-bar About item (approved 2026-10-19).** The way to reopen the panel is an "About" item in the gallery's top bar. It opens the dialog; it is not a link to another page, and the gallery still has no routing beyond its one page. Whether the item is rendered with the library `Navigation` component (which today supports links, a current item and a disabled item only) or with a library `Button` styled as a bar item is a Tech Lead decision. The Tech Lead must not change the `Navigation` public API or Design IDs without a Moderator decision. If the item is a button, it keeps the accessible name "About" and returns focus there when the dialog closes.
+
+**Open question for the Tech Lead.** The first-visit auto-open puts a dialog over the gallery on a fresh browser. The existing accessibility scan and three Playwright specifications must still exercise the whole gallery. How they do so (seeded storage, dismissal, or another route) is a technical decision, but it must not weaken AC-8 or reduce the three specifications. About-panel checks (AC-17) join the existing specifications rather than adding a fourth.
 
 ---
 
@@ -139,7 +159,7 @@ Each criterion is checkable. QA records pass, fail or not verified, with evidenc
 | AC-14 | Adding or changing a brand touches only brand token files, not component code. Confirmed by review. | S |
 | AC-15 | Each component state in the gallery carries the Design ID from `design-spec.md`. | S |
 | AC-16 | With names and logos covered, a reviewer can tell the brands shown apart at thumbnail size. | S |
-| AC-17 | The About panel states the project's intent, the status of each brand as in 1.1, and how to use the gallery. It is a dialog with an accessible name, opens and closes by keyboard (Esc and a close button), keeps focus inside while open and returns focus to its trigger on close. It opens automatically on the first visit only. Its statements match the README. | C |
+| AC-17 | The About panel covers the five content points in 5.2: the project's intent, the status of each brand as in 1.1, the ui library and its token idea, how the gallery relates to the library (separate app, public entry point only, gallery-owned review features), and how to use the gallery. It is a gallery-owned dialog, not a library export, with an accessible name that with an accessible name, opens and closes by keyboard (Esc and a close button), keeps focus inside while open and returns focus to its trigger on close. It opens automatically on the first visit only. Its statements match the README. | C |
 | AC-18 | The CMS page renders from mock JSON using library components only. | C |
 | AC-19 | If deployed, the gallery is served as a static site with indexing disabled and contains no third-party brand asset. | C |
 
@@ -153,7 +173,7 @@ Shortcuts accepted in advance. Anything taken beyond this list is recorded by th
 - Chromium only for Playwright; no other browsers or devices.
 - Open-license fonts only.
 - A narrow public API: only what the four components need.
-- Alert, teaser or hero, About panel, CMS page and deployment are not built unless the Must items are accepted with time to spare.
+- Alert, teaser or hero, CMS page and deployment are not built unless the Must items are accepted with time to spare. The About panel was promoted by the Moderator on 2026-10-19 and is now wanted.
 - CodeCraft Academy, including both Light and Dark styling modes, may be dropped without a product change.
 - No npm publishing, versioning or changelog.
 - No RTL or general dark mode.

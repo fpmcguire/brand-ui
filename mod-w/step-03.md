@@ -1,6 +1,6 @@
 # STEP-03 — Gallery About panel
 
-**Status:** Approved by the Moderator, 2026-10-19; Development Team implementation awaits separate plan approval
+**Status:** Accepted by the Moderator, 2026-10-19 (implemented in `d49e703`, tagged `step-03-complete`)
 
 **Date:** 2026-10-19
 

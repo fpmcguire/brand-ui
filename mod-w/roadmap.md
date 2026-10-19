@@ -16,7 +16,7 @@ The accepted two-Step component-library spike is followed by a small, separately
 | ------- | ------------------------------------------------------ | -------------------------------------------------------------- | ---------------- | -------------------------------------- | ----------------------------------------------- |
 | STEP-01 | Theme foundation, button, card, and gallery shell      | S-1, S-2, part S-3/S-4, S-8, S-9; AC-1 to AC-5, AC-13 to AC-16 | Claude Code      | Accepted 2026-10-19                    | CodeCraft is first approved cut                 |
 | STEP-02 | Input, navigation, long labels, and final verification | remaining S-3 to S-7, S-9; AC-4 to AC-15                       | Claude Code      | Accepted 2026-10-19                    | Playwright, axe, README, final gates complete   |
-| STEP-03 | Gallery About panel                                    | S-11, AC-17; recheck AC-4, AC-8, AC-9, AC-12                   | Claude Code      | Tech Lead Pass; Moderator approved review | QA delta/acceptance remains separate          |
+| STEP-03 | Gallery About panel                                    | S-11, AC-17; recheck AC-4, AC-8, AC-9, AC-12                   | Claude Code      | Accepted 2026-10-19                    | About panel with source-repository link         |
 | STEP-04 | Static subfolder deployment                            | S-13, AC-19                                                    | Development Team | QA approved; PO validation pending    | `/brand-ui/`; no indexing or third-party assets |
 | Gate    | Full project study review                              | Moderator decision                                             | Moderator        | Required after deployment              | Covers the workspace projects and UI library    |
 
@@ -81,6 +81,8 @@ On 2026-10-19, the Moderator moved the study break until after STEP-02 completio
 On 2026-10-19, the Moderator approved STEP-03 as written, its bounded design authority, D-11, and sequencing S-11 before the required S-13 deployment gate. This approval allows the Development Team to inspect the baseline and submit its exact file/command plan. It does not approve implementation; the Team must stop for separate Moderator approval of that plan.
 
 On 2026-10-19, after the initial implementation and Tech Lead review, the Moderator and Product Owner directed a distinct About-panel section linking to `https://github.com/fpmcguire/brand-ui.git`. Product v0.5 reconciles section 5.2 and AC-17 with that decision. The amendment is confined to About content and focused evidence; it changes no library API, token, asset, Design ID, route, or deployment scope. The Development Team must submit an exact amendment plan for separate Moderator approval, and the Tech Lead must perform a focused re-review before STEP-03 can be accepted.
+
+On 2026-10-19, the Moderator accepted STEP-03, including the source-repository amendment (AC-17.7). The acceptance is the Moderator's decision on the Tech Lead Pass and the recorded QA evidence: the six-section QA baseline in git history at `d49e703` and the STEP-04 QA run, which re-ran every gate on the implemented seven-section panel. A separate STEP-03 QA delta report was not written. The Step is tagged `step-03-complete` at `d49e703`.
 
 ## STEP-04 Moderator activation
 

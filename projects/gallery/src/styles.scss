@@ -35,6 +35,28 @@ body {
   }
 }
 
+[data-specimen='input'] {
+  &[data-specimen-state='hover'] {
+    --bui-state-border: var(--bui-color-text);
+  }
+
+  &[data-specimen-state='focus'] {
+    --bui-state-border: var(--bui-color-focus);
+    --bui-state-outline: var(--bui-focus-width) solid var(--bui-color-focus);
+  }
+}
+
+// Navigation specimens hold a single item, so a wrapper-level variable reaches exactly that item.
+[data-specimen='nav'] {
+  &[data-specimen-state='hover'] {
+    --bui-state-bg: var(--bui-color-primary-tint);
+  }
+
+  &[data-specimen-state='focus'] {
+    --bui-state-outline: var(--bui-focus-width) solid var(--bui-color-focus);
+  }
+}
+
 [data-specimen='card'] {
   &[data-specimen-state='hover'] {
     --bui-state-border: var(--bui-color-border-strong);

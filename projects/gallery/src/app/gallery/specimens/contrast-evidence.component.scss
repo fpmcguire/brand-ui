@@ -1,0 +1,50 @@
+:host {
+  display: block;
+}
+
+.pairs {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: unset;
+  list-style: none;
+}
+
+// One row per pair; the columns stack on a narrow screen.
+.pair {
+  display: grid;
+  grid-template-columns: minmax(10rem, 3fr) minmax(8rem, 3fr) minmax(12rem, 4fr) 5rem 6rem 3rem;
+  gap: var(--bui-space-1) var(--bui-space-3);
+  align-items: baseline;
+  padding: var(--bui-space-2) var(--bui-space-1);
+  border-bottom: var(--bui-border-width) solid var(--bui-color-border);
+  font-size: var(--bui-size-small);
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr auto;
+
+    .use,
+    .tokens {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+.use,
+.need {
+  color: var(--bui-color-text-muted);
+}
+
+.tokens {
+  overflow-wrap: anywhere;
+  font-family: var(--bui-font-mono);
+}
+
+.ratio {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.result {
+  font-weight: 600;
+}

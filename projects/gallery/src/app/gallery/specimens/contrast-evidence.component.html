@@ -1,0 +1,14 @@
+<ul class="pairs" data-testid="gallery-contrast-list">
+  @for (result of results(); track result.pair.id) {
+    <li class="pair" [attr.data-pair]="result.pair.id" [attr.data-kind]="result.pair.kind">
+      <span class="label">{{ result.pair.label }}</span>
+      <span class="use">{{ result.pair.usedBy }}</span>
+      <code class="tokens">{{ result.pair.foreground }} on {{ result.pair.background }}</code>
+      <span class="ratio" data-testid="gallery-contrast-ratio">{{ format(result.ratio) }}</span>
+      <span class="need">needs {{ result.required }}:1</span>
+      <span class="result" data-testid="gallery-contrast-result">{{
+        result.pass ? 'Pass' : 'Fail'
+      }}</span>
+    </li>
+  }
+</ul>

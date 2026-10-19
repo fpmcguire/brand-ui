@@ -1,7 +1,7 @@
 <header class="top">
   <div class="top-row">
     <div>
-      <p class="kicker">brand-ui · reference spike · STEP-01</p>
+      <p class="kicker">brand-ui Â· reference spike Â· STEP-02</p>
       <h1 class="heading">Gallery</h1>
     </div>
     <div class="controls">
@@ -35,8 +35,8 @@
   <p class="status" data-testid="gallery-status">
     Reference spike, not production. Three brands are shown across four scopes; CodeCraft Academy
     Light and Dark are modes of one brand. ArtAnon Shop is an unofficial concept exploration with no
-    affiliation or delivery claim. Button and card only; text input and navigation arrive in
-    STEP-02.
+    affiliation or delivery claim. Four components are shown: button, text input, card and
+    navigation.
     @if (state.showDesignIds()) {
       <span class="id">DS-005</span>
     }
@@ -57,16 +57,8 @@
       }
 
       <section class="block" [attr.aria-labelledby]="scope.id + '-tokens'">
-        <h3 class="block-title" [id]="scope.id + '-tokens'">
-          Tokens, read from computed CSS
-          @if (state.showDesignIds()) {
-            <span class="id">DS-060</span>
-          }
-        </h3>
-        <p class="note">
-          Every value below is read from this panel's computed style. Contrast verification arrives
-          in STEP-02.
-        </p>
+        <h3 class="block-title" [id]="scope.id + '-tokens'">Tokens, read from computed CSS</h3>
+        <p class="note">Every value below is read from this panel's computed style.</p>
         @for (group of tokenGroups; track group.id) {
           <gal-token-group [group]="group" [scope]="scope.selection" />
         }
@@ -85,7 +77,7 @@
                 [attr.data-testid]="'gallery-button-' + variant + '-' + specimen.state"
               >
                 <p class="caption">
-                  {{ variant }} · {{ specimen.state }}
+                  {{ variant }} Â· {{ specimen.state }}
                   @if (state.showDesignIds()) {
                     <span class="id">{{ specimen.designId }}</span>
                   }
@@ -98,6 +90,55 @@
                 >
               </div>
             }
+          }
+        </div>
+        <p class="caption">
+          Form fixture: a submit button and a loading submit button, with counters.
+        </p>
+        <gal-button-form-fixture />
+      </section>
+
+      <section class="block" [attr.aria-labelledby]="scope.id + '-input'">
+        <h3 class="block-title" [id]="scope.id + '-input'">Text input</h3>
+        <div class="grid">
+          @for (specimen of inputSpecimens; track specimen.state) {
+            <div
+              class="specimen"
+              data-specimen="input"
+              [attr.data-specimen-state]="specimen.forced ? specimen.state : null"
+              [attr.data-testid]="'gallery-input-field-' + specimen.state"
+            >
+              <p class="caption">
+                {{ specimen.label }}
+                @if (state.showDesignIds()) {
+                  <span class="id">{{ specimen.designId }}</span>
+                }
+              </p>
+              @if (specimen.state === 'default') {
+                <gal-input-sample
+                  [fieldId]="scope.id + '-input-' + specimen.state"
+                  [label]="inputContent[scope.id].label"
+                  [placeholder]="inputContent[scope.id].placeholder"
+                  [helperText]="inputContent[scope.id].helper"
+                />
+              } @else {
+                <bui-text-input
+                  [id]="scope.id + '-input-' + specimen.state"
+                  [label]="inputContent[scope.id].label"
+                  [placeholder]="inputContent[scope.id].placeholder"
+                  [helperText]="inputContent[scope.id].helper"
+                  [errorText]="specimen.error ? inputContent[scope.id].error : undefined"
+                  [disabled]="specimen.disabled"
+                  [value]="
+                    specimen.error
+                      ? inputContent[scope.id].invalidValue
+                      : specimen.filled
+                        ? inputContent[scope.id].value
+                        : ''
+                  "
+                />
+              }
+            </div>
           }
         </div>
       </section>
@@ -132,6 +173,103 @@
             </div>
           }
         </div>
+      </section>
+
+      <section class="block" [attr.aria-labelledby]="scope.id + '-nav'">
+        <h3 class="block-title" [id]="scope.id + '-nav'">Navigation bar</h3>
+        <div class="grid grid-nav">
+          @for (specimen of navSpecimens; track specimen.state) {
+            <div
+              class="specimen"
+              data-specimen="nav"
+              [attr.data-specimen-state]="specimen.forced ? specimen.state : null"
+              [attr.data-narrow]="specimen.narrow ? '' : null"
+              [attr.data-testid]="'gallery-nav-bar-' + specimen.state"
+              (click)="keepOnPage($event)"
+            >
+              <p class="caption">
+                {{ specimen.label }}
+                @if (state.showDesignIds()) {
+                  <span class="id">{{ specimen.designId }}</span>
+                }
+              </p>
+              <bui-navigation
+                [label]="scope.label + ' navigation, ' + specimen.state"
+                [wordmark]="navContent[scope.id].wordmark"
+                [items]="navItems(specimen.state, navContent[scope.id])"
+              />
+            </div>
+          }
+        </div>
+      </section>
+
+      <section class="block" [attr.aria-labelledby]="scope.id + '-long'">
+        <h3 class="block-title" [id]="scope.id + '-long'">Long label</h3>
+        <p class="note">
+          Buttons wrap, balance and grow; they never truncate. Navigation items clamp to two lines
+          at no more than 16rem, keeping the full text as the accessible name and tooltip.
+        </p>
+        <h4 class="sub-title">
+          Button
+          @if (state.showDesignIds()) {
+            <span class="id">DS-050</span>
+          }
+        </h4>
+        <div class="long-cases">
+          @for (entry of longLabelCases; track entry.width) {
+            <div>
+              <p class="caption">{{ entry.caption }}</p>
+              <div
+                class="long-case"
+                [attr.data-width]="entry.width"
+                [attr.data-testid]="'gallery-long-button-' + entry.width"
+              >
+                <bui-button variant="primary">{{ longButtonLabel[scope.id] }}</bui-button>
+                <bui-button variant="secondary">{{ longButtonLabel[scope.id] }}</bui-button>
+              </div>
+            </div>
+          }
+        </div>
+        <h4 class="sub-title">
+          Navigation item
+          @if (state.showDesignIds()) {
+            <span class="id">DS-051</span>
+          }
+        </h4>
+        <div class="long-cases">
+          @for (entry of longLabelCases; track entry.width) {
+            <div>
+              <p class="caption">{{ entry.caption }}</p>
+              <div
+                class="long-case"
+                [attr.data-width]="entry.width"
+                [attr.data-testid]="'gallery-long-nav-' + entry.width"
+                (click)="keepOnPage($event)"
+              >
+                <bui-navigation
+                  [label]="scope.label + ' navigation, long label, ' + entry.caption"
+                  [wordmark]="navContent[scope.id].wordmark"
+                  [items]="longLabelItems(navContent[scope.id])"
+                />
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+
+      <section class="block" [attr.aria-labelledby]="scope.id + '-contrast'">
+        <h3 class="block-title" [id]="scope.id + '-contrast'">
+          Contrast evidence
+          @if (state.showDesignIds()) {
+            <span class="id">DS-060</span>
+          }
+        </h3>
+        <p class="note">
+          Each pair is a combination of two tokens that a component paints, one on the other. Ratios
+          are calculated from this panel's computed colours; the Playwright specification repeats
+          the calculation from rendered colours and checks every pair. Disabled text is exempt.
+        </p>
+        <gal-contrast-evidence [scope]="scope.selection" />
       </section>
     </section>
   }

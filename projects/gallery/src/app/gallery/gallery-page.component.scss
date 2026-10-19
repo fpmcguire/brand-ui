@@ -151,6 +151,56 @@
   grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
 }
 
+.grid-nav {
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+}
+
+// DS-045: the same bar in a narrow container, to show it wrapping rather than collapsing.
+[data-narrow] > bui-navigation {
+  max-width: 17.5rem;
+}
+
+.sub-title {
+  margin: var(--bui-space-3) 0 0;
+  font-family: var(--bui-font-ui);
+  font-size: var(--bui-size-ui);
+  font-weight: var(--bui-weight-ui);
+  letter-spacing: var(--bui-letter-spacing-ui);
+}
+
+.long-cases {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bui-space-3);
+}
+
+// DS-050 / DS-051 containers: exact pixel widths, never clipping, so overflow stays measurable.
+.long-case {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bui-space-2);
+  box-sizing: border-box;
+  max-width: 100%;
+  outline: var(--bui-border-width) dashed var(--bui-color-border-strong);
+  outline-offset: var(--bui-space-1);
+
+  &[data-width='180'] {
+    width: 180px;
+  }
+
+  &[data-width='280'] {
+    width: 280px;
+  }
+
+  &[data-width='360'] {
+    width: 360px;
+  }
+
+  &[data-width='full'] {
+    width: 100%;
+  }
+}
+
 .caption {
   margin: 0 0 var(--bui-space-2);
   color: var(--bui-color-text-muted);

@@ -1,6 +1,6 @@
 # STEP-04 — Static subfolder deployment
 
-**Status:** ACTIVE — Moderator activated S-13 on 2026-10-19 and approved the Development Team plan; implementation and deployment complete; Moderator released the work for Tech Lead review on 2026-10-19. Acceptance checks remain unmet pending independent review.
+**Status:** TECH LEAD REVIEW APPROVED — implementation and deployment complete; the Tech Lead recorded Pass after independent local, gate, and remote verification; the Moderator approved that review on 2026-10-19 and released STEP-04 to QA. Final acceptance remains pending QA and Moderator decision.
 
 **Owner:** Development Team (Claude Code), after plan approval. Codex Tech Lead reviews; Moderator has final authority.
 

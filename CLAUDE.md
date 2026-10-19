@@ -45,7 +45,7 @@ The prototype and `architecture-notes.md` are evidence only. Never import/copy i
 
 ## Scope discipline
 
-- S-10 and S-12 are unauthorized. S-11 is authorized only while the Moderator-approved `mod-w/step-03.md` is the active Step and only within its file, behavior, and design-authority bounds. S-13 remains a separate required deployment gate and is unauthorized until the Moderator activates its own plan.
+- S-10 and S-12 are unauthorized. STEP-03 has a Tech Lead Pass and its focused review is Moderator-approved. S-13 is active as `mod-w/step-04.md`; activation authorizes planning only, and implementation requires separate Moderator approval of the Development Team's exact plan.
 - CodeCraft is the first approved cut if Must completion is threatened.
 - STEP-01 and STEP-02 are accepted. STEP-03 and its bounded design authority are approved. The Development Team may inspect and submit its exact implementation plan, but must not implement until the Moderator separately approves that plan.
 - Do not silently change architecture, domain terms, APIs, acceptance intent, or Design IDs.

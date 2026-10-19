@@ -1,56 +1,68 @@
-## Tech Lead Review - STEP-03
+# Tech Lead Focused Re-review — STEP-03 Repository-link amendment
 
-### Verdict
+## Verdict
 
 Pass.
 
-The implementation evidence passes, and the Moderator-directed Product 5.2/AC-17 and STEP-03 reconciliation is complete. This is a Tech Lead verdict, not Moderator acceptance.
+The Repository-link amendment in commit `d49e703` meets Product 5.2/AC-17.7 and the amended STEP-03. The earlier STEP-03 Pass still stands for AC-17.1–17.6 and the dialog, storage, focus, accessibility, token, and gallery behavior outside the amendment. This is an independent Tech Lead review verdict, not Development Team self-approval or Moderator acceptance.
 
-### Scope check
+## Scope check
 
-- Tracked changes and the seven new `about-panel/` files stay within the allowed implementation list.
-- `projects/ui/**`, tokens, dependencies and lockfile, routes, `gallery-state.ts`, `styles.scss`, `long-label-and-bevel.spec.ts`, Design, and QA artifacts are unchanged. Product and STEP-03 now contain only the Moderator-authorized post-review reconciliation.
-- The sixth **How this was built** section and its one safeguarded external link are authorized by the reconciled Product 5.2/AC-17 and STEP-03.
-- S-10, S-12, S-13/deployment, public-API, `Navigation`, Design-ID, asset, and brand-specific-structure scope did not enter the diff.
+- The amendment is confined to the seventh About section, a comment-only pluralization in `about-panel.scss`, focused unit/browser assertions, and applying the existing link token/focus checks to both links.
+- The seventh section is distinct and last. Its only link is `https://github.com/fpmcguire/brand-ui.git`, with `target="_blank"`, `rel="noopener noreferrer"`, visible text `github.com/fpmcguire/brand-ui`, and exact accessible name `github.com/fpmcguire/brand-ui (opens in a new tab)`.
+- The panel contains exactly two `<a href>` elements. The pre-existing MOD-W section, prose, destination, visible text, new-tab, `rel`, and accessible-name contract remain separately asserted inside that section.
+- No DS-, MW-OBS, install/tutorial wording, image, SVG, or base64 content entered the panel. README remains unchanged for the amendment, as approved by the Moderator.
+- The accepted pre-amendment evidence in `mod-w/qa.md` identifies AC-17.1–17.6, `about-panel.ts`, `about-first-visit.ts`, `dialog-shim.ts`, gallery header/README, long-label/bevel coverage, library/public API, tokens, dependencies/workspace, configuration, and Design artifacts as already passing. Current source inspection and the full regression gates show no change in those contracts or behavior from the amendment.
+- Exactly three `e2e/*.spec.ts` files remain, and `playwright.config.ts` declares Chromium only. No route, dependency, asset, deployment, token, Design-ID, `Navigation`, library, or public-API expansion is present.
 
-### Reference Implementation compliance
+## Amendment findings
 
-The rejected prototype was not used as an implementation source. The gallery-owned native-dialog design follows Product 5.2, D-11, STEP-03 bounded authority, existing tokens/components, and established gallery chrome.
-
-### Findings
-
-#### Must fix now
+### Must fix now
 
 None.
 
-#### Could fix later
+### Could fix later
 
-1. Correct the pre-existing `Â·` mojibake in the button specimen caption after STEP-03 (or under separate authorization). It is outside this Step and is not caused by this diff.
-2. If exact prose parity is desired later, align README “method” with panel “methodology” under separate documentation authorization. Product AC-17 now explicitly accepts the current semantic match.
+None introduced by the amendment. The two pre-existing later observations from the earlier review remain outside this amendment: the button-caption mojibake and optional README “method”/panel “methodology” prose alignment.
 
-### Acceptance check mapping
+## Acceptance and evidence mapping
 
-- AC-17.1 Project: met — the panel states reference-spike/not-production status, domain learning and workflow evidence, and rejects production, delivery, rollout, and official-rebrand claims; README meaning is consistent.
-- AC-17.2 Brands: met — all three Product statuses, three brands/four scopes, and CodeCraft Light/Dark as modes of one brand are present.
-- AC-17.3 Library: met — four components, `ThemeService`, `ThemeScopeDirective`, shared semantic names, no component brand values, and token-only switching are stated.
-- AC-17.4 Boundary: met — separate review app, `ui` public-entry-point use, gallery-owned review features, and no reverse dependency are stated and verified by imports/public API.
-- AC-17.5 Use: met — scope switcher/All brands, Design IDs, panel sections, and About reopening are explained.
-- AC-17.6 Built: met — the panel gives the authorized workflow provenance, identifies `mod-w/`, includes the single safeguarded MOD-W methodology link, and makes no validation claim.
-- Gallery ownership/public API: met — About is confined to the gallery, imports library symbols from `ui`, is absent from `projects/ui/src/public-api.ts`, and changes neither library nor `Navigation`.
-- Dialog semantics/focus: met — library Button trigger, named modal `<dialog>`, initial Close focus, and deterministic focus return pass in Chromium. Native traversal may enter browser chrome/document-body state, but never the inert page behind the dialog and returns to Close; this satisfies the required native focus boundary.
-- Close paths/backdrop: met — Close, cancel/Esc, and pointer-down-plus-click outside use one close operation; padding, programmatic clicks, content clicks, and inside-start drags do not backdrop-close.
-- First visit/storage: met — the versioned key is written when auto-open is claimed; obtaining storage, reads, and writes are guarded. The component-instance fallback is acceptable because the gallery has one route instance, and both failure modes prove once-per-load behavior plus manual use.
-- Four-scope tokens/AC-7: met — one structure follows retained active selection; all painted dialog and trigger usage pairs pass in all four scopes. The neutral `#f4f3ef` trigger ring reuses established gallery-chrome treatment through `--bui-state-outline` and is directly verified at >=3:1 against the neutral bar. The scrim carries no content.
-- Design ID: met — no S-11 badge or placeholder exists. No Design ID applies.
-- README/header/claims/AC-12: met — reference-spike, brand, boundary, gallery-use, and workflow-provenance claims are consistent in meaning; the one link is correctly safeguarded; no MW-OBS validation claim, tutorial/install copy, or prohibited asset was added.
-- Playwright/AC-8/AC-9: met — exactly three Chromium specs remain. `test.slow()` only extends timeout; it does not weaken the complete-gallery axe assertion. Seed/dismiss flows preserve prior coverage, and open-dialog axe runs in all four scopes.
-- Tests/gates: met — Node 26.0.0, npm 11.12.1, Angular 22.2.3, TypeScript 6.0.3; formatting, token lint, asset check, E2E typecheck, unit tests (`ui` 68/68; `gallery` 62/62), Chromium (69/69), build, and `git diff --check` pass. The asset/test/build/browser commands required process-spawn permission after sandbox `EPERM`; reruns passed unchanged.
-- Final scope gate: met — implementation remains limited to allowed files, with no Design/library/token/dependency/route/deployment change; Product and STEP-03 changes are the separately authorized authority reconciliation.
+- **AC-17.7 Source repository:** met — the seventh `Source repository` section and exact link contract are present in `about-panel.html`; Vitest asserts the section, its position, its single paragraph/link, destination, text, new-tab behavior, `rel`, and accessible name.
+- **Exactly two external links:** met — Vitest and Chromium assert exactly two links and both complete contracts. The MOD-W assertion is scoped to `section[aria-labelledby="gal-about-built"]`; the source assertion is scoped to the final source section.
+- **Keyboard/new-tab security:** met — Chromium tabs from the initially focused Close control to the repository link, activates it with Enter against a stubbed GitHub destination, verifies the exact URL, and proves `window.opener` is `null`.
+- **Seven headings and focus containment:** met — unit and browser checks assert the seven ordered headings. Tab/Shift+Tab coverage still rejects focus reaching the inert page, requires traversal through dialog content, and requires return to Close.
+- **Four-scope token and focus evidence:** met — `brand-and-contrast.spec.ts` iterates both links in each of ArtAnon, Mentor, CodeCraft Light, and CodeCraft Dark, checking primary-on-background, underline, and focus-token outline; all listed AC-7 pairs pass.
+- **Earlier STEP-03 behavior:** unaffected — all 64 gallery unit tests and all 70 Chromium tests pass. The browser suite re-proves AC-17.1–17.6 content, three close paths and deterministic focus restoration, manual reopening, first-visit persistence, guarded storage failures/once-per-page-load fallback, four-scope structure, retained selection, full-gallery axe, and open-dialog axe.
+- **Accepted STEP-01/02 coverage:** unaffected — all 68 `ui` tests pass; existing brand/scope/contrast, keyboard, semantics, long-label, bevel, and full-gallery accessibility tests remain green.
+- **No weakened evidence:** met — repository scan found no `.only`, `.skip`, `xit`, `fit`, `fixme`, snapshots/screenshots, disabled axe rules, or excluded axe surfaces. Complete-gallery serious/critical axe checks and focused open-dialog scans remain active.
 
-### Design ID mapping (if applicable)
+## Command evidence
 
-Not applicable. S-11 has no Design ID; evidence maps AC-17.1–17.6.
+Run on 2026-10-19 from clean `master` at `d49e7034b71a62b605c8add4be9b73ce06316e16`, after `fnm use 26.0.0`:
 
-### Recommended next action
+| Check | Result |
+|---|---|
+| `node --version` | Pass — `v26.0.0` |
+| `npm --version` | Pass — `11.12.1` |
+| `npx ng version` | Pass — CLI/Angular `22.2.3`, Node `26.0.0` |
+| `npx tsc --version` | Pass — `6.0.3` |
+| `npm run format:check` | Pass |
+| `npm run lint:tokens` | Pass — 51 contract tokens, four scopes, components clean |
+| `npm run check:assets` | Pass — no restricted assets |
+| `npm run typecheck:e2e` | Pass |
+| `npm test` | Pass — `ui` 68/68; `gallery` 64/64 |
+| `npm run test:e2e` | Pass — Chromium 70/70 in exactly three specs |
+| `npm run build` | Pass — `ui` and `gallery` production builds |
+| `git diff --check` | Pass |
+| `git status --short` before review | Clean |
+| `git status --short -- mod-w/design` | Clean |
 
-Moderator may accept STEP-03 and hand off to QA. S-13 remains the required separate post-STEP-03 gate.
+The default shell initially resolved Node 24.13.0; validation was therefore rerun in the required fnm-managed Node 26.0.0 environment. Process-spawning gates required the managed execution permission and then passed unchanged.
+
+## Design-ID and Reference Implementation compliance
+
+No Design ID applies to S-11; the amendment is traced through AC-17.7 and displays no badge or placeholder. The rejected prototype remains visual evidence only and was not needed or used as an implementation authority. The amendment follows Product 5.2, D-11, and STEP-03 without widening bounded design authority.
+
+## Next action
+
+Return this focused Pass to the Moderator. The Moderator may accept STEP-03 and direct the separate QA delta/re-run. S-13 deployment remains a separate required post-STEP-03 gate and is not authorized by this review.

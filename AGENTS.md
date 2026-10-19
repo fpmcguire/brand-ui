@@ -43,8 +43,8 @@ The Tech Lead maintains architecture, domain language, roadmap, Steps, role conf
 - Fonts are self-hosted only with matching OFL/provenance evidence.
 - CodeCraft bevel is progressive enhancement with rounded fallback.
 - ArtAnon logo, artwork, photography, and other third-party brand assets are prohibited.
-- Could items S-10 to S-13 are excluded; CodeCraft is the first approved cut.
-- STEP-02 cannot start until the Moderator ends the study break.
+- Could items S-10 to S-12 are excluded; CodeCraft is the first approved cut. The Moderator promoted S-13 static deployment to a required post-STEP-02 gate on 2026-10-19.
+- STEP-02 was authorized by the Moderator on 2026-10-19. The former between-Step study break is replaced by a fuller project and UI-library study review after STEP-02 acceptance and deployment.
 
 ## Angular and TypeScript review criteria
 

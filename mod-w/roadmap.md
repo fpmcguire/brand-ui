@@ -8,15 +8,16 @@
 
 ## Summary
 
-The one-day reference spike is delivered in two reviewable Steps separated by a mandatory Moderator study break. Must scope is protected before Should scope. Could items S-10 to S-13 are excluded.
+The reference spike is delivered in two reviewable Steps, followed by static deployment and a fuller Moderator study review of the projects and UI library. Must scope is protected before Should scope. Could items S-10 to S-12 remain excluded; the Moderator promoted S-13 deployment to a required post-STEP-02 gate on 2026-10-19.
 
 ## Steps
 
 | Step | Title | Requirements | Agent | Status | Notes |
 | --- | --- | --- | --- | --- | --- |
 | STEP-01 | Theme foundation, button, card, and gallery shell | S-1, S-2, part S-3/S-4, S-8, S-9; AC-1 to AC-5, AC-13 to AC-16 | Claude Code | Accepted 2026-10-19 | CodeCraft is first approved cut |
-| Gate | Moderator study break | Product 1.2 | Moderator | Active | Step 2 cannot begin until explicitly ended |
-| STEP-02 | Input, navigation, long labels, and final verification | remaining S-3 to S-7, S-9; AC-4 to AC-15 | Claude Code | Planned | Adds Playwright, axe, README, final gates |
+| STEP-02 | Input, navigation, long labels, and final verification | remaining S-3 to S-7, S-9; AC-4 to AC-15 | Claude Code | Authorized 2026-10-19 | Adds Playwright, axe, README, final gates |
+| Gate | Static deployment | S-13, AC-19 | Development Team | Required after STEP-02 | No indexing or third-party brand assets |
+| Gate | Full project study review | Moderator decision | Moderator | Required after deployment | Covers the workspace projects and UI library |
 
 ## STEP-01
 
@@ -26,9 +27,9 @@ The one-day reference spike is delivered in two reviewable Steps separated by a 
 
 **Design IDs:** DS-001 to DS-015, DS-030 to DS-035, DS-060 foundation.
 
-## Mandatory Moderator study break
+## Moderator sequencing decision
 
-The Moderator studies the theme service/directive and button until able to explain root versus host attachment, CSS as the only token-value source, signal-to-native-button behavior, and loading activation suppression, and can reproduce the core patterns without the prototype. The Moderator must explicitly authorize STEP-02.
+On 2026-10-19, the Moderator moved the study break until after STEP-02 completion and static deployment and authorized STEP-02 to proceed. The later gate is a fuller study review of the workspace projects and UI library, including the original theme attachment, CSS-token authority, signal/native-button behavior, and loading-suppression topics. STEP-02 acceptance and deployment evidence are prerequisites for that review.
 
 ## STEP-02
 
@@ -49,7 +50,8 @@ The Moderator studies the theme service/directive and button until able to expla
 | S-5 to S-7 | STEP-02 | Planned |
 | S-8 | STEP-01 | Should; first approved cut |
 | S-9 | Both | Should |
-| S-10 to S-13 | None | Could; excluded |
+| S-10 to S-12 | None | Could; excluded |
+| S-13, AC-19 | Post-STEP-02 deployment gate | Required by Moderator 2026-10-19 |
 | AC-1 to AC-5 | STEP-01; rechecked STEP-02 | Planned |
 | AC-6 to AC-12 | STEP-02 | Planned |
 | AC-13 to AC-15 | Both | Should |
@@ -57,7 +59,7 @@ The Moderator studies the theme service/directive and button until able to expla
 
 ## Cut order
 
-1. Unstarted Could scope remains excluded.
+1. Unstarted Could scope S-10 to S-12 remains excluded; the required S-13 deployment gate is not cuttable without a new Moderator decision.
 2. Drop CodeCraft Light and Dark together if Must completion is threatened.
 3. Drop gallery Design-ID badges if further reduction is necessary.
 4. Any other reduction requires a Product decision.

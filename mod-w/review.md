@@ -313,3 +313,13 @@ The Moderator approves the Tech Lead and Development Team work for STEP-01. STEP
 ---
 
 MOD-W v5.0.1
+
+---
+
+## Moderator Sequencing Decision - 2026-10-19
+
+The Moderator supersedes the earlier between-Step study-break sequence and approves the corresponding updates to `AGENTS.md`, `mod-w/roadmap.md`, and `mod-w/architecture.md`. STEP-02 is authorized to proceed. After STEP-02 is completed and accepted, the application must pass the S-13/AC-19 static-deployment gate; the Moderator will then conduct a fuller study review of the workspace projects and UI library. S-10 to S-12 remain excluded.
+
+---
+
+MOD-W v5.0.1

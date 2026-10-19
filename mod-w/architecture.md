@@ -259,8 +259,8 @@ No production source may import from `mod-w/design`.
 
 ## Constraints and Open Product Wording
 
-- One working day, with a mandatory Moderator study break between Steps.
-- Could items S-10 to S-13 are excluded.
+- The original one-working-day sequence and between-Step study break were superseded by the Moderator on 2026-10-19: STEP-02 may proceed now, followed by static deployment and a fuller project/UI-library study review.
+- Could items S-10 to S-12 are excluded. S-13 static deployment is required as a post-STEP-02 gate by Moderator decision.
 - CodeCraft is the first approved cut if Must completion is threatened.
 - “All brands shows three panels” is a wording defect: it means three brands across four panels/scopes.
 - Approved sample tags and bracketed placeholders remain neutral sample content. Do not invent testimonials, prices, course claims, or contact details.

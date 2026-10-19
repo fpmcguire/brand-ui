@@ -43,8 +43,9 @@ The Tech Lead maintains architecture, domain language, roadmap, Steps, role conf
 - Fonts are self-hosted only with matching OFL/provenance evidence.
 - CodeCraft bevel is progressive enhancement with rounded fallback.
 - ArtAnon logo, artwork, photography, and other third-party brand assets are prohibited.
-- Could items S-10 to S-12 are excluded; CodeCraft is the first approved cut. The Moderator promoted S-13 static deployment to a required post-STEP-02 gate on 2026-10-19.
-- STEP-02 was authorized by the Moderator on 2026-10-19. The former between-Step study break is replaced by a fuller project and UI-library study review after STEP-02 acceptance and deployment.
+- S-10 and S-12 are excluded. S-11 is authorized only while a Moderator-approved STEP-03 is active and within its bounded design authority. The Moderator promoted S-13 static deployment to a required post-STEP-03 gate on 2026-10-19.
+- STEP-01 and STEP-02 are accepted. STEP-03, its bounded design authority, D-11, and S-11-before-S-13 sequencing were approved by the Moderator on 2026-10-19; implementation still requires separate approval of the Development Team's exact plan. The fuller project and UI-library study review remains after STEP-03 acceptance and deployment.
+- STEP-03 bounded design authority permits only the About dialog's layout, spacing, heading structure, backdrop treatment, and content presentation using existing semantic tokens, library components, and gallery patterns. It prohibits token, public-API, `Navigation`, existing Design-ID, `mod-w/design/`, brand-specific structure, animation-library, icon, and imagery changes. The panel must pass WCAG 2.2 AA and AC-7 contrast in all four scopes. It has no Design ID: trace AC-17 and show no placeholder badge.
 
 ## Angular and TypeScript review criteria
 

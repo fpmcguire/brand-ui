@@ -36,6 +36,8 @@ The Moderator studies the theme service/directive and button until able to expla
 
 **Outputs:** text input; navigation; remaining gallery states; long-label specimens; contrast verification; exactly three Chromium Playwright specifications including axe; final static/build gates; AC-12 README.
 
+**AC-12 documentation check:** Replace the root Angular CLI boilerplate with the approved project README. Remove or replace `projects/ui/README.md` publishing boilerplate with a short non-publishing library note or a pointer to the root README; this spike must not instruct readers to publish the package to npm.
+
 **Design IDs:** DS-020 to DS-025, DS-040 to DS-051, DS-060, plus completion checks for earlier IDs.
 
 ## Coverage check

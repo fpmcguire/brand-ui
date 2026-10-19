@@ -234,7 +234,7 @@ Declare the top-right radius before `corner-top-right-shape`. Unsupported browse
 - Font licence and provenance files are present.
 - Restricted brand assets are absent.
 - Components are exported and the gallery imports from `ui`, not library internals.
-- README language matches AC-12 and makes no production or client-delivery claim.
+- The root README replaces Angular CLI boilerplate, matches AC-12, and makes no production or client-delivery claim. Project-level boilerplate must not contradict the spike's non-goals: remove or replace `projects/ui/README.md` npm-publishing instructions with a non-publishing note or a pointer to the root README.
 
 ## Decisions That Diverge From Prototype
 

@@ -1,6 +1,6 @@
 # STEP-04 — Static subfolder deployment
 
-**Status:** ACTIVE — Moderator activated S-13 on 2026-10-19; Development Team implementation plan pending separate approval.
+**Status:** ACTIVE — Moderator activated S-13 on 2026-10-19 and approved the Development Team plan; implementation and deployment complete; Moderator released the work for Tech Lead review on 2026-10-19. Acceptance checks remain unmet pending independent review.
 
 **Owner:** Development Team (Claude Code), after plan approval. Codex Tech Lead reviews; Moderator has final authority.
 
@@ -93,6 +93,29 @@ The report must also provide read-only evidence that:
 - [ ] Remote publication, if requested, uses only the separately authorized host and URL and is verified after deployment.
 
 Every checkbox remains unmet until supported by diff, command, browser, or deployed-URL evidence and independent review.
+
+## Development Team record
+
+Recorded 2026-10-19 by the Development Team (Claude Code). This is evidence for Tech Lead review, not self-approval.
+
+**Implementation.** Three allowed files only: `package.json` (`build:subfolder`, exactly `ng build gallery --base-href /brand-ui/`), `projects/gallery/src/index.html` (`<meta name="robots" content="noindex, nofollow" />`; source `<base href="/" />` unchanged), and new `projects/gallery/public/robots.txt` (`User-agent: *`, `Disallow: /`). No lockfile, `angular.json`, `playwright.config.ts`, `projects/ui`, or `mod-w/design/**` change.
+
+**Versions (Node 26.0.0).** npm 11.12.1; Angular CLI 22.2.3; TypeScript 6.0.3.
+
+**Gates (all exit 0).** `format:check`; `lint:tokens` (51 contract tokens, four scopes, components clean); `check:assets` (no restricted assets); `typecheck:e2e`; `npm test` (`ui` 68/68, `gallery` 64/64); `test:e2e` (Chromium 70/70, same three specifications, both axe surfaces); `npm run build` (emits `<base href="/">`); `npm run build:subfolder`; `git diff --check` (only LF/CRLF warnings). Scope status over `mod-w/design projects/ui package-lock.json angular.json playwright.config.ts` was empty. No `.only`, `.skip`, `fixme`, snapshot, disabled axe rule, or excluded surface was added.
+
+**Emitted output.** `dist/gallery/browser/index.html` has `<base href="/brand-ui/">` and `noindex, nofollow`; `robots.txt` was copied with the Disallow rule; scripts and styles are hashed; all seven fonts are local `./media/*.woff2`; the favicon is local. Emitted HTML and CSS contain no remote URL. The JavaScript contains only XML namespaces, an Angular documentation string, the `example.com` input placeholder, and the two authorized About links.
+
+**Local `/brand-ui/` run.** `dist/gallery/browser` was served under `/brand-ui/` by a throwaway static server kept outside the repository. In Chromium, initial load and refresh made 19 requests, all 200, with no failed, off-origin, or console-error request. About auto-opened on first visit with seven headings and two links, closed by Close and Esc with focus returning to About, did not auto-open after refresh, and reopened manually.
+
+**Remote publication.** On the Moderator's identification (cPanel `public_html/frank-mcguire/brand-ui`, public URL `https://www.frank-mcguire.com/brand-ui/`), the `build:subfolder` output was uploaded manually by the Moderator as a zip and extracted; the Development Team did not access the host. Post-deployment Chromium checks at that URL showed all requests 200 or 304 with none failed or off-origin, no console errors, `<base href="/brand-ui/">`, `noindex, nofollow`, `/brand-ui/robots.txt` returning the Disallow rule, local favicon and fonts, and the same About behavior and refresh as above.
+
+**Open observations (not changes).**
+
+- `brand-ui-site.zip` was still publicly downloadable at `/brand-ui/brand-ui-site.zip` when last checked; the Moderator was asked to delete it and it has not been rechecked since.
+- Crawlers read `robots.txt` only at a domain root, so the `/brand-ui/robots.txt` copy is not effective by itself; the meta tag is the working control at this path. A root `robots.txt` is a host matter outside this Step.
+- `http://www.frank-mcguire.com/brand-ui/` returns 200 without redirecting to HTTPS; no change was made.
+- The host's Mod Security returns 406 to plain `curl`; browsers are unaffected.
 
 ## Stop conditions
 

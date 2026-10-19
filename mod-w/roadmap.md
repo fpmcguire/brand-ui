@@ -17,7 +17,7 @@ The accepted two-Step component-library spike is followed by a small, separately
 | STEP-01 | Theme foundation, button, card, and gallery shell      | S-1, S-2, part S-3/S-4, S-8, S-9; AC-1 to AC-5, AC-13 to AC-16 | Claude Code      | Accepted 2026-10-19                    | CodeCraft is first approved cut                 |
 | STEP-02 | Input, navigation, long labels, and final verification | remaining S-3 to S-7, S-9; AC-4 to AC-15                       | Claude Code      | Accepted 2026-10-19                    | Playwright, axe, README, final gates complete   |
 | STEP-03 | Gallery About panel                                    | S-11, AC-17; recheck AC-4, AC-8, AC-9, AC-12                   | Claude Code      | Tech Lead Pass; Moderator approved review | QA delta/acceptance remains separate          |
-| STEP-04 | Static subfolder deployment                            | S-13, AC-19                                                    | Development Team | Active; implementation plan pending    | `/brand-ui/`; no indexing or third-party assets |
+| STEP-04 | Static subfolder deployment                            | S-13, AC-19                                                    | Development Team | Built and deployed; Tech Lead review  | `/brand-ui/`; no indexing or third-party assets |
 | Gate    | Full project study review                              | Moderator decision                                             | Moderator        | Required after deployment              | Covers the workspace projects and UI library    |
 
 ## STEP-01
@@ -85,6 +85,8 @@ On 2026-10-19, after the initial implementation and Tech Lead review, the Modera
 ## STEP-04 Moderator activation
 
 On 2026-10-19, the Moderator activated S-13 as STEP-04 and directed a subfolder build for `/brand-ui/`. Activation authorizes planning only. The Development Team must submit its exact implementation and verification plan and receive separate Moderator approval before editing implementation or deployment configuration.
+
+On 2026-10-19, the Moderator approved the Development Team plan. The Team implemented the three allowed files and the Moderator deployed the `/brand-ui/` build to `https://www.frank-mcguire.com/brand-ui/`. The Moderator released the work for Tech Lead review; the evidence is recorded in `mod-w/step-04.md`. Acceptance remains pending Tech Lead review and QA.
 
 ---
 

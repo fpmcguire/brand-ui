@@ -1,6 +1,6 @@
 # STEP-04 — Static subfolder deployment
 
-**Status:** QA REVIEW APPROVED — implementation and deployment complete; the Tech Lead recorded Pass after independent local, gate, and remote verification and the Moderator approved that review on 2026-10-19; QA then recorded Pass with notes, and the Moderator approved the QA review on 2026-10-19. Product Owner acceptance validation and the Moderator's final gate remain pending; the acceptance checkboxes below stay unchecked until the Moderator accepts the Step.
+**Status:** Accepted by the Moderator, 2026-10-19 (implemented in `f205dc3`, tagged `step-04-complete`; Tech Lead Pass, QA Pass with notes, and Product Owner sign-off Accepted with notes in `mod-w/po-signoff-step-04.md`).
 
 **Owner:** Development Team (Claude Code), after plan approval. Codex Tech Lead reviews; Moderator has final authority.
 
@@ -83,16 +83,16 @@ The report must also provide read-only evidence that:
 
 ## Acceptance checks
 
-- [ ] **AC-19 static site:** the gallery builds to static files and works from `/brand-ui/` with no broken local resource request.
-- [ ] **AC-19 no indexing:** source and emitted HTML contain `noindex, nofollow`, and emitted `robots.txt` disallows `/` for every user agent.
-- [ ] **AC-19 assets:** `check:assets` passes and the deployment contains no third-party brand asset or remote font/asset.
-- [ ] The root `build:subfolder` script is exactly `ng build gallery --base-href /brand-ui/`.
-- [ ] No dependency, lockfile, route, SSR/service-worker, analytics, library/public-API, token, Navigation, Design-ID, or application-behavior change occurs.
-- [ ] Accepted STEP-01–03 tests and behavior remain green, including exactly three Chromium specs and both axe surfaces.
-- [ ] Formatting, token, asset, typecheck, unit, browser, default build, subfolder build, diff, and scope gates pass under Node 26.
-- [ ] Remote publication, if requested, uses only the separately authorized host and URL and is verified after deployment.
+- [x] **AC-19 static site:** the gallery builds to static files and works from `/brand-ui/` with no broken local resource request.
+- [x] **AC-19 no indexing:** source and emitted HTML contain `noindex, nofollow`, and emitted `robots.txt` disallows `/` for every user agent.
+- [x] **AC-19 assets:** `check:assets` passes and the deployment contains no third-party brand asset or remote font/asset.
+- [x] The root `build:subfolder` script is exactly `ng build gallery --base-href /brand-ui/`.
+- [x] No dependency, lockfile, route, SSR/service-worker, analytics, library/public-API, token, Navigation, Design-ID, or application-behavior change occurs.
+- [x] Accepted STEP-01–03 tests and behavior remain green, including exactly three Chromium specs and both axe surfaces.
+- [x] Formatting, token, asset, typecheck, unit, browser, default build, subfolder build, diff, and scope gates pass under Node 26.
+- [x] Remote publication, if requested, uses only the separately authorized host and URL and is verified after deployment.
 
-Every checkbox remains unmet until supported by diff, command, browser, or deployed-URL evidence and independent review.
+Every checkbox was checked on Moderator acceptance, 2026-10-19, on the strength of diff, command, browser, and deployed-URL evidence and independent review.
 
 ## Development Team record
 

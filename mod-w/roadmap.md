@@ -2,7 +2,7 @@
 
 **Project:** brand-ui  
 **Date:** 2026-10-19
-**Status:** STEP-04 QA review approved; Product Owner validation and Moderator final gate pending
+**Status:** STEP-04 accepted by the Moderator, 2026-10-19; full project study review gate pending
 
 ---
 
@@ -17,7 +17,7 @@ The accepted two-Step component-library spike is followed by a small, separately
 | STEP-01 | Theme foundation, button, card, and gallery shell      | S-1, S-2, part S-3/S-4, S-8, S-9; AC-1 to AC-5, AC-13 to AC-16 | Claude Code      | Accepted 2026-10-19                    | CodeCraft is first approved cut                 |
 | STEP-02 | Input, navigation, long labels, and final verification | remaining S-3 to S-7, S-9; AC-4 to AC-15                       | Claude Code      | Accepted 2026-10-19                    | Playwright, axe, README, final gates complete   |
 | STEP-03 | Gallery About panel                                    | S-11, AC-17; recheck AC-4, AC-8, AC-9, AC-12                   | Claude Code      | Accepted 2026-10-19                    | About panel with source-repository link         |
-| STEP-04 | Static subfolder deployment                            | S-13, AC-19                                                    | Development Team | QA approved; PO validation pending    | `/brand-ui/`; no indexing or third-party assets |
+| STEP-04 | Static subfolder deployment                            | S-13, AC-19                                                    | Development Team | Accepted 2026-10-19                   | `/brand-ui/`; no indexing or third-party assets |
 | Gate    | Full project study review                              | Moderator decision                                             | Moderator        | Required after deployment              | Covers the workspace projects and UI library    |
 
 ## STEP-01
@@ -88,7 +88,9 @@ On 2026-10-19, the Moderator accepted STEP-03, including the source-repository a
 
 On 2026-10-19, the Moderator activated S-13 as STEP-04 and directed a subfolder build for `/brand-ui/`. Activation authorizes planning only. The Development Team must submit its exact implementation and verification plan and receive separate Moderator approval before editing implementation or deployment configuration.
 
-On 2026-10-19, the Moderator approved the Development Team plan. The Team implemented the three allowed files and the Moderator deployed the `/brand-ui/` build to `https://www.frank-mcguire.com/brand-ui/`. The Tech Lead independently verified the implementation, gates, local subfolder behavior, and live deployment. After the Moderator removed the publicly exposed upload archive, the focused remote re-check passed. The Moderator approved the Tech Lead review on 2026-10-19 and released STEP-04 to QA. QA independently re-ran every gate and verified the local `/brand-ui/` run and the live deployment, recorded Pass with notes in `mod-w/qa.md`, and the Moderator approved the QA review on 2026-10-19. Product Owner acceptance validation and the Moderator's final gate remain pending.
+On 2026-10-19, the Moderator approved the Development Team plan. The Team implemented the three allowed files and the Moderator deployed the `/brand-ui/` build to `https://www.frank-mcguire.com/brand-ui/`. The Tech Lead independently verified the implementation, gates, local subfolder behavior, and live deployment. After the Moderator removed the publicly exposed upload archive, the focused remote re-check passed. The Moderator approved the Tech Lead review on 2026-10-19 and released STEP-04 to QA. QA independently re-ran every gate and verified the local `/brand-ui/` run and the live deployment, recorded Pass with notes in `mod-w/qa.md`, and the Moderator approved the QA review on 2026-10-19. The Product Owner then validated acceptance and signed off "Accepted with notes" in `mod-w/po-signoff-step-04.md`: the page-level `noindex, nofollow` meta is the effective AC-19 control, the `/brand-ui/robots.txt` copy is non-effective defense-in-depth, and O-1 to O-4 do not affect acceptance.
+
+On 2026-10-19, the Moderator approved the Product Owner's review and accepted STEP-04. The Step is tagged `step-04-complete` at `f205dc3`. Notes O-1 to O-4 are recorded and open as host or tooling matters outside this Step: a root `robots.txt` (host-wide policy; if added, weigh that it would stop crawlers reading the page-level `noindex`), an HTTP-to-HTTPS redirect, and a Node-version pin. Each needs separate Moderator authorization. The full project study review gate is next.
 
 ---
 

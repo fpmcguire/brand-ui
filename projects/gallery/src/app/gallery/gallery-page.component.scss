@@ -155,6 +155,11 @@
   grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
 }
 
+// DS-040: the working sample takes the whole row, so it is the bar at its natural width.
+.grid-nav > [data-wide] {
+  grid-column: 1 / -1;
+}
+
 // DS-045: the same bar in a narrow container, to show it wrapping rather than collapsing.
 [data-narrow] > bui-navigation {
   max-width: 17.5rem;

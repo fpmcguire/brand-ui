@@ -184,6 +184,7 @@
               data-specimen="nav"
               [attr.data-specimen-state]="specimen.forced ? specimen.state : null"
               [attr.data-narrow]="specimen.narrow ? '' : null"
+              [attr.data-wide]="specimen.state === 'default' ? '' : null"
               [attr.data-testid]="'gallery-nav-bar-' + specimen.state"
               (click)="keepOnPage($event)"
             >

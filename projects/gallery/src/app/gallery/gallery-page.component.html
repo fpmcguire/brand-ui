@@ -1,7 +1,7 @@
 <header class="top">
   <div class="top-row">
     <div>
-      <p class="kicker">brand-ui Â· reference spike Â· STEP-02</p>
+      <p class="kicker">brand-ui · reference spike</p>
       <h1 class="heading">Gallery</h1>
     </div>
     <div class="controls">
@@ -30,6 +30,15 @@
           <span class="id">DS-004</span>
         }
       </label>
+      <span class="about-trigger" [buiThemeScope]="state.activeScope().selection">
+        <bui-button
+          #aboutTrigger
+          variant="primary"
+          data-testid="gallery-about-trigger"
+          (activated)="about().show()"
+          >About</bui-button
+        >
+      </span>
     </div>
   </div>
   <p class="status" data-testid="gallery-status">
@@ -275,3 +284,5 @@
     </section>
   }
 </main>
+
+<gal-about-panel [selection]="state.activeScope().selection" (closed)="restoreAboutFocus()" />

@@ -1,10 +1,14 @@
 import AxeBuilder from '@axe-core/playwright';
-import { Locator, Page, expect, test } from '@playwright/test';
+import { Locator, Page, TestInfo, expect, test } from '@playwright/test';
 import { parseRgb } from './helpers/contrast';
 import {
+  ABOUT_SEEN_KEY,
   SCOPES,
   Scope,
+  aboutDialog,
+  aboutTrigger,
   computed,
+  galleryReady,
   openGallery,
   panel,
   resolveColor,
@@ -309,7 +313,48 @@ test.describe('card and navigation semantics', () => {
   });
 });
 
+/** Attaches the axe results and fails on any serious or critical violation. */
+async function expectNoBlockingViolations(
+  results: Awaited<ReturnType<AxeBuilder['analyze']>>,
+  testInfo: TestInfo,
+  attachment: string,
+  minimumPasses: number,
+): Promise<void> {
+  await testInfo.attach(attachment, {
+    body: JSON.stringify(
+      {
+        url: results.url,
+        violations: results.violations,
+        incomplete: results.incomplete.map(({ id, impact, nodes }) => ({
+          id,
+          impact,
+          nodes: nodes.length,
+        })),
+        passes: results.passes.length,
+      },
+      null,
+      2,
+    ),
+    contentType: 'application/json',
+  });
+
+  expect(results.passes.length, 'axe evaluated the page').toBeGreaterThan(minimumPasses);
+  const blocking = results.violations.filter(
+    (violation) => violation.impact === 'serious' || violation.impact === 'critical',
+  );
+  expect(
+    blocking.map((violation) => ({
+      id: violation.id,
+      impact: violation.impact,
+      targets: violation.nodes.map((node) => node.target.join(' ')),
+    })),
+  ).toEqual([]);
+}
+
 test.describe('automated accessibility', () => {
+  // The scan of four stacked scopes is slow enough to approach the default timeout under load.
+  test.slow();
+
   test('the complete gallery has no serious or critical axe violations', async ({
     page,
   }, testInfo) => {
@@ -317,34 +362,293 @@ test.describe('automated accessibility', () => {
     await expect(page.getByTestId('gallery-status')).toContainText('Reference spike');
 
     const results = await new AxeBuilder({ page }).analyze();
-    await testInfo.attach('axe-results.json', {
-      body: JSON.stringify(
-        {
-          url: results.url,
-          violations: results.violations,
-          incomplete: results.incomplete.map(({ id, impact, nodes }) => ({
-            id,
-            impact,
-            nodes: nodes.length,
-          })),
-          passes: results.passes.length,
-        },
-        null,
-        2,
-      ),
-      contentType: 'application/json',
+    await expectNoBlockingViolations(results, testInfo, 'axe-results.json', 10);
+  });
+
+  test('the complete gallery has no serious or critical axe violations once the About panel is dismissed', async ({
+    page,
+  }, testInfo) => {
+    await page.goto('/');
+    await expect(aboutDialog(page)).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(aboutDialog(page)).toHaveCount(0);
+    await page.getByTestId('gallery-switch-all').click();
+    await galleryReady(page, 4);
+    await expect(page.getByTestId('gallery-status')).toContainText('Reference spike');
+
+    const results = await new AxeBuilder({ page }).analyze();
+    await expectNoBlockingViolations(results, testInfo, 'axe-results-after-about.json', 10);
+  });
+
+  for (const scope of SCOPES) {
+    test(`the open About panel has no serious or critical axe violations in ${scope.label}`, async ({
+      page,
+    }, testInfo) => {
+      await openGallery(page, scope.id);
+      await aboutTrigger(page).click();
+      await expect(aboutDialog(page)).toBeVisible();
+
+      const results = await new AxeBuilder({ page }).include('dialog[open]').analyze();
+      await expectNoBlockingViolations(results, testInfo, 'axe-results-about-dialog.json', 5);
+    });
+  }
+});
+
+test.describe('About panel', () => {
+  const closeButton = (page: Page) => aboutDialog(page).getByRole('button', { name: 'Close' });
+  /** The two external links the panel permits: the methodology, then the source repository. */
+  const EXTERNAL_LINKS = [
+    {
+      name: 'github.com/fpmcguire/mod-w (opens in a new tab)',
+      text: 'github.com/fpmcguire/mod-w',
+      href: 'https://github.com/fpmcguire/mod-w',
+    },
+    {
+      name: 'github.com/fpmcguire/brand-ui (opens in a new tab)',
+      text: 'github.com/fpmcguire/brand-ui',
+      href: 'https://github.com/fpmcguire/brand-ui.git',
+    },
+  ] as const;
+  /**
+   * Where keyboard focus is: on Close, on the dialog itself (its scrolling box), somewhere else in
+   * the dialog, in the browser's own UI (the document has lost focus), or on a page element.
+   */
+  const focusStop = (page: Page) =>
+    page.evaluate(() => {
+      const active = document.activeElement;
+      const dialog = document.querySelector('dialog[open]');
+      if (!document.hasFocus() && (active === null || active === document.body)) return 'browser';
+      if (active && dialog?.contains(active)) {
+        if (active === dialog) return 'dialog';
+        return active.textContent?.trim() === 'Close' ? 'close' : 'inside';
+      }
+      return `page element ${active?.tagName}`;
     });
 
-    expect(results.passes.length, 'axe evaluated the page').toBeGreaterThan(10);
-    const blocking = results.violations.filter(
-      (violation) => violation.impact === 'serious' || violation.impact === 'critical',
-    );
-    expect(
-      blocking.map((violation) => ({
-        id: violation.id,
-        impact: violation.impact,
-        targets: violation.nodes.map((node) => node.target.join(' ')),
-      })),
-    ).toEqual([]);
+  /** The three ways to dismiss the panel: Close button, Esc, and a click outside the dialog. */
+  const DISMISSALS: ReadonlyArray<readonly [string, (page: Page) => Promise<void>]> = [
+    ['the Close button', (page) => closeButton(page).click()],
+    ['Esc', (page) => page.keyboard.press('Escape')],
+    ['a click outside the dialog', (page) => page.mouse.click(5, 5)],
+  ];
+
+  test('opens by itself on a first visit: modal, named by its heading, focused on Close', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    const dialog = aboutDialog(page);
+    await expect(dialog).toBeVisible();
+    await expect(dialog).toHaveAccessibleName('About brand-ui');
+    await expect(dialog.getByRole('heading', { level: 2 })).toHaveText('About brand-ui');
+    expect(await dialog.evaluate((element) => element.matches(':modal'))).toBe(true);
+    await expect(closeButton(page)).toBeFocused();
+
+    // Recorded when the automatic opening is initiated, not when it is closed.
+    expect(await page.evaluate((key) => localStorage.getItem(key), ABOUT_SEEN_KEY)).not.toBeNull();
+
+    await expect(dialog.getByRole('heading', { level: 3 })).toHaveText([
+      'A reference spike, not production',
+      'Three brands, four scopes',
+      'The ui library',
+      'How the gallery relates to the library',
+      'Using the gallery',
+      'How this was built',
+      'Source repository',
+    ]);
+    await expect(dialog.getByText(/DS-/)).toHaveCount(0);
+
+    // Exactly two external links, each opening in a new tab and saying so.
+    await expect(dialog.getByRole('link')).toHaveCount(2);
+    for (const { name, text, href } of EXTERNAL_LINKS) {
+      const link = dialog.getByRole('link', { name, exact: true });
+      await expect(link).toHaveCount(1);
+      await expect(link).toHaveText(text);
+      await expect(link).toHaveAttribute('href', href);
+      await expect(link).toHaveAttribute('target', '_blank');
+      await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    }
+
+    // The source repository has its own, last, section.
+    await expect(dialog.getByRole('heading', { level: 3 }).last()).toHaveText('Source repository');
   });
+
+  test('the source-repository link is reached and opened in a new tab from the keyboard', async ({
+    page,
+    context,
+  }) => {
+    // The destination is stubbed, so the test never depends on the network.
+    await context.route('https://github.com/**', (route) =>
+      route.fulfill({ contentType: 'text/html', body: '<title>stub</title>' }),
+    );
+    await page.goto('/');
+    const dialog = aboutDialog(page);
+    await expect(dialog).toBeVisible();
+    await expect(closeButton(page)).toBeFocused();
+
+    const repository = dialog.getByRole('link', { name: EXTERNAL_LINKS[1].name, exact: true });
+    for (let press = 0; press < 6; press++) {
+      if (await repository.evaluate((link) => link === document.activeElement)) break;
+      await page.keyboard.press('Tab');
+    }
+    await expect(repository).toBeFocused();
+
+    const [popup] = await Promise.all([context.waitForEvent('page'), page.keyboard.press('Enter')]);
+    await popup.waitForLoadState();
+    expect(popup.url()).toBe(EXTERNAL_LINKS[1].href);
+    // noopener: the new tab has no handle back to the gallery.
+    expect(await popup.evaluate(() => window.opener)).toBeNull();
+    await popup.close();
+
+    await expect(dialog).toBeVisible();
+    await expect(repository).toBeFocused();
+  });
+
+  test('Tab and Shift+Tab never reach the page behind the open dialog', async ({ page }) => {
+    await page.goto('/');
+    await expect(aboutDialog(page)).toBeVisible();
+
+    // Focus cycles Close, the dialog's own box, its two links and the browser's own UI. It must
+    // never land on a page element, in either direction, and must come back to Close.
+    const contained = new Set(['close', 'dialog', 'inside', 'browser']);
+    for (const key of ['Tab', 'Shift+Tab']) {
+      const stops: string[] = [];
+      for (let press = 0; press < 9; press++) {
+        await page.keyboard.press(key);
+        stops.push(await focusStop(page));
+      }
+      expect(
+        stops.filter((stop) => !contained.has(stop)),
+        `${key} stops outside the dialog`,
+      ).toEqual([]);
+      expect(stops, `${key} comes back to Close`).toContain('close');
+      expect(stops, `${key} reaches the links inside the dialog`).toContain('inside');
+    }
+
+    const reachedPage = await page.evaluate(() => {
+      const behind = document.querySelector<HTMLElement>('[data-testid="gallery-switch-all"]')!;
+      behind.focus();
+      return document.activeElement === behind;
+    });
+    expect(reachedPage, 'a control behind the modal takes focus').toBe(false);
+  });
+
+  for (const [name, dismiss] of DISMISSALS) {
+    test(`${name} closes it and returns focus to About, on a first visit and on a manual reopen`, async ({
+      page,
+    }) => {
+      await page.goto('/');
+      const dialog = aboutDialog(page);
+      await expect(dialog).toBeVisible();
+      await dismiss(page);
+      await expect(dialog).toHaveCount(0);
+      await expect(aboutTrigger(page)).toBeFocused();
+
+      await aboutTrigger(page).click();
+      await expect(dialog).toBeVisible();
+      await expect(closeButton(page)).toBeFocused();
+      await dismiss(page);
+      await expect(dialog).toHaveCount(0);
+      await expect(aboutTrigger(page)).toBeFocused();
+    });
+  }
+
+  test('reopens from the keyboard with Enter and with Space', async ({ page }) => {
+    await openGallery(page, 'artanon');
+    const dialog = aboutDialog(page);
+    for (const key of ['Enter', 'Space']) {
+      await aboutTrigger(page).focus();
+      await page.keyboard.press(key);
+      await expect(dialog).toBeVisible();
+      await expect(closeButton(page)).toBeFocused();
+      await page.keyboard.press('Escape');
+      await expect(dialog).toHaveCount(0);
+      await expect(aboutTrigger(page)).toBeFocused();
+    }
+  });
+
+  test('does not close from interaction inside the dialog', async ({ page }) => {
+    await page.goto('/');
+    const dialog = aboutDialog(page);
+    await expect(dialog).toBeVisible();
+
+    await dialog.getByRole('heading', { level: 2 }).click();
+    await expect(dialog).toBeVisible();
+
+    // The dialog's own padding is inside its rectangle: the click target is the dialog itself.
+    const box = (await dialog.boundingBox())!;
+    await page.mouse.click(box.x + 3, box.y + 3);
+    await expect(dialog).toBeVisible();
+
+    // A drag that starts inside and is released over the backdrop is not an outside click.
+    await page.mouse.move(box.x + box.width / 2, box.y + 20);
+    await page.mouse.down();
+    await page.mouse.move(5, 5);
+    await page.mouse.up();
+    await expect(dialog).toBeVisible();
+  });
+
+  test('opens on the first visit only: the seen value persists across a reload', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await expect(aboutDialog(page)).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(aboutDialog(page)).toHaveCount(0);
+
+    await page.reload();
+    await galleryReady(page, 1);
+    await expect(aboutDialog(page)).toHaveCount(0);
+    expect(await page.evaluate((key) => localStorage.getItem(key), ABOUT_SEEN_KEY)).not.toBeNull();
+  });
+
+  const STORAGE_FAILURES: ReadonlyArray<readonly [string, () => void]> = [
+    [
+      'Storage reads and writes throw',
+      () => {
+        const fail = () => {
+          throw new DOMException('denied', 'SecurityError');
+        };
+        Storage.prototype.getItem = fail;
+        Storage.prototype.setItem = fail;
+      },
+    ],
+    [
+      'the localStorage getter throws',
+      () => {
+        Object.defineProperty(window, 'localStorage', {
+          configurable: true,
+          get() {
+            throw new DOMException('denied', 'SecurityError');
+          },
+        });
+      },
+    ],
+  ];
+
+  for (const [name, fail] of STORAGE_FAILURES) {
+    test(`when ${name}, it opens once per page load, works by hand, and opens again after a reload`, async ({
+      page,
+    }) => {
+      await page.addInitScript(fail);
+      await page.goto('/');
+      const dialog = aboutDialog(page);
+      await expect(dialog).toHaveCount(1);
+      await expect(dialog).toBeVisible();
+
+      await page.keyboard.press('Escape');
+      await expect(dialog).toHaveCount(0);
+      await expect(aboutTrigger(page)).toBeFocused();
+      await galleryReady(page, 1);
+      await expect(dialog, 'no second automatic opening in this page load').toHaveCount(0);
+
+      await aboutTrigger(page).click();
+      await expect(dialog).toBeVisible();
+      await closeButton(page).click();
+      await expect(dialog).toHaveCount(0);
+      await expect(aboutTrigger(page)).toBeFocused();
+
+      await page.reload();
+      await expect(aboutDialog(page)).toBeVisible();
+    });
+  }
 });

@@ -219,6 +219,8 @@ First-visit state uses a versioned gallery-owned `localStorage` key. All storage
 
 The dialog consumes `ui` only through its public entry point and may use the existing `Button` and `ThemeScopeDirective`. It is never exported by `ui`; the library never depends on it. It follows the active single-scope theme; while All brands is displayed, it follows the retained active theme selection. No brand-specific markup or branching is permitted.
 
+The About content may contain exactly two external links: the approved MOD-W methodology link and the Moderator-approved public `brand-ui` source-repository link at `https://github.com/fpmcguire/brand-ui.git`. Both open in a new tab, use `rel="noopener noreferrer"`, and announce the new-tab behavior in their accessible names. The repository link appears in its own short content section and introduces no new token, component, icon, image, or library API.
+
 No approved Design ID covers S-11. Trace implementation and review through the AC-17 sub-checks in STEP-03, do not invent a `DS-nnn`, and render no Design-ID badge or “no Design ID” placeholder for the panel.
 
 ## Public API
@@ -249,7 +251,7 @@ No approved Design ID covers S-11. Trace implementation and review through the A
 - Restricted brand assets are absent.
 - Components are exported and the gallery imports from `ui`, not library internals.
 - The root README replaces Angular CLI boilerplate, matches AC-12, and makes no production or client-delivery claim. Project-level boilerplate must not contradict the spike's non-goals: remove or replace `projects/ui/README.md` npm-publishing instructions with a non-publishing note or a pointer to the root README.
-- The README and About panel share the same five product facts. Review maps both surfaces to Product section 5.2 and AC-17; tests assert stable headings/key statements rather than duplicating the full prose in a second source file.
+- The README and About panel share the approved product facts. Review maps both surfaces to Product section 5.2, AC-17, and the recorded Moderator amendments; tests assert stable headings/key statements and both external-link contracts rather than duplicating the full prose in a second source file.
 
 ## Decisions That Diverge From Prototype
 
@@ -286,6 +288,7 @@ No production source may import from `mod-w/design`.
 | ---------- | ------------------------------------------- | -------------------------------------------------------------------------------- |
 | 2026-10-18 | Initial architecture approved               | Architecture Handoff and Definition                                              |
 | 2026-10-19 | D-11 native About-dialog lifecycle approved | Moderator approved the STEP-03 bounded authority and S-11-before-S-13 sequencing |
+| 2026-10-19 | D-11 repository-link content amendment | Moderator and Product Owner required a distinct About section linking to the public `brand-ui` GitHub repository; no API, token, asset, or behavior expansion |
 
 ---
 

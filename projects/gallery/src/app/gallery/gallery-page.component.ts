@@ -1,5 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, viewChild } from '@angular/core';
 import { Button, Card, Navigation, TextInput, ThemeScopeDirective } from 'ui';
+import { AboutPanel } from './about-panel/about-panel';
 import { GalleryState } from './gallery-state';
 import { ButtonFormFixtureComponent } from './specimens/button-form-fixture.component';
 import { ContrastEvidenceComponent } from './specimens/contrast-evidence.component';
@@ -18,6 +19,7 @@ import { TOKEN_GROUPS } from './token-inspector';
 
 @Component({
   imports: [
+    AboutPanel,
     Button,
     ButtonFormFixtureComponent,
     Card,
@@ -35,6 +37,11 @@ import { TOKEN_GROUPS } from './token-inspector';
 export class GalleryPage {
   protected readonly state = inject(GalleryState);
 
+  protected readonly about = viewChild.required(AboutPanel);
+  private readonly aboutTrigger = viewChild.required('aboutTrigger', {
+    read: ElementRef<HTMLElement>,
+  });
+
   protected readonly tokenGroups = TOKEN_GROUPS;
   protected readonly buttonVariants = BUTTON_VARIANTS;
   protected readonly buttonSpecimens = BUTTON_SPECIMENS;
@@ -48,6 +55,11 @@ export class GalleryPage {
   protected readonly longLabelItems = longLabelItems;
   protected readonly longLabelCases = LONG_LABEL_CASES;
   protected readonly longButtonLabel = LONG_BUTTON_LABEL;
+
+  /** Every way of closing the About panel returns focus to the top-bar About button. */
+  protected restoreAboutFocus(): void {
+    this.aboutTrigger().nativeElement.querySelector('button')?.focus();
+  }
 
   /** Sample card and navigation links go nowhere; keep the review surface on the page. */
   protected keepOnPage(event: Event): void {

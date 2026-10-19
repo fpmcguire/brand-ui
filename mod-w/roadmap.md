@@ -2,7 +2,7 @@
 
 **Project:** brand-ui  
 **Date:** 2026-10-19
-**Status:** STEP-03 approved; Development Team plan pending
+**Status:** STEP-03 repository-link amendment directed; Development Team amendment plan pending
 
 ---
 
@@ -16,7 +16,7 @@ The accepted two-Step component-library spike is followed by a small, separately
 | ------- | ------------------------------------------------------ | -------------------------------------------------------------- | ---------------- | -------------------------------------- | ----------------------------------------------- |
 | STEP-01 | Theme foundation, button, card, and gallery shell      | S-1, S-2, part S-3/S-4, S-8, S-9; AC-1 to AC-5, AC-13 to AC-16 | Claude Code      | Accepted 2026-10-19                    | CodeCraft is first approved cut                 |
 | STEP-02 | Input, navigation, long labels, and final verification | remaining S-3 to S-7, S-9; AC-4 to AC-15                       | Claude Code      | Accepted 2026-10-19                    | Playwright, axe, README, final gates complete   |
-| STEP-03 | Gallery About panel                                    | S-11, AC-17; recheck AC-4, AC-8, AC-9, AC-12                   | Claude Code      | Approved 2026-10-19; Team plan pending | Includes bounded design authority; no Design ID |
+| STEP-03 | Gallery About panel                                    | S-11, AC-17; recheck AC-4, AC-8, AC-9, AC-12                   | Claude Code      | Amendment plan pending                 | Repository-link amendment requires re-review    |
 | Gate    | Static deployment                                      | S-13, AC-19                                                    | Development Team | Required after STEP-03                 | No indexing or third-party brand assets         |
 | Gate    | Full project study review                              | Moderator decision                                             | Moderator        | Required after deployment              | Covers the workspace projects and UI library    |
 
@@ -46,7 +46,7 @@ On 2026-10-19, the Moderator moved the study break until after STEP-02 completio
 
 **Goal:** Add the gallery-owned S-11 About panel and top-bar trigger without changing the `ui` public API, token contract, existing Design IDs, or three-brand/four-scope structure.
 
-**Outputs:** native modal dialog; first-visit persistence with safe page-lifetime fallback; library `Button` trigger; five required content sections; README/header consistency; focused unit coverage; AC-17 browser checks integrated into the existing three Playwright specifications; full existing gates.
+**Outputs:** native modal dialog; first-visit persistence with safe page-lifetime fallback; library `Button` trigger; seven required content sections including distinct methodology and source-repository sections; README/header consistency; focused unit coverage; AC-17 and amendment browser checks integrated into the existing three Playwright specifications; full existing gates.
 
 **Design traceability:** No `DS-nnn` exists for S-11 and none may be invented. STEP-03 traces the panel through explicit AC-17 sub-checks. The gallery shows no Design-ID label for the panel.
 
@@ -79,6 +79,8 @@ On 2026-10-19, the Moderator moved the study break until after STEP-02 completio
 ## STEP-03 Moderator approval
 
 On 2026-10-19, the Moderator approved STEP-03 as written, its bounded design authority, D-11, and sequencing S-11 before the required S-13 deployment gate. This approval allows the Development Team to inspect the baseline and submit its exact file/command plan. It does not approve implementation; the Team must stop for separate Moderator approval of that plan.
+
+On 2026-10-19, after the initial implementation and Tech Lead review, the Moderator and Product Owner directed a distinct About-panel section linking to `https://github.com/fpmcguire/brand-ui.git`. Product v0.5 reconciles section 5.2 and AC-17 with that decision. The amendment is confined to About content and focused evidence; it changes no library API, token, asset, Design ID, route, or deployment scope. The Development Team must submit an exact amendment plan for separate Moderator approval, and the Tech Lead must perform a focused re-review before STEP-03 can be accepted.
 
 ---
 

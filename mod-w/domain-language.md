@@ -36,6 +36,7 @@ The Tech Lead owns this vocabulary. Code, tests, documentation, Steps, and revie
 | About panel              | Gallery-owned modal explanation of the project, brands, library, gallery relationship, and gallery use; not a library component. | `AboutPanel`              | About component in `ui`, page, drawer |
 | About trigger            | Top-bar library button that opens the About panel and receives restored focus when it closes.                                    | `aboutTrigger`            | Navigation item, About link           |
 | First visit              | Browser profile in which the versioned About-seen key is absent; storage failure falls back to once per page load.               | `ABOUT_SEEN_STORAGE_KEY`  | First route, first session            |
+| Source repository        | Public `brand-ui` GitHub repository linked from its own About-panel section.                                                       | source repository link    | Download link, methodology link       |
 | Reference spike          | Exploratory implementation, not production delivery.                                                                             | README wording            | Production library                    |
 | Reference Implementation | Prototype code explicitly granted a Step disposition. None exists here.                                                          | Step disposition          | Visual reference                      |
 

@@ -1,5 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ThemeService } from 'ui';
+import { ABOUT_SEEN_STORAGE_KEY } from './about-panel/about-first-visit';
+import { installDialogShim } from './about-panel/dialog-shim';
 import { GalleryPage } from './gallery-page.component';
 import { USAGE_PAIRS } from './specimens/usage-pairs';
 
@@ -25,13 +27,80 @@ async function setup() {
 describe('GalleryPage', () => {
   let style: HTMLStyleElement;
 
+  beforeAll(() => installDialogShim());
+
   beforeEach(() => {
     style = document.createElement('style');
     style.textContent = TEST_STYLES;
     document.head.appendChild(style);
+    // A seen About panel, so the first-visit dialog does not cover the gallery under test.
+    localStorage.setItem(ABOUT_SEEN_STORAGE_KEY, '1');
   });
 
-  afterEach(() => style.remove());
+  afterEach(() => {
+    style.remove();
+    localStorage.clear();
+  });
+
+  describe('About trigger', () => {
+    const trigger = (root: HTMLElement) =>
+      root.querySelector<HTMLButtonElement>('[data-testid="gallery-about-trigger"] button')!;
+
+    it('is a library button named About, in the top bar, and the dialog starts closed', async () => {
+      const { root } = await setup();
+      expect(root.querySelector('header [data-testid="gallery-about-trigger"]')?.tagName).toBe(
+        'BUI-BUTTON',
+      );
+      expect(trigger(root).textContent?.trim()).toBe('About');
+      expect(root.querySelector('dialog')).toBeNull();
+      expect(root.querySelector('header bui-navigation')).toBeNull();
+    });
+
+    it('opens the dialog on the active theme selection, and focus returns to About on close', async () => {
+      const { fixture, root, press } = await setup();
+      await press('gallery-switch-codecraft-dark');
+      trigger(root).click();
+      await fixture.whenStable();
+      const dialog = root.querySelector<HTMLDialogElement>('dialog')!;
+      expect(dialog.hasAttribute('open')).toBe(true);
+      expect(dialog.dataset['buiBrand']).toBe('codecraft');
+      expect(dialog.dataset['buiMode']).toBe('dark');
+
+      // Retained while All brands is displayed.
+      dialog.querySelector<HTMLButtonElement>('bui-button button')!.click();
+      await fixture.whenStable();
+      await press('gallery-switch-all');
+      trigger(root).click();
+      await fixture.whenStable();
+      expect(root.querySelector<HTMLDialogElement>('dialog')!.dataset['buiMode']).toBe('dark');
+
+      root
+        .querySelector<HTMLDialogElement>('dialog')!
+        .dispatchEvent(new Event('cancel', { cancelable: true }));
+      await fixture.whenStable();
+      expect(root.querySelector('dialog')).toBeNull();
+      expect(document.activeElement).toBe(trigger(root));
+    });
+
+    it('opens on a first visit and returns focus to About after that automatic opening', async () => {
+      localStorage.clear();
+      const { fixture, root } = await setup();
+      const dialog = root.querySelector<HTMLDialogElement>('dialog')!;
+      expect(dialog.hasAttribute('open')).toBe(true);
+      dialog.querySelector<HTMLButtonElement>('bui-button button')!.click();
+      await fixture.whenStable();
+      expect(document.activeElement).toBe(trigger(root));
+    });
+  });
+
+  it('has a kicker without stale step wording, and a status line that is not a second About', async () => {
+    const { root } = await setup();
+    expect(root.querySelector('.kicker')?.textContent?.trim()).toBe('brand-ui · reference spike');
+    expect(root.querySelector('[data-testid="gallery-status"]')?.textContent).toContain(
+      'Reference spike, not production.',
+    );
+    expect(root.textContent).not.toContain('STEP-0');
+  });
 
   it('starts on ArtAnon Shop with one panel and the switcher reflecting it', async () => {
     const { root, panels } = await setup();

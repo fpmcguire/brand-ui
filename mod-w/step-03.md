@@ -16,7 +16,7 @@ This Step does not deploy the gallery. Acceptance hands the completed gallery to
 
 ## Authority and traceability
 
-- Product: S-11 and AC-17; recheck AC-4 public-entry-point consumption, AC-8 complete-gallery axe coverage, AC-9 unit/browser evidence, and AC-12 truthful documentation. Product section 5.2 controls the five content points, behavior, prohibited content, top-bar trigger, and first-visit test constraint.
+- Product: S-11 and AC-17; recheck AC-4 public-entry-point consumption, AC-8 complete-gallery axe coverage, AC-9 unit/browser evidence, and AC-12 truthful documentation. Product section 5.2 controls the six content points, the single authorized external link, behavior, prohibited content, top-bar trigger, and first-visit test constraint.
 - Architecture: D-01 token authority, D-02 theme attachment, D-04 narrow library APIs/native semantics, D-05 theme-independent structure, D-07 accessibility/contrast, D-08 layered verification with exactly three Playwright specifications, D-09 documentation/asset controls, and D-11 native About-dialog lifecycle.
 - Domain language: About panel, About trigger, first visit, reference spike, three brands across four gallery scopes, and styling mode.
 - Sequence: STEP-01 and STEP-02 are accepted. S-10 and S-12 remain excluded. S-13 deployment and the later study review remain pending and out of scope.
@@ -41,13 +41,15 @@ Any need to exceed these bounds is a stop condition requiring a Moderator decisi
 3. Give the dialog an accessible name from its visible heading. On open, focus its close button. Native modal behavior provides the focus boundary; tests must prove Tab and Shift+Tab do not escape while it is open.
 4. Route close-button, Esc/native `cancel`, and backdrop dismissal through one close operation. Backdrop dismissal occurs only for a pointer interaction outside the dialog rectangle, not for a click on dialog content or padding. Restore focus to the top-bar About trigger on every close path, including the automatic first-visit opening.
 5. Automatically open once when the versioned gallery-owned seen key is absent and record the seen value when that automatic opening is initiated, not when the user closes it. Guard every `localStorage` read/write with `try/catch`. When storage is unavailable, use an in-memory flag so automatic opening occurs once per page load; manual reopen/close continues to work. A later page load may auto-open again in that fallback case.
-6. Present five short, plain-language sections matching Product section 5.2 and README wording:
+6. Present seven short, plain-language sections matching Product section 5.2, the Moderator's repository-link amendment recorded below, and README meaning:
    - this is a reference spike, not production, with the two learning/evidence purposes and no delivery, rollout, production, or official-rebrand claim;
    - exact status of ArtAnon Shop, IT English Mentor, and CodeCraft Academy, including three brands across four scopes and Light/Dark as CodeCraft modes;
    - the four-component `ui` library plus `ThemeService` and `ThemeScopeDirective`, one semantic token-name contract, no component brand values, and token-only switching;
    - the gallery as a separate public-entry-point consumer, with the switcher, forced-state specimens, token read-outs, contrast evidence, and Design IDs gallery-owned and no library dependency on the gallery;
    - how to use the scope switcher/All brands, Design IDs checkbox, panel sections, and About trigger.
-7. Exclude tutorials, installation steps, marketing claims, ArtAnon or other third-party assets, and any statement that this project validates MW-OBS-022 or MW-OBS-023.
+   - how the project was built: MOD-W v5.0.1 as a role-separated workflow with a Moderator (human-in-the-loop), Tech Lead review before QA, Claude Code as Development Team, governing documents in `mod-w/`, and one methodology link to `https://github.com/fpmcguire/mod-w`. The link opens in a new tab, uses `rel="noopener noreferrer"`, and is named `github.com/fpmcguire/mod-w (opens in a new tab)`.
+   - where to find the source: identify the public `brand-ui` GitHub repository and link to `https://github.com/fpmcguire/brand-ui.git`. The link opens in a new tab, uses `rel="noopener noreferrer"`, and is named `github.com/fpmcguire/brand-ui (opens in a new tab)`.
+7. Exclude tutorials, installation steps, marketing claims, ArtAnon or other third-party assets, external links other than the authorized MOD-W methodology and `brand-ui` repository links, and any statement that this project validates MW-OBS-022 or MW-OBS-023.
 8. Add a concise README paragraph explaining the gallery/library relationship and identifying its review-only features as gallery-owned, plus one sentence explaining automatic first-visit opening and top-bar reopening. Keep the panel and README aligned by explicit AC-17 review mapping and focused assertions for stable headings/key statements; do not create a second TypeScript source of prose.
 9. Update the gallery header kicker/status only as needed to remove stale `STEP-02` wording and remain consistent with the README/About panel. Do not turn the status line into a second full About panel.
 
@@ -67,7 +69,7 @@ Existing helpers may gain a typed helper for seeding the versioned key. Tests as
 - Successful seen-key write and guarded read/write failure behavior.
 - Once-per-page-load fallback after storage failure and continued manual reopen.
 - Native dialog open/close coordination, accessible-name wiring, close-button behavior, `cancel` handling, outside-rectangle backdrop discrimination, and focus restoration.
-- Five content headings/key statements and absence of a Design-ID badge/placeholder.
+- Seven content headings/key statements, both authorized links' destination/new-tab/`rel`/accessible-name contracts, and absence of a Design-ID badge/placeholder.
 - Existing GalleryState, header, component, and library tests remain passing. Do not replace browser-only focus-containment evidence with DOM-emulator assertions.
 
 ## Allowed files
@@ -108,7 +110,7 @@ No dependency, `package.json`, lockfile, workspace, route, token, library, or pu
 1. Stop before edits and submit an exact file/command plan to the Moderator. It must identify the storage key, component/helper boundaries, native-dialog event/focus flow, README/header copy changes, allocation of AC-17 across the existing three browser specs, unit tests, and every final gate. Wait for explicit approval.
 2. Record `node --version`, `npm --version`, `npx ng version`, and `npx tsc --version`. Stop on mismatch with Node 26, Angular 22.2, or TypeScript 6.
 3. Implement the narrow storage/state helper and focused Vitest coverage, then the gallery-owned dialog and top-bar library-button trigger.
-4. Add the five bounded content sections, theme attachment, token-only styles, accessible name, native modal focus behavior, close paths, and deterministic focus restoration.
+4. Add the seven bounded content sections, the two safeguarded external links, theme attachment, token-only styles, accessible name, native modal focus behavior, close paths, and deterministic focus restoration.
 5. Reconcile README and gallery header wording without changing Product meaning or adding prohibited claims.
 6. Extend only the existing unit tests and three Playwright specifications as allocated above. Preserve all accepted coverage.
 7. Run every final verification command and inspect scope, public imports, tokens, assets, design directory, spec count, and documentation/content parity.
@@ -139,10 +141,10 @@ The final report must also show read-only evidence that:
 
 - `e2e/` still contains exactly three `*.spec.ts` files and Playwright still declares Chromium only;
 - the About panel and gallery import `Button`, `ThemeScopeDirective`, and any other library symbol only from `ui`; `projects/ui/src/public-api.ts` is unchanged and no About symbol is exported;
-- token files, token names/values, existing Design IDs, library source, dependencies, routes, `mod-w/product.md`, and `mod-w/design/` are unchanged;
+- token files, token names/values, existing Design IDs, library source, dependencies, routes, and `mod-w/design/` are unchanged; `mod-w/product.md` differs only by the Moderator-authorized post-review reconciliation recorded below;
 - the panel contains no Design-ID badge/placeholder and no brand-specific conditional structure;
 - every new semantic token usage pair passes AC-7 in all four scopes;
-- README, gallery header, and the five panel content sections contain consistent reference-spike, brand-status, library-boundary, and gallery-use claims;
+- README, gallery header, and the seven panel content sections contain consistent reference-spike, brand-status, library-boundary, gallery-use, workflow-provenance, and source-repository claims; both external links meet their destination, new-tab, `rel`, and accessible-name contracts;
 - full-gallery and open-dialog axe scans report no serious or critical violations;
 - no restricted asset or prohibited claim entered the repository.
 
@@ -153,17 +155,19 @@ The final report must also show read-only evidence that:
 - [ ] **AC-17.3 Library:** It names the four components, `ThemeService`, `ThemeScopeDirective`, common semantic token names, absent component brand values, and token-only switching.
 - [ ] **AC-17.4 Boundary:** It says the gallery is separate, imports through `ui`'s public entry point, owns the switcher/forced states/token read-outs/contrast/Design IDs, and is not a library dependency (AC-4).
 - [ ] **AC-17.5 Use:** It explains the switcher and All brands, Design IDs checkbox, panel sections, and top-bar About reopening.
+- [ ] **AC-17.6 Built:** It gives the authorized MOD-W/role/Claude Code provenance, identifies `mod-w/`, includes only the safeguarded MOD-W methodology link, and makes no MOD-W or MW-OBS validation claim.
+- [ ] **AC-17.7 Source repository:** A distinct source-repository section links to `https://github.com/fpmcguire/brand-ui.git`; the link opens in a new tab, uses `rel="noopener noreferrer"`, and is named `github.com/fpmcguire/brand-ui (opens in a new tab)`.
 - [ ] The panel is gallery-owned, absent from `ui` exports, consumes library symbols only through `ui`, and changes no library API or `Navigation`.
 - [ ] The library `Button` top-bar trigger is named `About`; native `<dialog>` has a visible accessible name, opens modally, initially focuses Close, contains keyboard focus, and restores focus to About after every close path.
 - [ ] Close button, Esc/native `cancel`, and outside-rectangle backdrop dismissal work; interaction inside the dialog does not backdrop-close it.
 - [ ] Automatic opening occurs only when the versioned seen key is absent; storage reads/writes are guarded; unavailable storage opens at most once per page load and does not break manual use.
 - [ ] The panel follows all four scope selections through existing tokens only, has no brand-specific structure, and every painted token pair passes AC-7.
 - [ ] No Design ID is invented or displayed for S-11; review evidence maps the AC-17 sub-checks instead.
-- [ ] README and header are consistent with the panel and Product; prohibited panel content and claims are absent (AC-12).
+- [ ] README and header are consistent in meaning with the panel and Product; the authorized link is correctly safeguarded; all other prohibited panel content, external links, and claims are absent (AC-12).
 - [ ] Exactly three Chromium Playwright specifications remain. First-visit setup does not obstruct existing brand, contrast, keyboard, long-label, bevel, or full-gallery axe coverage (AC-8/AC-9).
 - [ ] Focused Vitest and Chromium checks cover the required state, storage, dialog, content, keyboard, persistence, and focus-restoration behavior; all existing tests remain passing.
 - [ ] Formatting, token, asset, E2E typecheck, unit, browser, accessibility, build, diff, and scope gates all pass under the approved toolchain.
-- [ ] Final diff stays inside the allowed implementation list and contains no S-10, S-12, deployment, design-artifact, Product, QA, library, dependency, route, token, asset, or unrelated change.
+- [ ] The implementation diff stays inside the allowed implementation list and contains no S-10, S-12, deployment, design-artifact, QA, library, dependency, route, token, asset, or unrelated change. The later Product/Step edits are limited to the Moderator-authorized post-review authority reconciliation recorded below.
 
 Every checkbox remains unmet until the Development Team supplies diff, command, test, or browser evidence and independent review accepts it.
 
@@ -188,6 +192,8 @@ Stop and report to the Moderator if:
 - **Approved sequence:** S-11 completes before the required S-13 deployment gate.
 - **Effect:** The Development Team may inspect the accepted baseline and submit the exact implementation plan required by procedure item 1.
 - **Implementation gate:** No source or test implementation begins until the Moderator separately approves that Team plan.
+- **Post-review amendment:** On 2026-10-19, the Moderator directed Product 5.2/AC-17 and STEP-03 to be reconciled with the already supplied sixth “How this was built” section and its single safeguarded MOD-W methodology link. This amendment authorizes those content/evidence requirements and does not broaden implementation scope beyond the reviewed files.
+- **Repository-link amendment:** On 2026-10-19, the Moderator and Product Owner directed a distinct About-panel section linking to the public `brand-ui` GitHub repository at `https://github.com/fpmcguire/brand-ui.git`. This supersedes the prior one-external-link limit only to permit that second safeguarded link. Product v0.5 reconciles section 5.2 and AC-17 with this decision. The Development Team must submit an exact amendment plan and receive separate Moderator approval before editing implementation or tests. The prior Tech Lead Pass does not cover this amendment; STEP-03 requires focused re-review before acceptance.
 
 ---
 

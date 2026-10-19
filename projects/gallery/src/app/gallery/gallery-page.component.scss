@@ -81,6 +81,19 @@
   min-height: 44px;
 }
 
+// The library Button needs a theme scope, so the trigger sits in one. It is the primary variant: it
+// paints its own fill, so its text pair is on-primary on primary and never depends on the neutral
+// bar. Its focus ring is the bar's own neutral one, like the switcher buttons, through the
+// library's optional --bui-state-outline override, because a token-coloured ring would sit on the
+// neutral bar rather than on a themed surface.
+.about-trigger {
+  display: inline-flex;
+
+  &:has(:focus-visible) {
+    --bui-state-outline: 3px solid #f4f3ef;
+  }
+}
+
 .id {
   display: inline-block;
   padding: 0 0.375rem;

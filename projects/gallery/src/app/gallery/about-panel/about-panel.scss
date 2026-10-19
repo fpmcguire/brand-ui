@@ -1,0 +1,89 @@
+// Gallery-owned and token-only: the dialog sets its own theme scope, so every colour, type and
+// space value below resolves from the active selection. The one literal is the neutral scrim, which
+// matches the gallery's own neutral chrome and carries no text.
+:host {
+  display: contents;
+}
+
+.about {
+  box-sizing: border-box;
+  width: min(42rem, calc(100% - 2 * var(--bui-space-4)));
+  max-height: 90dvh;
+  margin: auto;
+  padding: 0 var(--bui-space-5) var(--bui-space-5);
+  overflow-y: auto;
+  border: var(--bui-border-width) solid var(--bui-color-border-strong);
+  border-radius: var(--bui-radius-card);
+  border-top-right-radius: var(--bui-radius-tr-panel);
+  background: var(--bui-color-bg);
+  color: var(--bui-color-text);
+  box-shadow: var(--bui-elevation-raised);
+  font-family: var(--bui-font-body);
+  font-size: var(--bui-size-body);
+
+  &::backdrop {
+    background: rgb(27 27 27 / 0.75);
+  }
+
+  p,
+  ul {
+    margin: var(--bui-space-2) 0 0;
+  }
+
+  ul {
+    padding-left: var(--bui-space-4);
+  }
+
+  li + li {
+    margin-top: var(--bui-space-2);
+  }
+
+  code {
+    font-family: var(--bui-font-mono);
+  }
+
+  // The links: underlined so it is not told apart by colour alone.
+  a {
+    color: var(--bui-color-primary);
+    text-decoration: underline;
+
+    &:focus-visible {
+      outline: var(--bui-focus-width) solid var(--bui-color-focus);
+      outline-offset: var(--bui-focus-offset);
+    }
+  }
+}
+
+// Stays in view so Close is always reachable while the content scrolls.
+.head {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bui-space-3);
+  padding: var(--bui-space-4) 0 var(--bui-space-3);
+  background: var(--bui-color-bg);
+}
+
+.title,
+.section-title {
+  margin: 0;
+  font-family: var(--bui-font-display);
+  font-weight: var(--bui-weight-display);
+  line-height: var(--bui-line-height-title);
+}
+
+.title {
+  font-size: var(--bui-size-title);
+}
+
+.section-title {
+  font-size: calc(var(--bui-size-title) * 0.75);
+}
+
+.section {
+  margin-top: var(--bui-space-4);
+  padding-top: var(--bui-space-3);
+  border-top: var(--bui-border-width) solid var(--bui-color-border);
+}

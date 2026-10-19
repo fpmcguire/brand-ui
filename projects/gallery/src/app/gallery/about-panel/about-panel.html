@@ -1,0 +1,139 @@
+@if (rendered()) {
+  <dialog
+    #dialog
+    class="about"
+    aria-labelledby="gal-about-title"
+    data-testid="gallery-about-dialog"
+    [buiThemeScope]="selection()"
+    (cancel)="onCancel($event)"
+    (pointerdown)="onPointerDown($event)"
+    (click)="onClick($event)"
+  >
+    <header class="head">
+      <h2 class="title" id="gal-about-title">About brand-ui</h2>
+      <bui-button #closeButton variant="secondary" (activated)="close()">Close</bui-button>
+    </header>
+
+    <section class="section" aria-labelledby="gal-about-project">
+      <h3 class="section-title" id="gal-about-project">A reference spike, not production</h3>
+      <p>
+        brand-ui is a reference spike, not production software. It exists to model how a digital
+        agency serves several unrelated clients from one shared component base, with each brand's
+        identity applied through design tokens.
+      </p>
+      <p>
+        It has two purposes: domain learning, and workflow evidence, a small data point on how a
+        role-separated workflow governs a reusable UI system. It makes no production,
+        client-delivery, official-rebrand or rollout claim.
+      </p>
+    </section>
+
+    <section class="section" aria-labelledby="gal-about-brands">
+      <h3 class="section-title" id="gal-about-brands">Three brands, four scopes</h3>
+      <p>
+        The gallery shows three brands across four scopes: CodeCraft Academy Light and Dark are two
+        styling modes of one brand.
+      </p>
+      <ul>
+        <li>
+          <strong>ArtAnon Shop:</strong> a real business owned by a third party. This is an
+          unofficial concept exploration of turning its existing identity into tokens. It is not an
+          official rebrand, and no affiliation or delivery claim is made. Only palette values and a
+          text wordmark are used: no logo, artwork or photography.
+        </li>
+        <li>
+          <strong>IT English Mentor:</strong> a new brand for the Moderator's own freelance venture.
+          Its visual direction may later become real.
+        </li>
+        <li>
+          <strong>CodeCraft Academy:</strong> a placeholder name for open-source tech and code
+          examples.
+        </li>
+      </ul>
+    </section>
+
+    <section class="section" aria-labelledby="gal-about-library">
+      <h3 class="section-title" id="gal-about-library">The ui library</h3>
+      <p>
+        The ui library has four components: Button, TextInput, Card and Navigation. It also has
+        ThemeService, which owns the selected theme, and ThemeScopeDirective, which attaches a theme
+        to one part of a page.
+      </p>
+      <p>
+        Every brand fills the same set of semantic token names (<code>--bui-*</code>), and the
+        components hold no brand values. Switching brand changes tokens only, never component
+        structure.
+      </p>
+    </section>
+
+    <section class="section" aria-labelledby="gal-about-boundary">
+      <h3 class="section-title" id="gal-about-boundary">How the gallery relates to the library</h3>
+      <p>
+        The gallery is a separate review application. It imports the library only through the ui
+        public entry point, as an outside consumer would, and the library does not depend on the
+        gallery.
+      </p>
+      <p>
+        Everything the gallery adds is its own and is not library API: the brand scope switcher, the
+        persistent hover, focus and active specimens, the token read-outs, the contrast evidence and
+        the Design IDs.
+      </p>
+    </section>
+
+    <section class="section" aria-labelledby="gal-about-use">
+      <h3 class="section-title" id="gal-about-use">Using the gallery</h3>
+      <ul>
+        <li>
+          <strong>Brand scope switcher:</strong> choose ArtAnon Shop, IT English Mentor, CodeCraft
+          Academy Light or CodeCraft Academy Dark, or All brands to stack the four scopes. Switching
+          restyles every component without a reload.
+        </li>
+        <li>
+          <strong>Design IDs checkbox:</strong> shows or hides each Design ID beside token groups
+          and component states.
+        </li>
+        <li>
+          <strong>Panel sections:</strong> each scope shows its tokens read from the computed style,
+          then Button, Text input, Card, Navigation bar, Long label and Contrast evidence.
+        </li>
+        <li>
+          <strong>About:</strong> this panel opens by itself on a browser's first visit. The About
+          button in the top bar opens it again.
+        </li>
+      </ul>
+    </section>
+
+    <section class="section" aria-labelledby="gal-about-built">
+      <h3 class="section-title" id="gal-about-built">How this was built</h3>
+      <p>
+        Built with MOD-W v5.0.1, a role-separated workflow in which a Moderator (human-in-the-loop)
+        approves each step and plan and a Tech Lead reviews each step before QA. Implementation was
+        done by Claude Code acting as the Development Team.
+      </p>
+      <p>
+        The governing documents are in <code>mod-w/</code>; the methodology is at
+        <a
+          href="https://github.com/fpmcguire/mod-w"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="github.com/fpmcguire/mod-w (opens in a new tab)"
+          >github.com/fpmcguire/mod-w</a
+        >.
+      </p>
+    </section>
+
+    <section class="section" aria-labelledby="gal-about-source">
+      <h3 class="section-title" id="gal-about-source">Source repository</h3>
+      <p>
+        The source code is in the public brand-ui repository on GitHub:
+        <a
+          href="https://github.com/fpmcguire/brand-ui.git"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="github.com/fpmcguire/brand-ui (opens in a new tab)"
+          >github.com/fpmcguire/brand-ui</a
+        >.
+      </p>
+    </section>
+  </dialog>
+}

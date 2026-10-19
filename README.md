@@ -22,6 +22,8 @@ All brands share one component set and one set of semantic `--bui-*` token names
 
 `projects/ui` is the library. Its public entry point exports four standalone, signal-based components: `Button`, `TextInput`, `Card` and `Navigation`, plus `ThemeService` and `ThemeScopeDirective` for choosing and attaching a brand. `projects/gallery` is the review application; it imports the library only through `ui`.
 
+The gallery is a separate review application, not part of the library. It imports the library only through `ui`'s public entry point, as an outside consumer would, and the library does not depend on it. The brand scope switcher, the persistent hover, focus and active specimens, the token read-outs, the contrast evidence and the Design IDs are gallery-owned review features, not library API.
+
 ## Setup
 
 Requires Node 26 and npm 11. The project uses Angular 22.2 and TypeScript 6.
@@ -42,6 +44,7 @@ Open <http://localhost:4200/>. The gallery has no backend and needs no code chan
 - **Brand scope switcher** (top): ArtAnon Shop, IT English Mentor, CodeCraft Academy Light, CodeCraft Academy Dark, or **All brands** to see the four scopes stacked. Switching restyles every component without a reload.
 - **Design IDs** checkbox: shows the `DS-nnn` identifier beside each token group and component state.
 - Each panel shows its **tokens** (read from the computed style), then **Button**, **Text input**, **Card**, **Navigation bar**, **Long label** and **Contrast evidence**.
+- **About** panel: opens automatically the first time a browser visits the gallery (once per page load if storage is unavailable) and reopens from the **About** button in the top bar.
 - Hover, focus and active states are shown persistently so no interaction is needed. These are gallery-owned presentation; the real `:hover`, `:focus-visible` and `:active` styles behave the same and can be tried by hand.
 
 ## Commands
@@ -74,6 +77,7 @@ The accepted shortcuts for this spike are listed in the [Product shortcuts list]
 
 ## How this was built
 
-Built with MOD-W v5.0.1, a role-separated workflow in which a Moderator approves each step and plan and a Tech Lead reviews each step before QA.
+Built with MOD-W v5.0.1, a role-separated workflow in which a Moderator (human-in-the-loop) approves each step and plan and a Tech Lead reviews each step before QA.
 Implementation was done by Claude Code acting as the Development Team.
+
 The governing documents are in [`mod-w/`](mod-w/); the method is at [github.com/fpmcguire/mod-w](https://github.com/fpmcguire/mod-w).

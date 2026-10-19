@@ -1,0 +1,185 @@
+// Tokens only. `--bui-state-*` are optional inherited overrides: real pseudo-classes and a host
+// that forces a state both end up in the same properties below.
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.card {
+  --_border: var(--bui-color-border);
+  --_shadow: var(--bui-elevation-card);
+  --_outline: none;
+  --_link-decoration: none;
+
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--bui-color-surface);
+  color: var(--bui-color-text);
+  border: var(--bui-border-width) solid var(--bui-state-border, var(--_border));
+  border-radius: var(--bui-radius-card);
+  // Must follow the shorthand above, which would otherwise reset this corner. Browsers without
+  // `corner-shape` keep the rounded corner of the same size.
+  border-top-right-radius: var(--bui-radius-tr-card);
+  corner-top-right-shape: var(--bui-corner-shape-card);
+  box-shadow: var(--bui-state-shadow, var(--_shadow));
+  outline: var(--bui-state-outline, var(--_outline));
+  outline-offset: var(--bui-focus-offset);
+  font-family: var(--bui-font-body);
+  font-size: var(--bui-size-body);
+
+  &[data-interactive] {
+    cursor: pointer;
+  }
+
+  &[data-interactive]:hover {
+    --_border: var(--bui-color-border-strong);
+    --_shadow: var(--bui-elevation-raised);
+    --_link-decoration: underline;
+  }
+
+  &[data-interactive]:active {
+    --_border: var(--bui-color-primary);
+    --_shadow: var(--bui-elevation-card);
+  }
+
+  &:focus-within {
+    --_outline: var(--bui-focus-width) solid var(--bui-color-focus);
+  }
+}
+
+.media {
+  box-sizing: border-box;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: var(--bui-space-3);
+  background: var(--bui-color-surface-sunken);
+  color: var(--bui-color-text-muted);
+  font-size: var(--bui-size-small);
+}
+
+.tag {
+  padding: var(--bui-space-1) var(--bui-space-2);
+  background: var(--bui-color-accent);
+  color: var(--bui-color-on-accent);
+  border-radius: var(--bui-radius-control);
+  font-family: var(--bui-font-ui);
+  font-weight: var(--bui-weight-ui);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bui-space-2);
+  padding: var(--bui-space-4);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--bui-font-display);
+  font-weight: var(--bui-weight-display);
+  font-size: var(--bui-size-title);
+  line-height: var(--bui-line-height-title);
+}
+
+.text,
+.meta {
+  margin: 0;
+}
+
+.meta {
+  color: var(--bui-color-text-muted);
+  font-size: var(--bui-size-small);
+}
+
+.code {
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--bui-space-3);
+  background: var(--bui-color-bg);
+  color: var(--bui-color-text);
+  border: var(--bui-border-width) solid var(--bui-color-border);
+  border-radius: var(--bui-radius-control);
+  font-family: var(--bui-font-mono);
+  font-size: var(--bui-size-small);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.link {
+  color: inherit;
+  text-decoration: var(--bui-state-link-decoration, var(--_link-decoration));
+  text-decoration-thickness: var(--bui-indicator-width);
+
+  // The card shows focus on itself (:focus-within), so the link draws none of its own.
+  &:focus-visible {
+    outline: none;
+  }
+
+  // Stretches the single link's hit area over the whole card: one tab stop, one native link.
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+}
+
+.skeleton {
+  display: block;
+  background: var(--bui-color-surface-sunken);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+// The loading media block stays square under the card's own clipped corners; only the text
+// placeholders take the control radius.
+.skeleton-title,
+.skeleton-line {
+  border-radius: var(--bui-radius-control);
+}
+
+.skeleton-title {
+  width: 60%;
+  height: var(--bui-space-5);
+}
+
+.skeleton-line {
+  width: 100%;
+  height: var(--bui-space-3);
+}
+
+.skeleton-short {
+  width: 40%;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}

@@ -1,0 +1,138 @@
+<header class="top">
+  <div class="top-row">
+    <div>
+      <p class="kicker">brand-ui · reference spike · STEP-01</p>
+      <h1 class="heading">Gallery</h1>
+    </div>
+    <div class="controls">
+      <div class="switcher" role="group" aria-label="Brand scope">
+        @for (option of state.options; track option.id) {
+          <button
+            type="button"
+            class="seg"
+            [attr.aria-pressed]="state.isPressed(option.id)"
+            [attr.data-testid]="'gallery-switch-' + option.id"
+            (click)="state.choose(option.id)"
+          >
+            {{ option.label }}
+          </button>
+        }
+      </div>
+      <label class="check">
+        <input
+          #designIds
+          type="checkbox"
+          [checked]="state.showDesignIds()"
+          (change)="state.showDesignIds.set(designIds.checked)"
+        />
+        Design IDs
+        @if (state.showDesignIds()) {
+          <span class="id">DS-004</span>
+        }
+      </label>
+    </div>
+  </div>
+  <p class="status" data-testid="gallery-status">
+    Reference spike, not production. Three brands are shown across four scopes; CodeCraft Academy
+    Light and Dark are modes of one brand. ArtAnon Shop is an unofficial concept exploration with no
+    affiliation or delivery claim. Button and card only; text input and navigation arrive in
+    STEP-02.
+    @if (state.showDesignIds()) {
+      <span class="id">DS-005</span>
+    }
+  </p>
+</header>
+
+<main class="main">
+  @for (scope of state.visibleScopes(); track scope.id) {
+    <section
+      class="panel"
+      [buiThemeScope]="scope.selection"
+      [attr.aria-labelledby]="scope.id + '-title'"
+      [attr.data-testid]="'gallery-panel-' + scope.id"
+    >
+      <h2 class="panel-title" [id]="scope.id + '-title'">{{ scope.label }}</h2>
+      @if (scope.note) {
+        <p class="note">{{ scope.note }}</p>
+      }
+
+      <section class="block" [attr.aria-labelledby]="scope.id + '-tokens'">
+        <h3 class="block-title" [id]="scope.id + '-tokens'">
+          Tokens, read from computed CSS
+          @if (state.showDesignIds()) {
+            <span class="id">DS-060</span>
+          }
+        </h3>
+        <p class="note">
+          Every value below is read from this panel's computed style. Contrast verification arrives
+          in STEP-02.
+        </p>
+        @for (group of tokenGroups; track group.id) {
+          <gal-token-group [group]="group" [scope]="scope.selection" />
+        }
+      </section>
+
+      <section class="block" [attr.aria-labelledby]="scope.id + '-button'">
+        <h3 class="block-title" [id]="scope.id + '-button'">Button</h3>
+        <div class="grid">
+          @for (variant of buttonVariants; track variant) {
+            @for (specimen of buttonSpecimens; track specimen.state) {
+              <div
+                class="specimen"
+                data-specimen="button"
+                [attr.data-specimen-state]="specimen.forced ? specimen.state : null"
+                [attr.data-specimen-variant]="variant"
+                [attr.data-testid]="'gallery-button-' + variant + '-' + specimen.state"
+              >
+                <p class="caption">
+                  {{ variant }} · {{ specimen.state }}
+                  @if (state.showDesignIds()) {
+                    <span class="id">{{ specimen.designId }}</span>
+                  }
+                </p>
+                <bui-button
+                  [variant]="variant"
+                  [disabled]="specimen.state === 'disabled'"
+                  [loading]="specimen.state === 'loading'"
+                  >Sample action</bui-button
+                >
+              </div>
+            }
+          }
+        </div>
+      </section>
+
+      <section class="block" [attr.aria-labelledby]="scope.id + '-card'">
+        <h3 class="block-title" [id]="scope.id + '-card'">Card</h3>
+        <div class="grid grid-cards">
+          @for (specimen of cardSpecimens; track specimen.state) {
+            <div
+              class="specimen"
+              data-specimen="card"
+              [attr.data-specimen-state]="specimen.forced ? specimen.state : null"
+              [attr.data-testid]="'gallery-card-' + specimen.state"
+              (click)="keepOnPage($event)"
+            >
+              <p class="caption">
+                {{ specimen.label }}
+                @if (state.showDesignIds()) {
+                  <span class="id">{{ specimen.designId }}</span>
+                }
+              </p>
+              <bui-card
+                [title]="cardContent[scope.id].title"
+                [description]="cardContent[scope.id].description"
+                [meta]="cardContent[scope.id].meta"
+                [tag]="cardContent[scope.id].tag"
+                [mediaLabel]="cardContent[scope.id].mediaLabel"
+                [codeSample]="cardContent[scope.id].codeSample"
+                [href]="specimen.linked ? '#sample' : undefined"
+                [loading]="specimen.loading"
+              />
+            </div>
+          }
+        </div>
+      </section>
+    </section>
+  }
+</main>

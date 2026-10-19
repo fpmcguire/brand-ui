@@ -1,6 +1,6 @@
 # STEP-01 — Theme foundation, button, card, and gallery shell
 
-**Status:** Planned; requires Moderator activation before implementation
+**Status:** Accepted by the Moderator, 2026-10-19
 
 ---
 

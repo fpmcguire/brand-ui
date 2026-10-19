@@ -14,8 +14,8 @@ The one-day reference spike is delivered in two reviewable Steps separated by a 
 
 | Step | Title | Requirements | Agent | Status | Notes |
 | --- | --- | --- | --- | --- | --- |
-| STEP-01 | Theme foundation, button, card, and gallery shell | S-1, S-2, part S-3/S-4, S-8, S-9; AC-1 to AC-5, AC-13 to AC-16 | Claude Code | Planned | CodeCraft is first approved cut |
-| Gate | Moderator study break | Product 1.2 | Moderator | Required | Step 2 cannot begin until explicitly ended |
+| STEP-01 | Theme foundation, button, card, and gallery shell | S-1, S-2, part S-3/S-4, S-8, S-9; AC-1 to AC-5, AC-13 to AC-16 | Claude Code | Accepted 2026-10-19 | CodeCraft is first approved cut |
+| Gate | Moderator study break | Product 1.2 | Moderator | Active | Step 2 cannot begin until explicitly ended |
 | STEP-02 | Input, navigation, long labels, and final verification | remaining S-3 to S-7, S-9; AC-4 to AC-15 | Claude Code | Planned | Adds Playwright, axe, README, final gates |
 
 ## STEP-01

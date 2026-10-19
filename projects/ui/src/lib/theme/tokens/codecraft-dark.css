@@ -1,0 +1,21 @@
+/* CodeCraft Academy - Dark styling mode: color values only. A mode of one brand, not a general dark theme. */
+[data-bui-brand='codecraft'][data-bui-mode='dark'] {
+  --bui-color-bg: #1c1611;
+  --bui-color-surface: #271f18;
+  --bui-color-surface-sunken: #15100c;
+  --bui-color-text: #f3ebdb;
+  --bui-color-text-muted: #b8ab94;
+  --bui-color-border: #40362b;
+  --bui-color-border-strong: #8f8068;
+  --bui-color-primary: #e2705a;
+  --bui-color-on-primary: #1c1611;
+  --bui-color-primary-hover: #ee8570;
+  --bui-color-primary-active: #cf5f4a;
+  --bui-color-primary-tint: #3a241d;
+  --bui-color-accent: #d4b483;
+  --bui-color-on-accent: #1c1611;
+  --bui-color-focus: #f3ebdb;
+  --bui-color-danger: #f2929b;
+  --bui-color-disabled-bg: #2a231b;
+  --bui-color-disabled-text: #7a6d5a;
+}

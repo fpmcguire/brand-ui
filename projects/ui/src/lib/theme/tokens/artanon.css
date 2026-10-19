@@ -1,0 +1,57 @@
+/* ArtAnon Shop - unofficial concept exploration (palette values only; no logo or artwork). */
+[data-bui-brand='artanon'] {
+  --bui-color-bg: #fdfbf7;
+  --bui-color-surface: #ffffff;
+  --bui-color-surface-sunken: #efe8db;
+  --bui-color-text: #2b2420;
+  --bui-color-text-muted: #665a50;
+  --bui-color-border: #dcd3c4;
+  --bui-color-border-strong: #857868;
+  --bui-color-primary: #1e5fa0;
+  --bui-color-on-primary: #ffffff;
+  --bui-color-primary-hover: #174d85;
+  --bui-color-primary-active: #103a66;
+  --bui-color-primary-tint: #e6edf5;
+  --bui-color-accent: #e0a93b;
+  --bui-color-on-accent: #2b2420;
+  --bui-color-focus: #1e5fa0;
+  --bui-color-danger: #b3261e;
+  --bui-color-disabled-bg: #ece6da;
+  --bui-color-disabled-text: #8f8578;
+
+  --bui-font-display: 'Instrument Serif', Georgia, serif;
+  --bui-font-body: 'Work Sans', system-ui, sans-serif;
+  --bui-font-ui: 'Work Sans', system-ui, sans-serif;
+  --bui-font-mono: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --bui-weight-display: 400;
+  --bui-weight-ui: 500;
+  --bui-letter-spacing-ui: 0.02em;
+  --bui-size-body: 1rem;
+  --bui-size-ui: 1rem;
+  --bui-size-small: 0.875rem;
+  --bui-size-title: 1.75rem;
+  --bui-line-height-ui: 1.3;
+  --bui-line-height-title: 1.15;
+
+  --bui-space-1: 4px;
+  --bui-space-2: 8px;
+  --bui-space-3: 16px;
+  --bui-space-4: 24px;
+  --bui-space-5: 32px;
+  --bui-space-6: 48px;
+
+  --bui-radius-control: 2px;
+  --bui-radius-card: 2px;
+  --bui-radius-round: 9999px;
+  --bui-radius-tr-control: 2px;
+  --bui-radius-tr-card: 2px;
+  --bui-radius-tr-panel: 0px;
+  --bui-corner-shape-card: round;
+  --bui-border-width: 1px;
+  --bui-indicator-width: 3px;
+  --bui-focus-width: 2px;
+  --bui-focus-offset: 2px;
+  --bui-control-height: 44px;
+  --bui-elevation-card: none;
+  --bui-elevation-raised: none;
+}

@@ -1,0 +1,63 @@
+/**
+ * Names only. Every scope must resolve all of these; the values live in `tokens/*.css` and nowhere
+ * else. Not part of the public API.
+ */
+export const TOKEN_NAMES = [
+  '--bui-color-bg',
+  '--bui-color-surface',
+  '--bui-color-surface-sunken',
+  '--bui-color-text',
+  '--bui-color-text-muted',
+  '--bui-color-border',
+  '--bui-color-border-strong',
+  '--bui-color-primary',
+  '--bui-color-on-primary',
+  '--bui-color-primary-hover',
+  '--bui-color-primary-active',
+  '--bui-color-primary-tint',
+  '--bui-color-accent',
+  '--bui-color-on-accent',
+  '--bui-color-focus',
+  '--bui-color-danger',
+  '--bui-color-disabled-bg',
+  '--bui-color-disabled-text',
+  '--bui-font-display',
+  '--bui-font-body',
+  '--bui-font-ui',
+  '--bui-font-mono',
+  '--bui-weight-display',
+  '--bui-weight-ui',
+  '--bui-letter-spacing-ui',
+  '--bui-size-body',
+  '--bui-size-ui',
+  '--bui-size-small',
+  '--bui-size-title',
+  '--bui-line-height-ui',
+  '--bui-line-height-title',
+  '--bui-space-1',
+  '--bui-space-2',
+  '--bui-space-3',
+  '--bui-space-4',
+  '--bui-space-5',
+  '--bui-space-6',
+  '--bui-radius-control',
+  '--bui-radius-card',
+  '--bui-radius-round',
+  '--bui-radius-tr-control',
+  '--bui-radius-tr-card',
+  '--bui-radius-tr-panel',
+  '--bui-corner-shape-card',
+  '--bui-border-width',
+  '--bui-indicator-width',
+  '--bui-focus-width',
+  '--bui-focus-offset',
+  '--bui-control-height',
+  '--bui-elevation-card',
+  '--bui-elevation-raised',
+] as const;
+
+export type TokenName = (typeof TOKEN_NAMES)[number];
+
+export const COLOR_TOKEN_NAMES: readonly TokenName[] = TOKEN_NAMES.filter((name) =>
+  name.startsWith('--bui-color-'),
+);

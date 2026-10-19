@@ -1,0 +1,21 @@
+/* CodeCraft Academy - Light styling mode: color values only. */
+[data-bui-brand='codecraft'][data-bui-mode='light'] {
+  --bui-color-bg: #f3ebdb;
+  --bui-color-surface: #fbf7ee;
+  --bui-color-surface-sunken: #e8deca;
+  --bui-color-text: #3b2e1e;
+  --bui-color-text-muted: #6b5b45;
+  --bui-color-border: #cbc1b2;
+  --bui-color-border-strong: #8c7c64;
+  --bui-color-primary: #a5372a;
+  --bui-color-on-primary: #fbf7ee;
+  --bui-color-primary-hover: #8c2d22;
+  --bui-color-primary-active: #73241b;
+  --bui-color-primary-tint: #ebdccb;
+  --bui-color-accent: #d4b483;
+  --bui-color-on-accent: #3b2e1e;
+  --bui-color-focus: #3b2e1e;
+  --bui-color-danger: #8c1d2c;
+  --bui-color-disabled-bg: #e6ddcb;
+  --bui-color-disabled-text: #9a8c76;
+}

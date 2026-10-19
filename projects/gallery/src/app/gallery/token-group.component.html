@@ -1,0 +1,36 @@
+<h4 class="title">
+  {{ group().label }}
+  @if (state.showDesignIds()) {
+    <span class="badge">{{ group().designId }}</span>
+  }
+</h4>
+<ul class="tokens" [attr.data-testid]="'gallery-tokens-' + group().id">
+  @for (name of group().names; track name) {
+    <li class="token" [attr.data-token]="name">
+      @switch (preview(name)) {
+        @case ('color') {
+          <span class="chip" aria-hidden="true" [style.background]="'var(' + name + ')'"></span>
+        }
+        @case ('font') {
+          <span class="sample" aria-hidden="true" [style.font-family]="'var(' + name + ')'"
+            >Aa</span
+          >
+        }
+        @case ('space') {
+          <span class="bar" aria-hidden="true" [style.width]="'var(' + name + ')'"></span>
+        }
+        @case ('radius') {
+          <span class="box" aria-hidden="true" [style.border-radius]="'var(' + name + ')'"></span>
+        }
+        @case ('elevation') {
+          <span class="box" aria-hidden="true" [style.box-shadow]="'var(' + name + ')'"></span>
+        }
+        @default {
+          <span class="none" aria-hidden="true"></span>
+        }
+      }
+      <code class="name">{{ name }}</code>
+      <span class="value" data-testid="gallery-token-value">{{ values()[name] }}</span>
+    </li>
+  }
+</ul>

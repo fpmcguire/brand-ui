@@ -1,0 +1,38 @@
+/* CodeCraft Academy (placeholder brand) - values shared by both styling modes. No color tokens here. */
+[data-bui-brand='codecraft'] {
+  --bui-font-display: 'Spectral', Georgia, serif;
+  --bui-font-body: 'Sora', system-ui, sans-serif;
+  --bui-font-ui: 'IBM Plex Mono', ui-monospace, monospace;
+  --bui-font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --bui-weight-display: 500;
+  --bui-weight-ui: 500;
+  --bui-letter-spacing-ui: 0.02em;
+  --bui-size-body: 0.9375rem;
+  --bui-size-ui: 0.875rem;
+  --bui-size-small: 0.8125rem;
+  --bui-size-title: 1.375rem;
+  --bui-line-height-ui: 1.3;
+  --bui-line-height-title: 1.15;
+
+  --bui-space-1: 4px;
+  --bui-space-2: 8px;
+  --bui-space-3: 12px;
+  --bui-space-4: 16px;
+  --bui-space-5: 24px;
+  --bui-space-6: 40px;
+
+  --bui-radius-control: 0px;
+  --bui-radius-card: 0px;
+  --bui-radius-round: 9999px;
+  --bui-radius-tr-control: 0px;
+  --bui-radius-tr-card: 16px;
+  --bui-radius-tr-panel: 32px;
+  --bui-corner-shape-card: bevel;
+  --bui-border-width: 1px;
+  --bui-indicator-width: 2px;
+  --bui-focus-width: 2px;
+  --bui-focus-offset: 2px;
+  --bui-control-height: 44px;
+  --bui-elevation-card: none;
+  --bui-elevation-raised: none;
+}

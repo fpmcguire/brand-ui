@@ -1,0 +1,42 @@
+<article
+  class="card"
+  [attr.data-interactive]="interactive() ? '' : null"
+  [attr.aria-busy]="loading() ? 'true' : null"
+>
+  @if (loading()) {
+    <div class="media skeleton" aria-hidden="true"></div>
+    <div class="body" aria-hidden="true">
+      <span class="skeleton skeleton-title"></span>
+      <span class="skeleton skeleton-line"></span>
+      <span class="skeleton skeleton-line skeleton-short"></span>
+    </div>
+    <span class="visually-hidden">Loading</span>
+  } @else {
+    <div class="media">
+      @if (mediaLabel(); as mediaLabel) {
+        <span class="media-label">{{ mediaLabel }}</span>
+      }
+      @if (tag(); as tag) {
+        <span class="tag">{{ tag }}</span>
+      }
+    </div>
+    <div class="body">
+      <h3 class="title">
+        @if (interactive()) {
+          <a class="link" [href]="href()">{{ title() }}</a>
+        } @else {
+          {{ title() }}
+        }
+      </h3>
+      @if (description(); as description) {
+        <p class="text">{{ description }}</p>
+      }
+      @if (codeSample(); as codeSample) {
+        <pre class="code"><code>{{ codeSample }}</code></pre>
+      }
+      @if (meta(); as meta) {
+        <p class="meta">{{ meta }}</p>
+      }
+    </div>
+  }
+</article>

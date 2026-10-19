@@ -1,1 +1,53 @@
-/* You can add global styles to this file, and also import other style files */
+// Gallery-owned forced states. A specimen wrapper sets the same inherited `--bui-state-*`
+// variables that the library components' real :hover, :active and :focus styles resolve to, so the
+// states stay visible without interaction and without any preview API on the components.
+// Tokens come from the enclosing theme scope.
+
+html,
+body {
+  margin: 0;
+  background: #1b1b1b;
+}
+
+[data-specimen='button'] {
+  &[data-specimen-state='hover'] {
+    --bui-state-bg: var(--bui-color-primary-hover);
+    --bui-state-border: var(--bui-color-primary-hover);
+  }
+
+  &[data-specimen-state='active'] {
+    --bui-state-bg: var(--bui-color-primary-active);
+    --bui-state-border: var(--bui-color-primary-active);
+  }
+
+  &[data-specimen-variant='secondary'][data-specimen-state='hover'] {
+    --bui-state-bg: var(--bui-color-primary-tint);
+    --bui-state-border: var(--bui-color-primary);
+  }
+
+  &[data-specimen-variant='secondary'][data-specimen-state='active'] {
+    --bui-state-bg: var(--bui-color-primary-tint);
+    --bui-state-border: var(--bui-color-primary-active);
+  }
+
+  &[data-specimen-state='focus'] {
+    --bui-state-outline: var(--bui-focus-width) solid var(--bui-color-focus);
+  }
+}
+
+[data-specimen='card'] {
+  &[data-specimen-state='hover'] {
+    --bui-state-border: var(--bui-color-border-strong);
+    --bui-state-shadow: var(--bui-elevation-raised);
+    --bui-state-link-decoration: underline;
+  }
+
+  &[data-specimen-state='active'] {
+    --bui-state-border: var(--bui-color-primary);
+    --bui-state-shadow: var(--bui-elevation-card);
+  }
+
+  &[data-specimen-state='focus'] {
+    --bui-state-outline: var(--bui-focus-width) solid var(--bui-color-focus);
+  }
+}

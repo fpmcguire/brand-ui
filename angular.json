@@ -55,7 +55,11 @@
                 "input": "projects/gallery/public"
               }
             ],
-            "styles": ["projects/gallery/src/styles.scss"]
+            "styles": [
+              "projects/ui/src/lib/theme/tokens/index.css",
+              "projects/ui/src/lib/theme/typography.css",
+              "projects/gallery/src/styles.scss"
+            ]
           },
           "configurations": {
             "production": {

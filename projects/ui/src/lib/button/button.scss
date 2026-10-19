@@ -1,0 +1,102 @@
+// Tokens only. `--bui-state-*` are optional inherited overrides: real pseudo-classes and a host
+// that forces a state both end up in the same properties below.
+:host {
+  display: inline-block;
+  max-width: 100%;
+}
+
+.button {
+  --_bg: var(--bui-color-primary);
+  --_fg: var(--bui-color-on-primary);
+  --_border: var(--bui-color-primary);
+  --_outline: none;
+
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--bui-space-2);
+  max-width: 100%;
+  min-height: var(--bui-control-height);
+  padding: var(--bui-space-2) var(--bui-space-5);
+  border: var(--bui-border-width) solid var(--bui-state-border, var(--_border));
+  border-radius: var(--bui-radius-control);
+  border-top-right-radius: var(--bui-radius-tr-control);
+  background: var(--bui-state-bg, var(--_bg));
+  color: var(--bui-state-fg, var(--_fg));
+  outline: var(--bui-state-outline, var(--_outline));
+  outline-offset: var(--bui-focus-offset);
+  font-family: var(--bui-font-ui);
+  font-size: var(--bui-size-ui);
+  font-weight: var(--bui-weight-ui);
+  letter-spacing: var(--bui-letter-spacing-ui);
+  line-height: var(--bui-line-height-ui);
+  text-align: center;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  cursor: pointer;
+
+  &[data-variant='secondary'] {
+    --_bg: transparent;
+    --_fg: var(--bui-color-primary);
+  }
+
+  &:hover:not(:disabled) {
+    --_bg: var(--bui-color-primary-hover);
+    --_border: var(--bui-color-primary-hover);
+  }
+
+  &[data-variant='secondary']:hover:not(:disabled) {
+    --_bg: var(--bui-color-primary-tint);
+    --_border: var(--bui-color-primary);
+  }
+
+  &:active:not(:disabled) {
+    --_bg: var(--bui-color-primary-active);
+    --_border: var(--bui-color-primary-active);
+  }
+
+  &[data-variant='secondary']:active:not(:disabled) {
+    --_bg: var(--bui-color-primary-tint);
+    --_border: var(--bui-color-primary-active);
+  }
+
+  &:focus-visible {
+    --_outline: var(--bui-focus-width) solid var(--bui-color-focus);
+  }
+
+  &[aria-busy='true'] {
+    cursor: progress;
+  }
+
+  &:disabled {
+    --_bg: var(--bui-color-disabled-bg);
+    --_fg: var(--bui-color-disabled-text);
+    --_border: var(--bui-color-disabled-bg);
+    cursor: not-allowed;
+  }
+}
+
+.spinner {
+  flex: none;
+  box-sizing: border-box;
+  width: var(--bui-space-4);
+  height: var(--bui-space-4);
+  border: var(--bui-indicator-width) solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--bui-radius-round);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}

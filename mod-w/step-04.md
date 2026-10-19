@@ -1,6 +1,6 @@
 # STEP-04 — Static subfolder deployment
 
-**Status:** TECH LEAD REVIEW APPROVED — implementation and deployment complete; the Tech Lead recorded Pass after independent local, gate, and remote verification; the Moderator approved that review on 2026-10-19 and released STEP-04 to QA. Final acceptance remains pending QA and Moderator decision.
+**Status:** QA REVIEW APPROVED — implementation and deployment complete; the Tech Lead recorded Pass after independent local, gate, and remote verification and the Moderator approved that review on 2026-10-19; QA then recorded Pass with notes, and the Moderator approved the QA review on 2026-10-19. Product Owner acceptance validation and the Moderator's final gate remain pending; the acceptance checkboxes below stay unchecked until the Moderator accepts the Step.
 
 **Owner:** Development Team (Claude Code), after plan approval. Codex Tech Lead reviews; Moderator has final authority.
 

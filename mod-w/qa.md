@@ -1,251 +1,107 @@
-## QA — STEP-03 — Gallery About panel (S-11, AC-17)
+## QA — STEP-04 — Static subfolder deployment (S-13, AC-19)
 
 **Project:** brand-ui
-**Tester:** QA / Tester (Claude Code SubAgent), independent of the Development Team and Tech Lead
-**Date:** 2026-10-19 (gates run 16:40–16:46, browser verification 16:47–16:55, local time)
-**Status of this document:** QA evidence for Moderator and Product Owner validation. It is **not** Step acceptance and does **not** authorize S-13 deployment.
+**Tester:** QA (Claude Code), independent of the Development Team and the Tech Lead
+**Date:** 2026-10-19
+**Baseline:** `master` at `21908ae` (clean tree before and after QA). Implementation commit `f205dc3`.
+**Status of this document:** QA evidence for the Moderator's final acceptance decision. It is **not** Step acceptance and does not authorize any further deployment.
+
+**Moderator disposition:** QA review approved on 2026-10-19. Product Owner acceptance validation and the Moderator's final gate remain pending.
+
+The STEP-03 QA report that previously occupied this file is preserved in git history (`git log -- mod-w/qa.md`).
 
 ---
 
-## 0. Read this first: the authority changed during QA
+### Summary
 
-QA was commissioned against Product 5.2/AC-17 and STEP-03 as reconciled for **six** About sections and **one** external link (the MOD-W methodology link). All gates and browser checks below were run against that baseline, on an implementation whose files were last modified at 16:23, before any gate started.
+**Pass with notes.** All eight STEP-04 acceptance checks are supported by independent command and browser evidence. No defect was found. Four non-blocking observations (O-1 to O-4) are for the Moderator; none is a STEP-04 requirement.
 
-While QA was running, the Moderator and Product Owner amended the governing documents again (file times 16:46–16:48; I did not edit any of them):
-
-| File                                | Change observed                                                                                                                                                                                                                         |
-| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `mod-w/product.md`                  | v0.5. 5.2 adds point 7 **Source repository**, linking `https://github.com/fpmcguire/brand-ui.git` (accessible name `github.com/fpmcguire/brand-ui (opens in a new tab)`). AC-17 now requires seven points and exactly two external links. |
-| `mod-w/step-03.md`                  | Seven sections, two links, new check **AC-17.7 Source repository**, and a "Repository-link amendment". It says the Development Team must submit an amendment plan, that **"the prior Tech Lead Pass does not cover this amendment"**, and that STEP-03 "requires focused re-review before acceptance". |
-| `mod-w/architecture.md`, `domain-language.md`, `roadmap.md` | D-11 and glossary updated for the repository link. Roadmap now reads "Amendment plan pending; Repository-link amendment requires re-review".                                                                         |
-
-**Consequence.** The implementation has six sections and one link and has not been amended. Against the current authority it cannot satisfy AC-17 or AC-17.7. That is expected, not an implementation defect. Everything in this report that is not about the seventh section stands unchanged, because the amendment touches only About content and its focused evidence. I stop here as instructed: evidence against the current authority is incomplete.
+I did not rely on the Development Team's or Tech Lead's reported results. Every gate was re-run and the deployed site was checked by QA's own scripts.
 
 ---
 
-## 1. Scope, sub-checks and acceptance checkboxes (restated)
+### Preconditions
 
-**Scope.** A small gallery-owned, accessible native `<dialog>` About panel opened from a top-bar library `Button`. It opens automatically on a first visit, with guarded storage and a per-page-load fallback. It has one close operation, restores focus to About on every close path, follows the active theme through tokens only, and extends exactly three existing Chromium Playwright specifications. The library public API, tokens, Design IDs, routes and dependencies are not to change. No deployment.
+- Approval record: `mod-w/step-04.md` status and `mod-w/review.md` (Tech Lead **Pass**, Moderator approval and release to QA recorded 2026-10-19) and `mod-w/roadmap.md` ("Tech Lead Pass approved; QA pending") are all committed in `21908ae`. The working tree was clean, so there was nothing further to commit.
+- The bare shell resolves **Node 24.13.0**. All gates below were run under Node 26.0.0 via `fnm exec --using=26.0.0` (see O-4).
 
-**AC-17 sub-checks (baseline six-section authority):** 17.1 Project, 17.2 Brands, 17.3 Library, 17.4 Boundary, 17.5 Use, 17.6 Built. **17.7 Source repository was added mid-QA (see section 0).**
-
-**STEP-03 acceptance checkboxes (C-1 to C-11, in `step-03.md` order after the AC lines):**
-C-1 gallery-owned/not exported/`ui`-only imports · C-2 Button trigger, named dialog, initial focus, containment, focus return · C-3 Close/Esc/backdrop, no inside-click close · C-4 first-visit/storage · C-5 four scopes through tokens, AC-7 · C-6 no Design ID · C-7 README/header/Product consistency and link safeguards · C-8 exactly three specs, no obstruction (AC-8/AC-9) · C-9 required Vitest/Chromium coverage · C-10 all gates pass · C-11 diff inside the allowlist.
-
----
-
-## 2. Toolchain
-
-| Command (as run)                | Result                                                                                                                                                                             |
-| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `node --version` (bare shell)   | **v24.13.0**, with npm 11.6.2. This is a mismatch with Node 26. `npx ng version` refuses to run: "The Angular CLI requires a minimum Node.js version of v22.22.3 or v24.15.0 or v26.0.0". |
-| `fnm list`                      | v22.21.1, v24.13.0, **v26.0.0 (fnm default)**, system. The shell resolved system Node 24 instead of the fnm default.                                                               |
-| Under `fnm exec --using=26.0.0` | `node --version` → **v26.0.0**; `npm --version` → **11.12.1** (matches `packageManager: npm@11.12.1`); `npx tsc --version` → **Version 6.0.3**; `npx ng version` → Angular CLI **22.2.3**, Angular **22.2.3**, TypeScript 6.0.3, `@angular/build` 22.2.3, ng-packagr 22.2.4. |
-
-I did not stop on the mismatch because the approved Node 26.0.0 is installed on this machine and selecting it changes nothing in the repository. **Every gate and browser check below was run under Node 26.0.0 via `fnm exec`.** The bare shell default (Node 24.13.0) would fail the toolchain gate. The repo has no `.nvmrc` or `.node-version` pinning Node 26 (see D-6).
+| Tool | Version |
+| ---- | ------- |
+| Node | 26.0.0 |
+| npm | 11.12.1 (matches `packageManager`) |
+| Angular CLI / Angular | 22.2.3 / 22.2.3 |
+| TypeScript | 6.0.3 |
 
 ---
 
-## 3. Gates (each run by QA; the Development Team's reported results were not relied on)
+### Gates (each run by QA; all exit 0)
 
-All commands run from the repo root under Node 26.0.0.
+| Command | Result | Evidence |
+| ------- | ------ | -------- |
+| `npm run format:check` | Pass | "All matched files use Prettier code style!" |
+| `npm run lint:tokens` | Pass | self-test 88 evasion / 21 clean fixtures; "51 contract tokens; 4 scopes; components clean" |
+| `npm run check:assets` | Pass | "6 font families with OFL.txt and SOURCE.md; no restricted assets" |
+| `npm run typecheck:e2e` | Pass | no output, exit 0 |
+| `npm test` | Pass | `ui` 5 files / **68** tests; `gallery` 5 files / **64** tests |
+| `npm run test:e2e` | Pass | "Running 70 tests using 2 workers" → **70 passed** in exactly three specs |
+| `npm run build` | Pass | `Built ui`; gallery bundle complete, initial total 233.75 kB |
+| `npm run build:subfolder` | Pass | gallery bundle complete, same hashed chunk names and sizes as the default build |
+| `git diff --check` | Pass | exit 0 |
+| `git status --short` | Pass | empty (tracked and untracked) |
+| `git status --short -- mod-w/design projects/ui package-lock.json angular.json playwright.config.ts` | Pass | empty |
 
-| #  | Command                                  | Result   | Relevant output                                                                                                                                                                                                  |
-| -- | ---------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1  | `npm run format:check`                   | **Pass** | `All matched files use Prettier code style!` (exit 0)                                                                                                                                                            |
-| 2  | `npm run lint:tokens`                    | **Pass** | `self-test passed (88 evasion fixtures detected; 21 clean fixtures accepted)`; `passed (51 contract tokens; 4 scopes; components clean)`                                                                          |
-| 3  | `npm run check:assets`                   | **Pass** | `passed (6 font families with OFL.txt and SOURCE.md; no restricted assets)`                                                                                                                                      |
-| 4  | `npm run typecheck:e2e`                  | **Pass** | `tsc -p e2e/tsconfig.json` printed nothing (exit 0)                                                                                                                                                              |
-| 5  | `npm test`                               | **Pass** | ui: `Test Files 5 passed (5)`, `Tests 68 passed (68)`. gallery: `Test Files 5 passed (5)`, `Tests 62 passed (62)`. exit 0                                                                                        |
-| 6  | `npm run test:e2e`                       | **Pass** | `Running 69 tests using 2 workers` → `69 passed (1.8m)`, exit 0. Per file: `brand-and-contrast` 21, `keyboard-and-accessibility` 33, `long-label-and-bevel` 15 (`playwright test --list`: "Total: 69 tests in 3 files") |
-| 7  | `npm run build`                          | **Pass** | `Built ui`; gallery `Application bundle generation complete`; initial total 233.75 kB raw / 64.73 kB transfer; lazy `gallery-page-component` 63.24 kB; exit 0                                                    |
-| 8  | `git diff --check`                       | **Pass** | exit 0, no whitespace errors. Only informational "LF will be replaced by CRLF" notices for 11 tracked files. Untracked `about-panel/*` checked separately with grep: no trailing whitespace.                      |
-| 9  | `git status --short`                     | recorded | See below                                                                                                                                                                                                        |
-| 10 | `git status --short -- mod-w/design`     | **Pass** | Empty output: `mod-w/design/` is unchanged                                                                                                                                                                       |
-
-`git status --short` at the end of QA:
-
-```
- M README.md
- M e2e/brand-and-contrast.spec.ts
- M e2e/helpers/gallery.ts
- M e2e/keyboard-and-accessibility.spec.ts
- M mod-w/architecture.md        <- changed by others during QA (section 0)
- M mod-w/domain-language.md     <- changed by others during QA (section 0)
- M mod-w/product.md
- M mod-w/review.md              <- Tech Lead artifact
- M mod-w/roadmap.md             <- changed by others during QA (section 0)
- M mod-w/step-03.md
- M projects/gallery/src/app/gallery/gallery-page.component.html
- M projects/gallery/src/app/gallery/gallery-page.component.scss
- M projects/gallery/src/app/gallery/gallery-page.component.spec.ts
- M projects/gallery/src/app/gallery/gallery-page.component.ts
-?? projects/gallery/src/app/gallery/about-panel/   (7 files)
-```
-
-Notes on QA side effects. `npm run test:e2e` and `npm run build` write `playwright-report/`, `test-results/` and `dist/`, all matched by `.gitignore` (lines 49, 48, 4) and absent from `git status`. A QA dev server I started on port 4320 was stopped. All other scratch output is outside the repo.
+Counts match the Step's stated invariants (68 `ui`, 64 gallery, 70 browser). Both axe surfaces ran and passed: "the complete gallery has no serious or critical axe violations" (two tests: before and after the first-visit dialog is dismissed) and "the open About panel has no serious or critical axe violations" in each of four scopes.
 
 ---
 
-## 4. Independent read-only scope checks
+### Acceptance check results
 
-| Check                                                                                       | Result   | Evidence                                                                                                                                                                                                                                                                                          |
-| ------------------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `e2e/` has exactly three `*.spec.ts`; Playwright is Chromium only                           | **Pass** | `ls e2e/*.spec.ts` → 3 files; `playwright.config.ts` projects: one, `name: 'chromium'`; `testMatch: '**/*.spec.ts'`                                                                                                                                                                                |
-| `projects/ui/**` unchanged; `public-api.ts` unchanged; no About symbol exported             | **Pass** | `git status --short -- projects/ui` empty; `git diff --quiet -- projects/ui/src/public-api.ts` clean; its 9 exports are Button, Card, Navigation, TextInput, ThemeScopeDirective, ThemeService and types; `grep -i about projects/ui/src` hits only an unrelated spec fixture label and a comment      |
-| Panel and gallery import library symbols only from `ui`                                     | **Pass** | `about-panel.ts:11` `import { Button, ThemeScopeDirective, ThemeSelection } from 'ui'`; `gallery-page.component.ts:2` `… from 'ui'`. No `projects/ui`, `../ui`, `ui/src` import in `projects/gallery/src`. The only deep path is a pre-existing read of `card.scss` in the unchanged `e2e/long-label-and-bevel.spec.ts:322`. |
-| Token files, names/values, existing Design IDs unchanged                                    | **Pass** | No change under `projects/ui`; `projects/gallery/src/styles.scss` unchanged; no added line contains `DS-nnn`; `lint:tokens` still reports 51 tokens / 4 scopes                                                                                                                                      |
-| Dependencies, lockfile, routes, `angular.json`, `playwright.config.ts`, `scripts/`          | **Pass** | `git status --short` on those paths is empty                                                                                                                                                                                                                                                      |
-| `mod-w/design/` unchanged                                                                   | **Pass** | Gate 10                                                                                                                                                                                                                                                                                           |
-| `mod-w/product.md` differs only by authorized reconciliation                                | **Pass (with note)** | As first inspected (16:3x) the diff against HEAD was exactly: 5.2 point 6, the out-of-scope line, and the AC-17 row (including repair of the garbled "with an accessible name that with an accessible name"). It has since gained the v0.5 repository-link reconciliation, also Moderator and Product Owner authorized (section 0). |
-| Diff inside the STEP-03 allowed-files list                                                  | **Pass (with notes)** | Implementation, test and README changes are all in the allowlist: `about-panel/**` (7 new files), the four gallery-page files, the two e2e specs and `e2e/helpers/gallery.ts` that changed, and `README.md`. `gallery-state.ts`, `long-label-and-bevel.spec.ts` and `styles.scss` are unchanged (allowed, not needed). `mod-w/*` changes are governing-document edits by the Moderator, Product Owner and Tech Lead, not Development Team implementation. |
-| No S-10, S-12 or deployment content                                                         | **Pass** | No new routes, hosting files, indexing changes or CMS code in the diff                                                                                                                                                                                                                            |
-| No Design-ID badge or placeholder; no brand-specific conditional structure                  | **Pass** | `about-panel.html` has one `@if (rendered())` and no brand/scope conditionals; the only brand names are prose. Browser: no `DS-\d` text in the dialog and no `.id` element. A structural-skeleton test (`brand-and-contrast.spec.ts`) shows one structure in all four scopes; theming is via `[buiThemeScope]` only. |
-| No restricted, remote, inline-base64 or third-party brand assets                            | **Pass** | `check:assets` passes. grep for `https?://`, `base64`, `url(`, `<img`, `<svg`, image extensions and `@import` in the new/changed source finds only `about-panel.html:116` (the authorized link). Browser: **0 requests** to any origin other than the local server over the whole session; dialog contains 0 `img/svg/picture/video/canvas/iframe`. |
-| Project code rules in new files                                                             | **Pass** | No `any`, `standalone`, `OnPush`, `HostBinding`, `HostListener`, `ngClass`, `ngStyle` or `CommonModule`. Uses `input()`, `output()`, `signal()`, `viewChild()`, native control flow. The two `constructor(` hits are `AboutPanel`'s no-argument constructor and the plain, non-DI class `AboutFirstVisit(storage = () => localStorage)`. |
+| Check | Result | Evidence |
+| ----- | ------ | -------- |
+| **AC-19 static site** — builds to static files and works from `/brand-ui/` with no broken local request | **Pass** | `dist/gallery/browser` is plain static files. QA served it under a real `/brand-ui/` path (server and script outside the repo) and drove Chromium: initial load plus refresh made 15 responses, **all 200**; 0 failed, 0 off-origin, 0 console/page errors. Resources were `index.html`, 1 hashed CSS, 3 hashed JS modules, 4 WOFF2 and `robots.txt`, all under `/brand-ui/`. Behavior intact: About auto-opens on a first visit with accessible name "About brand-ui", focus on Close, seven headings, two links; Close and Esc each return focus to About; refresh does not auto-open; manual reopen works. |
+| **AC-19 no indexing** — `noindex, nofollow` in source and emitted HTML; emitted `robots.txt` disallows `/` for all agents | **Pass** (note O-1) | Source `projects/gallery/src/index.html` and emitted `dist/gallery/browser/index.html` both contain `<meta name="robots" content="noindex, nofollow">`. Emitted `robots.txt` is byte-exact `User-agent: *\nDisallow: /\n`. Emitted base is `/brand-ui/`. Default build keeps the source `<base href="/">` (source diff and build log; `dist` was overwritten by the final subfolder build, so I did not re-inspect the default build's HTML). |
+| **AC-19 assets** — `check:assets` passes; no third-party brand asset or remote font/asset | **Pass** | `check:assets` passed. Emitted CSS references exactly 7 relative `./media/*.woff2` files and no other `url(...)`. All 7 are present in `media/`, begin with the `wOF2` signature, and fetch 200 with identical byte sizes locally and live. Emitted HTML/CSS contain no remote URL. Emitted JS contains only the strings listed under O-2. Page has 0 `img/picture/video/canvas/iframe` elements and 0 `svg` elements other than the pre-existing Text input error icon (O-2). Favicon is the local `favicon.ico`. |
+| **Root script** is exactly `ng build gallery --base-href /brand-ui/` | **Pass** | `grep -c '"build:subfolder"' package.json` → 1; line 8 is exactly that command, with trailing slash. |
+| **No prohibited change** (dependency, lockfile, route, SSR/service-worker, analytics, library/public API, token, Navigation, Design ID, application behavior) | **Pass** | `git diff --name-only aeb1513 HEAD` outside `mod-w/`, `e2e/`, `projects/gallery/src/app`, README and CLAUDE.md lists only `package.json`, `projects/gallery/public/robots.txt`, `projects/gallery/src/index.html` (the STEP-03 files in that range are the already-accepted About work). The implementation commit `f205dc3` touches exactly those three plus `mod-w` records. `git diff d49e703 f205dc3` over `mod-w/design`, `projects/ui`, `package-lock.json`, `angular.json`, `playwright.config.ts`, `e2e`, `projects/gallery/src/app` is empty. Emitted `index.html` has no service-worker or analytics reference; only the one `<meta>` line was added to the source. |
+| **Accepted STEP-01–03 tests and behavior remain green**, exactly three Chromium specs, both axe surfaces | **Pass** | `e2e/` has exactly three `*.spec.ts`; `playwright.config.ts` has one project, `chromium`. 68 + 64 unit and 70 browser tests pass; both axe surfaces pass (above). Grep over `e2e` and `projects` for `.only(`, `.skip(`, `fixme`, `xit(`, `fit(`, `toMatchSnapshot`, `toHaveScreenshot`, `disableRules`, `.exclude(` finds nothing. No test file changed in the STEP-04 implementation commit. |
+| **All prescribed gates pass under Node 26** | **Pass** | Gates table above. |
+| **Remote publication, if requested, uses only the authorized host and URL and is verified after deployment** | **Pass** (see note) | Read-only Chromium checks of `https://www.frank-mcguire.com/brand-ui/` (the URL the Moderator identified): 15 responses all 200, 0 off-origin, 0 failed, 0 console/page errors; `<base href="/brand-ui/">`; robots meta correct; same About and refresh behavior as the local run; hashed bundle names identical to the local build; all 7 WOFF2 fetch 200 with the same sizes as local; `/brand-ui/robots.txt` returns the exact Disallow rule; the previously exposed `brand-ui-site.zip` now returns **404**. QA cannot observe who uploaded or what host was touched; consistent with the record that the Moderator uploaded manually, the deployed files match the local build. |
 
 ---
 
-## 5. Real-browser verification (Chromium, production-mode build)
+### Regressions or risks
 
-I ran my own Playwright script against `ng serve gallery --configuration production --port 4320`. It is independent of the repo's specs and was written outside the repo. It performed **47 checks: 47 pass, 0 fail**. The two failed attempts during development were bugs in my script (a locator that matched a heading behind the modal, and a click that ended on the trigger), not application behavior; I fixed the script and re-ran in full. Per-scope numbers are computed from the browser's computed styles with my own WCAG luminance code, not from the repo helper.
+No regressions found. No behavior outside STEP-04 scope was observed. No source file, test, token, library, route, dependency or `mod-w/design/**` file was modified by QA.
 
-| Behavior                                                                                  | Result   | Observation                                                                                                                                                                                                                         |
-| ----------------------------------------------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| First visit, clean storage: auto-opens                                                    | **Pass** | `dialog[open]` present, `:modal` matches                                                                                                                                                                                            |
-| Visible heading is the accessible name                                                    | **Pass** | `aria-labelledby="gal-about-title"` → visible `h2` "About brand-ui"; `getByRole('dialog', {name:'About brand-ui'})` count 1                                                                                                          |
-| Focus lands on Close                                                                      | **Pass** | `activeElement` = `BUTTON` "Close", inside dialog                                                                                                                                                                                   |
-| Seen key recorded when the auto-open starts                                               | **Pass** | `brand-ui:gallery:about-seen:v1` = `"1"` while the dialog was still open                                                                                                                                                            |
-| Tab and Shift+Tab do not escape                                                           | **Pass** | 14 presses each way. Stops cycle: link → browser UI → dialog box → Close → … Never a page element. Control behind the modal (`gallery-switch-all`) cannot take focus.                                                                  |
-| Close button, Esc, outside click each close it; focus returns to About                     | **Pass** | My script closed the **auto-opened** dialog with the Close button, then closed manual reopens with Esc, a click at (5,5), a click 4px beyond the right edge and a click 4px beyond the bottom edge: each closed it and left `BUTTON` "About" focused. Esc and outside-click on the **auto-opened** dialog were not run by my script; that evidence is the repo spec `keyboard-and-accessibility.spec.ts:485` (all three paths on a first visit, then on a manual reopen), which passed in gate 6. |
-| Content, padding and drags do not close                                                   | **Pass** | Heading click, 2px inside the top-left border, 3px inside the bottom-right, header padding, drag inside→outside, and press outside→release inside: dialog still open                                                                  |
-| Double Esc; keyboard reopen                                                               | **Pass** | Two rapid Esc: closed, focus on About, no error. Enter on About reopens; Esc closes.                                                                                                                                                  |
-| Reload: no auto-open; manual reopen works                                                 | **Pass** | Dialog count 0 after reload; About click opens it                                                                                                                                                                                   |
-| Storage failure (a) `Storage.getItem/setItem` throw; (b) `localStorage` getter throws      | **Pass** | Both: auto-opens once, closed with Esc, no second auto-open in that load, manual open and Close work with focus back on About, reload auto-opens again, 0 page errors                                                                 |
-| No console or page errors; no remote requests                                             | **Pass** | `[]` and `[]`                                                                                                                                                                                                                       |
-| Each scope + All brands follows the theme; legible; AC-7                                  | **Pass** | See table below. In All brands with CodeCraft Dark retained, the dialog is `data-bui-brand=codecraft data-bui-mode=dark`. Screenshots reviewed for ArtAnon, Mentor, CodeCraft Dark and 320px: text is legible, structure identical, brand differences are token-driven (fonts, radius/bevel, colour). |
-| Axe on the open dialog, per scope + All brands                                            | **Pass** | 0 violations of any impact on `dialog[open]` in all five (18 passes, 0 incomplete). Whole page scan with the dialog open: 0 violations (24 passes).                                                                                  |
-| Axe on the full gallery (All brands) after dismissing the first-visit dialog              | **Pass** | 0 serious/critical. One **moderate** `landmark-unique` (7 nodes: existing page `section[aria-labelledby=…-tokens/-button…]`); `incomplete`: `color-contrast` (28 nodes). Neither involves the About panel. 37 passes.                  |
-| External link                                                                             | **Pass** | Exactly one `a` in the dialog and one `a[href^=http]` on the whole page: `href=https://github.com/fpmcguire/mod-w`, `target=_blank`, `rel="noopener noreferrer"`, `aria-label="github.com/fpmcguire/mod-w (opens in a new tab)"`, accessible-name role query matches 1. Click opens a new tab at that URL with `window.opener === null` (network stubbed). |
-| Small viewports                                                                           | **Pass** | 320×568 and 1280×400: dialog within the viewport, no internal horizontal overflow, Close visible and still in view after scrolling the dialog to the bottom (sticky header). See D-2 and D-4 for two cosmetic/pre-existing notes. |
+### Observations (non-blocking; none is a STEP-04 requirement)
 
-**AC-7 pairs the panel paints, per scope (ratios measured; thresholds 4.5 text, 3.0 non-text)**
+| ID | Observation | Evidence | Suggested owner |
+| -- | ----------- | -------- | --------------- |
+| O-1 | Root `https://www.frank-mcguire.com/robots.txt` returns **404**. Crawlers read `robots.txt` only at a domain root, so the `/brand-ui/robots.txt` copy is not effective by itself; the page-level `noindex, nofollow` meta is the working AC-19 control at this path. A root rule is host-wide policy and outside this Step. | QA fetch: 404. Matches the Tech Lead's "Could fix later". | Moderator (host policy) |
+| O-2 | Emitted JS contains non-request URL strings: Angular's XML namespaces and a docs URL; Angular Router's internal parsing base `http://fake`; the Text input specimen value `https://example.com/repo`; and the two authorized About links (`github.com/fpmcguire/mod-w`, `github.com/fpmcguire/brand-ui.git`). None is fetched; every network request is same-origin. One inline `svg` (circle and path, `aria-hidden`) exists on the page: the Text input error icon at `projects/ui/src/lib/text-input/text-input.html:17`, a STEP-02 element, not a new or third-party asset. | Response log; `grep` of emitted files; `git log` for text-input. | None (informational) |
+| O-3 | `http://www.frank-mcguire.com/brand-ui/` returns 200 and does not redirect to HTTPS. The site carries no sensitive transaction and no STEP-04 check requires a redirect. | QA fetch: 200, final URL stays `http://`. | Moderator (host hardening) |
+| O-4 | The default shell resolves Node 24.13.0 although Node 26.0.0 is the project target and `fnm` default; the repo has no `.nvmrc`/`.node-version`. Under Node 24 `ng` refuses to run. Pre-existing and unchanged by this Step. Also, `CLAUDE.md` still says S-13 implementation "requires separate Moderator approval" (stale now that STEP-04 is implemented, deployed and in QA); documentation drift only. | `node --version` → v24.13.0; `fnm list`. | Moderator |
 
-| Scope (brand/mode)         | text/bg | link & Close text/bg | Close border/bg | dialog border-strong/bg | focus ring on dialog bg | About trigger text/fill (rest / hover / active) | trigger ring on bar | Close text on hover / active |
-| -------------------------- | ------- | -------------------- | --------------- | ----------------------- | ----------------------- | ------------------------------------------------ | ------------------- | ---------------------------- |
-| ArtAnon Shop               | 14.77   | 6.35                 | 6.35            | 4.16                    | 6.35                    | 6.56 / 8.62 / 11.54                              | 15.51               | 5.56 / 5.56                  |
-| IT English Mentor          | 15.18   | 5.05                 | 5.05            | 3.76                    | 5.05                    | 5.36 / 7.20 / 9.78                               | 15.51               | 4.62 / 4.62                  |
-| CodeCraft Academy Light    | 11.10   | 5.57                 | 5.57            | 3.42                    | 11.10                   | 6.18 / 7.81 / 9.83                               | 15.51               | 4.92 / 4.92                  |
-| CodeCraft Academy Dark     | 15.11   | 5.71                 | 5.71            | 4.65                    | 15.11                   | 5.71 / 7.02 / 4.60                               | 15.51               | 4.62 / 4.62                  |
-| All brands (retained Dark) | 15.11   | 5.71                 | 5.71            | 4.65                    | n/a (same scope)        | n/a                                              | n/a                 | n/a                          |
+### Manual checks required
 
-All meet their thresholds. Tightest margins: Dark trigger active 4.60 (≥4.5), and Close hover/active at 4.62 in Mentor and CodeCraft Dark (4.62 equals the figure the repo's existing "approved Mentor 4.62:1 boundary pair" test protects; I did not map it to that exact pair). The Close and trigger focus rings were measured under genuine keyboard focus (`:focus-visible`, `solid`, 2–3px). The link is underlined, so it is not distinguished by colour alone.
+None blocking. Remaining human decisions, not QA-verifiable:
+
+1. The Moderator's final acceptance decision for STEP-04.
+2. Whether to address O-1 (root `robots.txt`, scoped to `/brand-ui/` if added) and O-3 (HTTPS redirect), both host matters outside this Step and requiring separate authorization.
+3. The "full project study review" gate in `roadmap.md` remains the Moderator's.
+
+### Known limitations of this QA
+
+- QA checked the deployed site with Chromium only (matching the project's browser scope) and at one point in time. The host's Mod Security rejects plain `curl` with 406; I did not test non-browser clients.
+- The refresh check is a reload of `/brand-ui/`, the only gallery URL. The Step defines no other route, and I did not test deep paths or the no-trailing-slash form `/brand-ui`, which depend on host behavior.
+- My first browser run reported seven failures. Investigation showed they were bugs in my script (asserting visibility immediately after a click, before the next render; and counting the pre-existing Text input `svg`), not application behavior. I corrected the script and re-ran the whole thing: **36/36 checks pass** locally and live. The per-check records above reflect the corrected run.
+- Scratch scripts and logs are outside the repository (session scratchpad). `dist/`, `playwright-report/` and `test-results/` are git-ignored build outputs.
 
 ---
 
-## 6. Content parity map (panel ↔ README ↔ header ↔ Product 5.2, baseline six-section authority)
+### Recommendation to the Moderator
 
-Panel text is quoted from the rendered dialog (`about-panel.html`). README line numbers are for the current `README.md`.
-
-| § | Panel (`about-panel.html`)                                                                                                                                                                                                                                | README                                                                                                                                             | Header / Product                                                                                                                                                                    | Result |
-| - | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
-| 1 | L17–29 "reference spike, not production software"; models how an agency serves unrelated clients from one component base via tokens; "two purposes: domain learning, and workflow evidence, a small data point…"; "no production, client-delivery, official-rebrand or rollout claim" | L3 same sentence on the reference spike and agency model; L5 "not production software… no production, client-delivery, official-rebrand or rollout claim" | Status line: "Reference spike, not production."; kicker "brand-ui · reference spike" (no STEP-02). Product 5.2 pt 1 and §1 purposes 1–2 ("one small data point, not a conclusion"). | Pass. **Gap L-1:** README does not state the second purpose ("workflow evidence"); the panel does. Not a contradiction. |
-| 2 | L31–53 three brands across four scopes; CodeCraft Light/Dark "two styling modes of one brand"; ArtAnon: real third-party business, unofficial concept exploration, not an official rebrand, no affiliation or delivery claim, palette and text wordmark only; Mentor: Moderator's own freelance venture; CodeCraft: placeholder name for open-source tech and code examples | L9–14 brand table (identical statuses); L18 "one brand with two styling modes… three brands across four scopes"                                      | Status line repeats the ArtAnon and four-scope statements. Product 1.1 and 5.2 pt 2.                                                                                                | Pass   |
-| 3 | L55–67 four components named; `ThemeService` and `ThemeScopeDirective` described; "same set of semantic token names (`--bui-*`)… components hold no brand values… Switching brand changes tokens only, never component structure"                                         | L18 shared `--bui-*` names, only values differ; L22 the four components plus the two theme classes                                                 | Product 5.2 pt 3                                                                                                                                                                    | Pass   |
-| 4 | L69–81 separate review application; imports only through the `ui` public entry point; library does not depend on the gallery; gallery-owned switcher, hover/focus/active specimens, token read-outs, contrast evidence, Design IDs                                          | L22 and L25 (near-identical wording)                                                                                                                | Product 5.2 pt 4; imports verified in section 4                                                                                                                                     | Pass   |
-| 5 | L83–104 scope switcher and All brands; Design IDs checkbox; panel sections "Button, Text input, Card, Navigation bar, Long label and Contrast evidence"; auto-open on first visit; "About button in the top bar opens it again"                                           | L40–47 switcher, Design IDs, same section list, About auto-open and reopen (adds "once per page load if storage is unavailable")                   | Section list verified in the browser: the page panels' headings are Tokens, Button, Text input, Card, Navigation bar, Long label, Contrast evidence. Product 5.2 pt 5.               | Pass   |
-| 6 | L106–123 MOD-W v5.0.1; Moderator (human-in-the-loop) approves each step and plan; Tech Lead reviews each step before QA; Claude Code as the Development Team; `mod-w/`; one link with the required attributes and name                                                    | L78–82 same sentences; README link text "the method" vs panel "the methodology" (accepted wording difference, Product AC-17 says so)                 | Product 5.2 pt 6                                                                                                                                                                    | Pass   |
-
-Prohibited-content scan of the rendered dialog text: the words *production, deliver, rollout, rebrand* appear only inside negations. There is no *validate*, *MW-OBS*, *install*, *tutorial*, *npm*, or marketing claim. There is one external link only, and the dialog contains no image, icon or Design ID. Header: kicker "brand-ui · reference spike"; status line is the pre-existing sentence about scopes and ArtAnon, not a second About panel; no `STEP-0x` string remains in gallery source or README (non-test).
-
----
-
-## 7. Test-quality review
-
-| Aspect                         | Finding                                                                                                                                                                                                                                                                                                                  |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Skips, `.only`, fixme, snapshots | grep over `e2e` and `projects` for `.only`, `.skip`, `xit`, `fit`, `fixme`, `todo`, `toMatchSnapshot`, `toHaveScreenshot`, `disableRules`, `.exclude(`: **no matches**. No snapshots added.                                                                                                                              |
-| Axe not weakened               | The original full-gallery scan was refactored into `expectNoBlockingViolations` with the **same** filter (serious/critical must be empty) and the **same** floor (`passes > 10`). The refactor deleted no assertion (`git diff` removals checked). New scans: full gallery after dismissing the first-visit dialog, and the open dialog in each of four scopes (`include('dialog[open]')`, floor 5). No rules disabled, no surfaces excluded. |
-| Claimed behavior is what is asserted | First visit, accessible name, `:modal`, initial focus (`keyboard-and-accessibility.spec.ts:422`); Tab and Shift+Tab containment with required return to Close and reaching the inner link, and a control behind the modal rejecting focus (`:456`); three dismissal paths × (auto-open, manual reopen) with focus on About (`:485`); Enter and Space reopen (`:505`); content/padding/inside-start drag do not close (`:519`); persistence after reload (`:540`); two storage-failure variants with once-per-load, manual use and re-open after reload (`:554–604`). Tokens: four per-scope painted-pair tests, two retained-selection tests, one structure-identity test (`brand-and-contrast.spec.ts:253–413`). My independent browser run reproduced every one of these results. |
-| Vitest                         | New files: `about-first-visit.spec.ts` (8 tests: absent/present key, immediate write, once per instance, read throw, write throw, storage-getter throw, later load reopens) and `about-panel.spec.ts` (outside-rectangle helper, open/close, `cancel`, padding vs backdrop, drag, six headings, per-AC statements, link contract, no Design ID). `gallery-page.component.spec.ts` adds trigger, theme-selection-retained and focus-return tests and a kicker test. Focus containment is not asserted in jsdom (the spec header says so); the shim `dialog-shim.ts` is test support only and is imported by specs only. |
-| Coverage list in `step-03.md`  | Every required Vitest and Chromium item is present. **Observations:** (a) `long-label-and-bevel.spec.ts` is unchanged. Its seeding is satisfied through `openGallery()`, which now seeds the seen key by default via `addInitScript` before `goto`, and every `openGallery` call in that file passes through it; the file has no direct `goto`. That meets the intent; the Step literally says "seed… in this spec". (b) 22 tests were added (brand 7, keyboard 15, long-label 0), so the pre-STEP-03 suite size is inferred as 47; I did not re-run the baseline. (c) The Tab test deliberately tolerates a "browser UI" and "dialog box" stop because Chromium's native modal cycle includes them; it still fails if focus reaches any page element. This is consistent with the Step ("native modal behavior provides the focus boundary"). |
-| Currently stale vs new authority | The unit and Chromium heading assertions list **exactly six** `h3` headings and exactly one link, which is correct for the baseline and will need updating for the seventh section and second link.                                                                                                                      |
-
----
-
-## 8. Evidence matrix
-
-**Legend.** Pass = evidence supports it. "Baseline" = the six-section authority QA was commissioned against. "Current" = authority as amended to seven sections.
-
-| Check                                    | Baseline | Current                       | Evidence                                                                                                                                                                                                                                       |
-| ---------------------------------------- | -------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **AC-17.1 Project**                      | Pass     | Pass (note L-1)               | `about-panel.html:17–29`; README L3, L5; status line; unit `about-panel.spec.ts` "states the project intent…"; rendered text scan (section 6)                                                                                                    |
-| **AC-17.2 Brands**                       | Pass     | Pass                          | `about-panel.html:31–53` vs README L9–14, L18; unit "states the three brand statuses…"                                                                                                                                                          |
-| **AC-17.3 Library**                      | Pass     | Pass                          | `about-panel.html:55–67`; README L18, L22; unit "names the library parts…"                                                                                                                                                                      |
-| **AC-17.4 Boundary**                     | Pass     | Pass                          | `about-panel.html:69–81`; README L22, L25; `about-panel.ts:11`, `gallery-page.component.ts:2`; `public-api.ts` unchanged; no About symbol in `ui`                                                                                               |
-| **AC-17.5 Use**                          | Pass     | Pass                          | `about-panel.html:83–104`; README L40–47; section headings verified in the browser                                                                                                                                                              |
-| **AC-17.6 Built**                        | Pass     | Pass (link contract unchanged) | `about-panel.html:106–123`; browser link checks (section 5); README L78–82; no MOD-W/MW-OBS validation claim                                                                                                                                    |
-| **AC-17.7 Source repository** *(new)*    | n/a      | **Not implemented**, so **not verifiable** | No such section or link exists (`about-panel.html` has six `h3`; the page has one external link). Expected: the amendment plan is still pending (section 0). Not an implementation defect.                                            |
-| C-1 gallery-owned, `ui`-only             | Pass     | Pass                          | Section 4 rows 2–3                                                                                                                                                                                                                              |
-| C-2 trigger, name, focus, containment    | Pass     | Pass                          | Browser rows 2–5 (section 5); `gallery-page.component.html` `bui-button` `data-testid="gallery-about-trigger"`, accessible name "About"; `header bui-navigation` absent (unit)                                                                  |
-| C-3 close paths                          | Pass     | Pass                          | Browser rows 6–8; `about-panel.ts:70–101` single `close()`; `cancel` → `preventDefault` + `close()`                                                                                                                                             |
-| C-4 first visit / storage                | Pass     | Pass                          | `about-first-visit.ts:23–41`; browser storage-failure and reload rows; 8 unit tests                                                                                                                                                              |
-| C-5 four scopes, token-only, AC-7        | Pass     | Pass                          | Section 5 pair table; `about-panel.scss` uses only `--bui-*` except the scrim literal (D-5); retained-selection checks                                                                                                                          |
-| C-6 no Design ID                         | Pass     | Pass                          | Browser `DS-\d` absent; unit "shows no Design ID badge or placeholder"; no added `DS-` line in the diff                                                                                                                                         |
-| C-7 README/header/Product consistency; link safeguards; no other prohibited content | Pass | **Not verifiable** | Baseline: section 6. Current wording is "the two authorized links", and the second link and its README/Product parity are not present or testable until the amendment is implemented.                                                         |
-| C-8 exactly three specs; no obstruction  | Pass     | Pass                          | 3 spec files; Chromium only; existing specs seed via `openGallery`; full-gallery axe passes both with seed and after dismissal                                                                                                                  |
-| C-9 required coverage                    | Pass     | Needs update for seventh section | Section 7                                                                                                                                                                                                                                      |
-| C-10 all gates                           | Pass     | Pass on the current tree      | Section 3 (all gates exit 0)                                                                                                                                                                                                                    |
-| C-11 diff inside allowlist               | Pass     | Pass                          | Section 4                                                                                                                                                                                                                                       |
-
----
-
-## 9. Defects and observations
-
-No defect was found that this Step introduced. Items are ordered by importance.
-
-| ID  | Severity                             | Description                                                                                                                                                                                                                                                                                                                              | Affected check          | Reproduction / evidence                                                                                                                                                                                                                       |
-| --- | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| D-7 | **Blocks acceptance (process)**      | Product v0.5 and STEP-03 were amended mid-QA to seven sections and two links. The implementation is not amended, the prior Tech Lead Pass is stated not to cover it, and the roadmap says re-review is required.                                                                                                                      | AC-17, AC-17.7, C-7, C-9 | `git diff` of `mod-w/product.md`, `step-03.md`, `roadmap.md` (section 0). Not a code defect.                                                                                                                                                  |
-| D-1 | Low, pre-existing, outside STEP-03   | Mojibake `Â·` in the Button specimen caption renders on every panel (48 occurrences across All brands). Already noted by the Tech Lead ("Could fix later"). It is a user-visible text defect on the page the About panel describes. The line is untouched by this diff; STEP-03 incidentally cleaned the kicker only.                | none (AC-12-adjacent)   | `projects/gallery/src/app/gallery/gallery-page.component.html:89` contains `{{ variant }} Â· {{ specimen.state }}`; browser (All brands view): a search of `document.body.innerText` for `Â·` returned 48 hits, i.e. the caption renders as "<variant> Â· <state>". |
-| L-1 | Low (documentation parity)           | The panel states two purposes (domain learning and workflow evidence). The README states the agency/domain model but never states "workflow evidence" as a purpose, though AC-17.1 says wording matches README. The panel does not contradict the README, matches Product §1/5.2, and makes no MW-OBS claim.                       | AC-17.1                 | `grep -iE "evidence\|purpose\|learning" README.md` finds only unrelated lines (25, 46). Product `product.md:17–18`, `:126`. Moderator to decide whether to align the README.                                                                |
-| D-2 | Low, pre-existing, not About         | At 320 CSS px the document scrolls horizontally (scrollWidth 384 vs 320). The overflowing elements are existing token read-out rows (`LI.token`, `CODE.name`, `SPAN.value`), which are not in this diff. The About dialog itself fits (24–296 px) and the About button is reachable. I did not compare against HEAD in a browser. | none (WCAG 1.4.10 context) | Load with the seen key set at 320×568 and compare `documentElement.scrollWidth` to `innerWidth`.                                                                                                                                  |
-| D-3 | Info                                 | Full-gallery axe reports one **moderate** `landmark-unique` (7 nodes on existing page sections) and `color-contrast` "incomplete" (28 nodes). Neither blocks (the gate is serious/critical) and neither involves the About panel. The open-dialog scan has 0 violations and 0 incomplete.                                          | AC-8                    | Axe run in my script; JSON for the open dialog is in the QA scratch folder.                                                                                                                                                                    |
-| D-4 | Info (cosmetic)                      | At 320 px the heading wraps as "About brand-/ui" beside Close. Close stays reachable.                                                                                                                                                                                                                                                    | none                    | Screenshot at 320×568 (scratch).                                                                                                                                                                                                              |
-| D-5 | Info (judgment for Moderator)        | `about-panel.scss:25` paints the scrim with the literal `rgb(27 27 27 / 0.75)`, and `gallery-page.component.scss:93` sets the trigger focus ring to the literal `3px solid #f4f3ef`. Both match the gallery's existing neutral-chrome literals (`#1b1b1b`, `#f4f3ef` in that same file and in `styles.scss`), sit in gallery-owned files, and `lint:tokens` passes. The ring measures 15.51:1 on the bar. "Backdrop treatment" is within the bounded design authority. The panel's own divider (`--bui-color-border` on bg) is decorative and is not in the AC-7 pair list. | C-5                     | Section 5 numbers; `grep -nE "#[0-9a-f]{3,6}\|rgb\(" projects/gallery/src/**/*.scss`.                                                                                                                                                      |
-| D-6 | Low (environment)                    | The default shell resolves Node **24.13.0**, so `npx ng version`, `npm test` and `npm run build` fail there. Node 26.0.0 is installed (fnm default) but is not what the shell used. There is no `.nvmrc` or `.node-version`. README says "Requires Node 26".                                                                         | C-10 toolchain           | `node --version` → v24.13.0; `fnm list` shows v26.0.0 as default.                                                                                                                                                                              |
-
----
-
-## 10. Scope-compliance findings
-
-- **Within scope:** all implementation, test and README changes are inside the STEP-03 allowed-files list; `projects/ui`, tokens, public API, `Navigation`, dependencies, lockfile, routes, `angular.json`, Playwright config and `mod-w/design/` are untouched. There is no S-10, S-12 or deployment content, no Design ID, and no restricted or remote asset.
-- **Governing documents changed while QA ran:** `architecture.md`, `domain-language.md`, `roadmap.md`, `product.md` and `step-03.md`, by the Moderator, Product Owner or Tech Lead. QA did not edit any of them. Because the authority moved, the QA baseline is the six-section state (section 0).
-- **I wrote exactly one repository file** (this `mod-w/qa.md`). I did not modify implementation, tests, README, `review.md`, `product.md`, `step-03.md` or anything under `mod-w/design/`. No snapshot or other file change was needed to run any gate.
-- **No Design ID was needed.** I did not begin S-13.
-
----
-
-## 11. Regression check
-
-- [x] No regressions found: all 68 + 62 unit tests and all 69 Chromium tests pass; the original full-gallery axe scan, contrast pairs, keyboard, long-label and bevel checks are intact and run unobstructed.
-- [x] Existing tests pass.
-- [ ] Not re-verified against the seven-section authority (section 0).
-
----
-
-## 12. Recommendation to the Moderator
-
-**Pass with defects, for the six-section baseline QA was commissioned against.** No defect introduced by STEP-03 was found. All gates pass under Node 26.0.0. The observed behavior in real Chromium meets every AC-17.1–17.6 sub-check and every STEP-03 acceptance checkbox, and the only open items are pre-existing or informational (D-1 to D-6, L-1).
-
-**The Step should not be accepted on this QA alone.** The authority now requires a seventh section and a second link (AC-17.7), the implementation does not provide them, and STEP-03 itself says the prior Tech Lead Pass does not cover the amendment. Recommended path, all of which is for the Moderator to direct:
-
-1. The Development Team submits its amendment plan; the Moderator approves it.
-2. The Team implements the seventh section and second link, updates the six-heading and one-link assertions, and re-runs all gates.
-3. The Tech Lead performs the focused re-review.
-4. QA re-runs as a delta: AC-17.7; exactly two external links on the page and in the dialog (both new-tab, `rel`, accessible-name checks, new tab opens with `opener === null`); the seven headings; Tab/Shift+Tab, axe and AC-7 on the longer dialog in all scopes, including at 320 px; README/Product parity for the new section; and the full gate list.
-
-Stopping now for Moderator and Product Owner validation. Not self-accepted. S-13 deployment not begun and not authorized.
+**Accept STEP-04 on QA grounds, with notes O-1 to O-4 recorded.** All eight acceptance checks are met; no defect, regression, or scope violation was found. Not self-accepted. Final acceptance is the Moderator's decision.
 
 ---
 

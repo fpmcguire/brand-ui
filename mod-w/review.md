@@ -123,6 +123,81 @@ Development Team adds narrow external-template `style`-attribute coverage to the
 
 MOD-W v5.0.1
 
+---
+
+## Tech Lead Review - STEP-02
+
+### Verdict
+
+Rework required
+
+### Scope check
+
+- The implementation stays within STEP-02's allowed surfaces plus approved A-1 (`scripts/token-rules.mjs`, `scripts/lint-tokens.selftest.mjs`) and A-2 (`.github/workflows/playwright.yml`). The new `specimens/**` files and `e2e/tsconfig.json` are within the directory allowances; adding `e2e/**/*.{ts,json}` to the existing Prettier commands and npm's lockfile `peer` normalization are narrow gate/dependency consequences (`package.json:13-15`, `package-lock.json:436`).
+- `token-inspector.ts` is unchanged. No button, card, theme, font, bootstrap, route, workspace, Product, QA, prototype, or `mod-w/design/` file changed. No S-10 to S-13 implementation or deployment file exists in the diff.
+- Five commits follow the approved cadence except there is no sixth final-fixes commit because no fix was attempted after the disclosed stop; all five contain the required attribution trailer. The absent repository plan is a process-record gap, but the resulting diff shows no architecture/Step drift beyond the unresolved authority conflict.
+- `padding: unset` is acceptable here: padding is non-inherited, so `unset` resolves to the initial zero and only clears the user-agent list indent without introducing a brand value (`projects/ui/src/lib/navigation/navigation.scss:37-45`).
+- Reference Implementation disposition is compliant: the prototype remains visual evidence only and is neither imported nor copied.
+
+### Findings
+
+#### Must fix now
+
+1. The required axe gate is red. The unadorned disabled navigation text uses `--bui-color-disabled-text` (`projects/ui/src/lib/navigation/navigation.scss:95-98`) while the required markup intentionally has no `aria-disabled` (`projects/ui/src/lib/navigation/navigation.html:6-9`). Axe consequently reports one serious `color-contrast` violation covering all four scopes; `npm run test:e2e` ends with 46 passed / 1 failed at `e2e/keyboard-and-accessibility.spec.ts:306-341`. Acceptance checks 8 and 16 are not met, so Pass is unavailable.
+
+Stop-condition options for the Moderator:
+
+1. **Recommended: amend the no-`aria-disabled` ruling and add `aria-disabled="true"` to the non-link item.** This preserves DS-044's token/look, non-link semantics, and non-focusability while exposing the unavailable state to assistive technology and allowing axe to apply the disabled exception. Cost: an explicit Moderator ruling amendment and corresponding unit/e2e assertion changes; the element remains plain text, not a fake link.
+2. **Use `--bui-color-text-muted` plus a non-colour unavailable cue.** This preserves the no-`aria-disabled` ruling and meets ordinary-text contrast. Cost: a DS-044 visual/content change requiring Designer/Moderator amendment, and it overloads the muted-text token rather than the approved disabled token.
+3. **Change disabled-text token values.** This can preserve current markup and DS-044's semantic token choice. Cost: prohibited Product/design token amendment with four-scope, all-disabled-control blast radius; it is the least bounded option.
+
+The current ruling, DS-044/token design, axe gate, and WCAG 1.4.3 cannot all be satisfied together unchanged. WCAG exempts inactive UI components, but without programmatic disabled semantics axe reasonably evaluates this span as ordinary text. Each viable option therefore needs the Moderator to amend either the ruling, DS-044 presentation, or token authority. The Tech Lead recommends option 1 but does not decide it.
+
+#### Could fix later
+
+1. Add focused edge tests for whitespace-only `errorText`, an empty navigation item list, duplicate navigation IDs, and a very long wordmark. External value resets are already covered (`projects/ui/src/lib/text-input/text-input.spec.ts:134-138`); the other cases are not acceptance blockers but would harden the public APIs.
+2. The 23-pair list is conservative: `large-text` is deliberately unused and all text is held to 4.5:1 (`projects/gallery/src/app/gallery/specimens/usage-pairs.ts:6-16`). That is acceptable. The rendering-bind test samples each component family but does not bind every one of the 23 rows to a separate rendered element (`e2e/brand-and-contrast.spec.ts:196-247`); extend it if DS-060 later becomes a reusable audit rather than spike evidence.
+
+### Acceptance check mapping
+
+1. **Met** - input/navigation use required signal APIs, strict types and native structure; public exports and `ui` gallery imports are present (`projects/ui/src/public-api.ts:10-12`, `projects/gallery/src/app/gallery/gallery-page.component.ts:1-2`).
+2. **Met** - label, helper/error replacement, `aria-invalid`, icon/text, model updates and native disabled behavior have unit and Chromium evidence (`projects/ui/src/lib/text-input/text-input.html:1-25`, `e2e/keyboard-and-accessibility.spec.ts:186-236`).
+3. **Met** - named native `nav`, wordmark, enabled/current anchors, disabled non-link text, current precedence, full names and wrapping are implemented and tested (`projects/ui/src/lib/navigation/navigation.html:1-23`, `projects/ui/src/lib/navigation/navigation.spec.ts:35-115`).
+4. **Met** - all approved states/IDs render in each selected scope; accepted STEP-01 states remain covered (`projects/gallery/src/app/gallery/gallery-page.component.html:72-273`).
+5. **Met** - DS-050/051 pass at 180/280/360/full in every scope with growth, clamp, tooltip/name and overflow assertions (`e2e/long-label-and-bevel.spec.ts:17-228`).
+6. **Met** - 23 explicit computed-value pairs pass all four scopes; the independent oracle cross-checks displayed ratios/results and Mentor `secondary-on-tint` equals 4.62 (`e2e/brand-and-contrast.spec.ts:141-194`).
+7. **Met** - Chromium proves real Tab order/activation, genuine `:focus-visible`, loading key/pointer/double-click/form suppression with focus retention, input semantics, one-link card behavior and navigation semantics (`e2e/keyboard-and-accessibility.spec.ts:36-303`). The raw coordinate card click is sound because it tests the stretched overlay at the user's pointer location (`e2e/keyboard-and-accessibility.spec.ts:254-277`).
+8. **Not met** - the representative axe scan has a serious disabled-navigation contrast violation (`e2e/keyboard-and-accessibility.spec.ts:305-341`).
+9. **Met** - exactly three local `*.spec.ts` files exist; Playwright declares Chromium only and production-mode local `ng serve` (`playwright.config.ts:10-33`).
+10. **Met** - Vitest covers theme/directive and all four components; `npm test` passes UI 5 files/68 tests and gallery 3 files/27 tests.
+11. **Met** - both READMEs satisfy bounded non-production/non-publishing documentation; “How this was built” is three lines and cites MOD-W v5.0.1 with the requested link (`README.md:1-79`, `projects/ui/README.md:1-5`).
+12. **Met** - both UI configs contain exactly `"rootDir": "./src"`; UI tests and both production builds pass.
+13. **Met** - `lint:tokens` passes 88 failing/21 clean self-test fixtures, 51 contract tokens and four scopes; no component brand name, literal governed value, `.is-*`, gallery selector or preview API was found. A-1 is exactly 15rem-fail/16rem-clean.
+14. **Met** - `check:assets` passes six matching OFL/SOURCE families and no restricted asset; the pre-existing Angular favicon is unchanged.
+15. **Met** - CodeCraft remains one brand/two modes/four scopes; Chromium computed `superellipse(...)` behavior, rounded fallback and source order pass (`e2e/long-label-and-bevel.spec.ts:265-330`).
+16. **Not met** - Node 26 format, token, asset, e2e typecheck, unit, build and diff gates pass, but `npm run test:e2e` exits 1 with 46 passed/1 failed.
+17. **Met** - AC-16's accepted distinction is preserved; no new brand-direction claim is made.
+18. **Met** - final diff is confined to approved files/amendments; S-10 to S-13 are absent.
+
+Toolchain evidence: Node 26.0.0, npm 11.12.1, TypeScript 6.0.3, Angular 22.2.3. `format:check`, `lint:tokens`, `check:assets`, `typecheck:e2e`, `npm test`, `npm run build`, and `git diff --check` passed. `git status --short -- mod-w/design` is empty. Initial sandbox `spawn EPERM` results were superseded by successful permitted reruns.
+
+### Design ID mapping
+
+- **DS-020..025:** met - default/working, hover, genuine focus, filled, error and disabled input; helper/error semantics and echo evidence.
+- **DS-040..043, DS-045:** met - working/default, hover, current, genuine focus and narrow wrapping; DS-040 spans the full grid row.
+- **DS-044:** implemented visually/semantically as specified, but **not accepted** because its current ruling/design combination makes the axe gate fail.
+- **DS-050/051:** met - all four widths and scopes pass wrap/growth and two-line clamp/full-name checks.
+- **DS-060:** met - explicit computed CSS usage pairs, independent browser calculation, gallery cross-check, component-paint sampling and Mentor 4.62 boundary.
+- **DS-001..015 and DS-030..035:** preserved; Chromium adds switching/structure, real focus, loading suppression, single-link/card-click, contrast and bevel evidence. The axe failure prevents overall accessibility acceptance but does not regress these IDs.
+
+### Recommended next action
+
+Moderator chooses the authority resolution for the disabled navigation stop condition. The Tech Lead recommends option 1: explicitly amend the prior ruling to permit `aria-disabled="true"` on this non-link, non-focusable item. The Development Team then makes only the authorized change and matching tests, reruns every STEP-02 gate under Node 26, and returns for focused review. Do not start S-13 deployment, QA edits, or the fuller study review.
+
+---
+
+MOD-W v5.0.1
+
 
 ---
 
@@ -319,6 +394,67 @@ MOD-W v5.0.1
 ## Moderator Sequencing Decision - 2026-10-19
 
 The Moderator supersedes the earlier between-Step study-break sequence and approves the corresponding updates to `AGENTS.md`, `mod-w/roadmap.md`, and `mod-w/architecture.md`. STEP-02 is authorized to proceed. After STEP-02 is completed and accepted, the application must pass the S-13/AC-19 static-deployment gate; the Moderator will then conduct a fuller study review of the workspace projects and UI library. S-10 to S-12 remain excluded.
+
+---
+
+MOD-W v5.0.1
+
+---
+
+## Tech Lead Focused Re-review - STEP-02 (Disabled Navigation Rework)
+
+### Verdict
+
+**Pass for the focused rework; Moderator acceptance remains required.** The amended disabled-navigation ruling is implemented, and acceptance checks 8 and 16 are now met.
+
+### Scope check
+
+- The rework diff is confined to the four authorized files: `navigation.html`, `navigation.spec.ts`, `keyboard-and-accessibility.spec.ts`, and the single gallery assertion in `gallery-page.component.spec.ts`. The separate pre-existing `mod-w/review.md` change is this Tech Lead-owned review history.
+- No token, SCSS, configuration, dependency, documentation, `mod-w/design/`, QA, S-13, button, or text-input file changed. Button and text-input tests still require native disabled behavior without `aria-disabled`.
+- The ruling amendment applies only to the disabled navigation item. Its `--bui-color-disabled-text` styling and DS-044 appearance are unchanged.
+
+### Findings
+
+#### Must fix now
+
+None.
+
+#### Could fix later
+
+No new finding. The prior non-blocking STEP-02 observations remain unchanged.
+
+### Evidence
+
+- Semantics: the disabled item remains a titled, non-anchor `SPAN` with `aria-disabled="true"`, no `href`, `role`, `tabindex`, or `aria-current`; disabled still dominates current. Unit and browser assertions independently prove no link and no focusable descendant.
+- Axe integrity: the unchanged test runs `AxeBuilder({ page }).analyze()` against the complete `all` gallery, filters only serious/critical results for the required gate, and has no exclusion, skipped surface, disabled rule, or narrowed scope.
+- Node `v26.0.0`; npm `11.12.1`; TypeScript `6.0.3`; Angular CLI/framework `22.2.3`.
+- `format:check`, `lint:tokens` (88 failing fixtures, 21 clean fixtures, 51 tokens, four scopes), `check:assets`, `typecheck:e2e`, `git diff --check`, and both builds passed.
+- `npm test` passed: UI 5 files / 68 tests; gallery 3 files / 27 tests. `npm run test:e2e` passed 47/47, including the complete-gallery axe test. `git status --short -- mod-w/design` is empty. Initial sandbox `spawn EPERM` results were superseded by successful permitted reruns.
+
+### Acceptance and Design-ID mapping
+
+- Acceptance check 8: **Met** - the representative full-gallery axe scan reports no serious or critical violation.
+- Acceptance check 16: **Met** - every required Node 26 gate passes.
+- DS-044: **Met** - disabled navigation remains non-link, non-focusable text using the approved disabled-text token and appearance, now with the Moderator-authorized `aria-disabled="true"` semantic.
+- All other previously Met STEP-02 acceptance checks and Design IDs remain Met; the focused diff does not alter their implementation surfaces or evidence.
+
+### Reference Implementation compliance
+
+Compliant. The prototype remains rejected as a Reference Implementation, and this rework adds no prototype dependency, copied token source, preview API, forced-state component class, remote asset, or prohibited brand asset.
+
+### Next action
+
+Moderator decides STEP-02 acceptance. Do not start S-13 deployment, QA edits, or the fuller study review before that decision.
+
+---
+
+MOD-W v5.0.1
+
+---
+
+## Moderator Decision - STEP-02 - 2026-10-19
+
+The Moderator accepts the STEP-02 implementation. STEP-02 is complete. The separate required S-13/AC-19 static-deployment gate is now next; this decision does not itself start deployment, authorize QA edits, or begin the fuller project and UI-library study review.
 
 ---
 

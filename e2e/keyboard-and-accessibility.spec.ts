@@ -80,7 +80,14 @@ test.describe('keyboard operation', () => {
     const bar = page.getByTestId('gallery-nav-bar-disabled');
     await expect(bar.getByText('Disabled', { exact: true })).toBeVisible();
     await expect(bar.getByRole('link')).toHaveCount(0);
-    await expect(bar.locator(`${FOCUSABLE}, [aria-disabled]`)).toHaveCount(0);
+    await expect(bar.locator(FOCUSABLE)).toHaveCount(0);
+    const disabled = bar.locator('[aria-disabled]');
+    await expect(disabled).toHaveCount(1);
+    await expect(disabled).toHaveAttribute('aria-disabled', 'true');
+    await expect(disabled).toHaveText('Disabled');
+    await expect(disabled).not.toHaveAttribute('role', /.*/);
+    await expect(disabled).not.toHaveAttribute('aria-current', /.*/);
+    expect(await disabled.evaluate((element) => element.tagName)).toBe('SPAN');
   });
 
   test('Enter and Space activate a button; loading suppresses key, pointer and submission', async ({

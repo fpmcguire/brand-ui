@@ -69,7 +69,7 @@ describe('Navigation', () => {
     expect(links().map((link) => link.getAttribute('aria-current'))).toEqual(['page', null, null]);
   });
 
-  it('renders a disabled item as non-link text with no role, tabindex or aria-disabled', async () => {
+  it('renders a disabled item as non-link text with aria-disabled and no role or tabindex', async () => {
     const { entries } = await setup();
     const disabled = entries()[3];
     expect(disabled.querySelector('a')).toBeNull();
@@ -77,7 +77,8 @@ describe('Navigation', () => {
     expect(item.hasAttribute('href')).toBe(false);
     expect(item.hasAttribute('role')).toBe(false);
     expect(item.hasAttribute('tabindex')).toBe(false);
-    expect(item.hasAttribute('aria-disabled')).toBe(false);
+    expect(item.tagName).toBe('SPAN');
+    expect(item.getAttribute('aria-disabled')).toBe('true');
     expect(item.hasAttribute('aria-current')).toBe(false);
     expect(item.textContent?.trim()).toBe('Coming soon');
   });
@@ -93,6 +94,7 @@ describe('Navigation', () => {
     await update([{ id: 'x', label: 'X', href: '#x', current: true, disabled: true }]);
     expect(entries()[0].querySelector('a')).toBeNull();
     expect(entries()[0].querySelector('[aria-current]')).toBeNull();
+    expect(entries()[0].querySelector('.item')?.getAttribute('aria-disabled')).toBe('true');
   });
 
   it('keeps the full label in the DOM for the accessible name and repeats it as a tooltip', async () => {

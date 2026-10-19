@@ -4,7 +4,7 @@
     @for (item of items(); track item.id) {
       <li class="entry">
         @if (item.disabled) {
-          <span class="item" data-disabled [attr.title]="item.title ?? null">
+          <span class="item" data-disabled aria-disabled="true" [attr.title]="item.title ?? null">
             <span class="text">{{ item.label }}</span>
           </span>
         } @else {

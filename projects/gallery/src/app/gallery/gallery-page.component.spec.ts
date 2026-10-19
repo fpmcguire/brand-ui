@@ -233,7 +233,7 @@ describe('GalleryPage', () => {
         root.querySelector<HTMLElement>(`[data-testid="gallery-nav-bar-${state}"]`)!;
       expect(bar('current').querySelector('a')?.getAttribute('aria-current')).toBe('page');
       expect(bar('disabled').querySelector('a')).toBeNull();
-      expect(bar('disabled').querySelector('[aria-disabled]')).toBeNull();
+      expect(bar('disabled').querySelectorAll('[aria-disabled="true"]')).toHaveLength(1);
       expect(bar('default').querySelectorAll('a[aria-current="page"]')).toHaveLength(1);
     });
 

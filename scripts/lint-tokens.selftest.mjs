@@ -44,6 +44,7 @@ const mustFail = {
   'signed plus-exponent vw margin': '.a { margin: -0e+0vw; }',
   'exponent form of allowlisted width is not allowlisted': '.a { width: 1e0px; }',
   'exponent form of allowlisted margin is not allowlisted': '.a { margin: -1e0px; }',
+  'max-width other than the DS-051 limit is not allowlisted': '.a { max-width: 15rem; }',
 };
 const inlineMustFail = {
   'inline styles array': '@Component({ styles: [`:host { border-radius: 0; }`] }) class A {}',
@@ -135,6 +136,7 @@ const mustPass = {
   'allowed structural constants':
     '.a { margin: 0; inset: 0; width: 1px; height: 1px; margin: -1px; width: 60%; aspect-ratio: 4 / 3; line-height: 1.5; min-width: 0; opacity: 0; }',
   'non-governed zero': '.a { min-width: 0; flex: 0 0 auto; z-index: 0; }',
+  'navigation item limit from DS-051': '.a { max-width: 16rem; }',
   'plain numbers and percentages':
     '.a { top: 10%; left: 100%; width: 100%; line-height: 1.05; z-index: 10; flex-grow: 0.5; }',
   'exponent percentage in governed and non-governed properties':

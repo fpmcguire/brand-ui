@@ -1,0 +1,109 @@
+// Tokens only. `--bui-state-*` are optional inherited overrides: real pseudo-classes and a host
+// that forces a state both end up in the same properties below.
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.nav {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bui-space-2) var(--bui-space-5);
+  padding: var(--bui-space-2) var(--bui-space-4);
+  border: var(--bui-border-width) solid var(--bui-color-border);
+  border-radius: var(--bui-radius-card);
+  background: var(--bui-color-surface);
+  color: var(--bui-color-text);
+  font-family: var(--bui-font-ui);
+  font-size: var(--bui-size-ui);
+  font-weight: var(--bui-weight-ui);
+  letter-spacing: var(--bui-letter-spacing-ui);
+  line-height: var(--bui-line-height-ui);
+}
+
+.wordmark {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-family: var(--bui-font-display);
+  font-size: var(--bui-size-title);
+  font-weight: var(--bui-weight-display);
+  letter-spacing: normal;
+  line-height: var(--bui-line-height-title);
+}
+
+// Items wrap onto further rows at narrow widths; there is no collapsed menu.
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bui-space-1);
+  min-width: 0;
+  margin: 0;
+  // Clears the user-agent list indent; `unset` resolves to the initial padding, not a brand value.
+  padding: unset;
+  list-style: none;
+}
+
+.entry {
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.item {
+  --_bg: transparent;
+  --_outline: none;
+
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  // Fixed by DS-051: no item is wider than this, whatever its label.
+  max-width: 16rem;
+  min-height: var(--bui-control-height);
+  padding: var(--bui-space-2) var(--bui-space-3);
+  border-radius: var(--bui-radius-control);
+  background-color: var(--bui-state-bg, var(--_bg));
+  color: inherit;
+  outline: var(--bui-state-outline, var(--_outline));
+  // Inset, so the ring is never clipped by the bar and never changes the bar's size.
+  outline-offset: calc(-1 * var(--bui-focus-width));
+  text-decoration: none;
+}
+
+a.item {
+  cursor: pointer;
+
+  &:hover {
+    --_bg: var(--bui-color-primary-tint);
+  }
+
+  &:focus-visible {
+    --_outline: var(--bui-focus-width) solid var(--bui-color-focus);
+  }
+
+  // The current-page indicator is a bar along the bottom edge, clipped by the item's own radius.
+  &[aria-current='page'] {
+    background-image: linear-gradient(var(--bui-color-primary), var(--bui-color-primary));
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: 100% var(--bui-indicator-width);
+  }
+}
+
+.item[data-disabled] {
+  color: var(--bui-color-disabled-text);
+  cursor: not-allowed;
+}
+
+// The full label stays in the DOM (and so in the accessible name); only the paint is clamped.
+.text {
+  display: -webkit-box;
+  min-width: 0;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}

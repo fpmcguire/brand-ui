@@ -1,0 +1,26 @@
+<div class="field">
+  <label class="label" [id]="labelId()" [attr.for]="id()">{{ label() }}</label>
+  <input
+    class="control"
+    type="text"
+    [id]="id()"
+    [attr.name]="name() ?? null"
+    [attr.placeholder]="placeholder() ?? null"
+    [value]="value()"
+    [disabled]="disabled()"
+    [attr.aria-invalid]="invalid() ? 'true' : null"
+    [attr.aria-describedby]="describedBy()"
+    (input)="onInput($event)"
+  />
+  @if (errorText(); as errorText) {
+    <p class="message error" [id]="errorId()">
+      <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+        <circle cx="8" cy="8" r="7" />
+        <path d="M8 4.5v4M8 11v.5" />
+      </svg>
+      <span>{{ errorText }}</span>
+    </p>
+  } @else if (helperText(); as helperText) {
+    <p class="message helper" [id]="helperId()">{{ helperText }}</p>
+  }
+</div>

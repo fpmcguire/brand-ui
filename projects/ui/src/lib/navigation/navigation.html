@@ -1,0 +1,23 @@
+<nav class="nav" [attr.aria-label]="label()">
+  <span class="wordmark">{{ wordmark() }}</span>
+  <ul class="list">
+    @for (item of items(); track item.id) {
+      <li class="entry">
+        @if (item.disabled) {
+          <span class="item" data-disabled [attr.title]="item.title ?? null">
+            <span class="text">{{ item.label }}</span>
+          </span>
+        } @else {
+          <a
+            class="item"
+            [href]="item.href"
+            [attr.aria-current]="item.current ? 'page' : null"
+            [attr.title]="item.title ?? null"
+          >
+            <span class="text">{{ item.label }}</span>
+          </a>
+        }
+      </li>
+    }
+  </ul>
+</nav>

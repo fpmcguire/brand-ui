@@ -13,6 +13,8 @@ export const ALLOWED_LITERALS = {
   height: ['1px'],
   // Stretched-link hit area: `inset: 0` fills the positioned card; it is geometry, not space.
   inset: ['0'],
+  // Navigation item limit fixed by DS-051 / D-06; no other max-width length is allowlisted.
+  'max-width': ['16rem'],
 };
 
 // A dimension is a number (scientific notation allowed, e.g. `0e0px`) followed at once by a unit;

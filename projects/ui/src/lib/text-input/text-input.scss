@@ -1,0 +1,95 @@
+// Tokens only. `--bui-state-*` are optional inherited overrides: real pseudo-classes and a host
+// that forces a state both end up in the same properties below.
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bui-space-2);
+  min-width: 0;
+}
+
+.label {
+  color: var(--bui-color-text);
+  font-family: var(--bui-font-ui);
+  font-size: var(--bui-size-ui);
+  font-weight: var(--bui-weight-ui);
+  letter-spacing: var(--bui-letter-spacing-ui);
+  line-height: var(--bui-line-height-ui);
+}
+
+.control {
+  --_bg: var(--bui-color-surface);
+  --_border: var(--bui-color-border-strong);
+  --_outline: none;
+
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--bui-control-height);
+  padding: var(--bui-space-2) var(--bui-space-3);
+  border: var(--bui-border-width) solid var(--bui-state-border, var(--_border));
+  border-radius: var(--bui-radius-control);
+  background: var(--_bg);
+  color: var(--bui-color-text);
+  outline: var(--bui-state-outline, var(--_outline));
+  outline-offset: var(--bui-focus-offset);
+  font-family: var(--bui-font-body);
+  font-size: var(--bui-size-body);
+
+  &::placeholder {
+    color: var(--bui-color-text-muted);
+    opacity: 1;
+  }
+
+  &:hover:not(:disabled, [aria-invalid='true']) {
+    --_border: var(--bui-color-text);
+  }
+
+  &[aria-invalid='true'] {
+    --_border: var(--bui-color-danger);
+  }
+
+  &:focus-visible {
+    --_border: var(--bui-color-focus);
+    --_outline: var(--bui-focus-width) solid var(--bui-color-focus);
+  }
+
+  &:disabled {
+    --_bg: var(--bui-color-disabled-bg);
+    --_border: var(--bui-color-border);
+    color: var(--bui-color-disabled-text);
+    cursor: not-allowed;
+  }
+}
+
+.message {
+  margin: 0;
+  font-family: var(--bui-font-body);
+  font-size: var(--bui-size-small);
+  line-height: var(--bui-line-height-ui);
+}
+
+.helper {
+  color: var(--bui-color-text-muted);
+}
+
+// Error is never colour alone: the icon and the message text carry it.
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--bui-space-2);
+  color: var(--bui-color-danger);
+}
+
+.icon {
+  flex: none;
+  width: var(--bui-space-4);
+  height: var(--bui-space-4);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: calc(var(--bui-border-width) * 2);
+  stroke-linecap: round;
+}

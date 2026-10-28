@@ -1,6 +1,6 @@
 # STEP-05 — Atomic package scaffold, pack, and installed consumption
 
-**Status:** Activated by the Moderator for planning only, 2026-10-28. Remote-reference/branch evidence and the D-12 before-measurement are accepted. Implementation remains prohibited until the Moderator separately approves the Development Team's exact plan.
+**Status:** Development Team plan approved and implementation completed. The Tech Lead accepted the corrected implementation for Moderator consideration, and the Moderator approved that review for fresh QA on 2026-10-28. Fresh QA is authorized; Product Owner sign-off and final Moderator acceptance remain pending. STEP-06 remains blocked.
 
 **Estimate:** 5 hours. **Dependencies:** approved D-12/domain terms; `v1.0.0` pushed and verified on `origin`; extension branch created from `v1.0.0`; before-measurement recorded under D-12. By Moderator decisions on 2026-10-28, the study-review gates are consolidated as one additional written-guide gate after STEP-09 and are not a dependency for STEP-05 or any later build Step through STEP-09. Written guides live under `study-guides/`; they do not authorize implementation or replace the separate approval of this Step's exact Development Team plan.
 

@@ -2,7 +2,7 @@
 
 **Project:** brand-ui  
 **Date:** 2026-10-28
-**Status:** STEP-04 accepted; D-12/domain terms and STEP-05 through STEP-09 plan approved by the Moderator, 2026-10-28; pre-Step gates pending
+**Status:** STEP-04 and the D-12 before-measurement gate accepted; frozen-v1.0.0 study review remains pending before STEP-05
 
 ---
 
@@ -20,7 +20,7 @@ The accepted v1.0.0 spike is followed by a Moderator-initiated Atomic Design ext
 | STEP-04 | Static subfolder deployment                            | S-13, AC-19                                                    | Development Team | Accepted 2026-10-19                   | `/brand-ui/`; no indexing or third-party assets |
 | Gate    | Full project study review                              | Moderator decision                                             | Moderator        | Required after deployment              | Covers the workspace projects and UI library    |
 | Gate | Remote reference and branch | MD-9, A-16 | Moderator | Required before STEP-05 | Push/verify `v1.0.0`; branch from `bd24152` |
-| Gate | Before measurement | S-18, AC-26, A-19; D-12 | Moderator/Development Team | Required before STEP-05 | Frozen v1.0.0, five-run baseline before code |
+| Gate | Before measurement | S-18, AC-26, A-19; D-12 | Moderator/Development Team | Accepted 2026-10-28 | Frozen v1.0.0, five-run baseline before code |
 | STEP-05 | Atomic package scaffold, pack, and installed consumption | S-15, S-16; AC-22 to AC-24 | Development Team | Plan approved; pre-gates pending | 5h; no Card move |
 | STEP-06 | Move Card behind installed atomic package | S-14 to S-16; AC-20 to AC-24 | Development Team | Plan approved; blocked by STEP-05 | 4h; unchanged behavior/assertions |
 | STEP-07 | Gallery Card structure view | S-17; AC-20, AC-23 to AC-25 | Development Team | Plan approved; blocked by STEP-06 | 5h; DS-061–066 plus DS-030/031/035 |
@@ -119,6 +119,7 @@ The estimated implementation effort is 21 hours over 4–5 working days, within 
 - **2026-10-28 — D-12 and domain terms:** approved by the Moderator.
 - **2026-10-28 — STEP-05 through STEP-09 plan:** approved by the Moderator.
 - **2026-10-28 — `CLAUDE.md` and `AGENTS.md` extension changes:** approved by the Moderator and applied.
+- **2026-10-28 — D-12 before measurement:** Tech Lead Pass accepted by the Moderator; corrected baseline records 2559.6461 ms median LCP, 0.035028 median CLS, 630 ms median TBT, and 89,050 bytes gzip-level-9 startup JS plus combined CSS. The accepted slow-host warning remains a STEP-08 comparison caveat.
 - **Limit:** approval of the Step plan is not activation or implementation approval. The pre-Step gates remain required, and each active Step requires separate Moderator approval of the Development Team's exact plan.
 
 ## Cut order

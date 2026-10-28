@@ -1,0 +1,261 @@
+{
+  "result": "PASS: five valid cold runs",
+  "requiredRuns": 5,
+  "attemptsTotal": 5,
+  "maxAttempts": 7,
+  "validRunsUsed": 5,
+  "configConsistentAcrossValidRuns": true,
+  "expected": {
+    "lighthouseVersion": "13.5.0",
+    "hostChrome": "HeadlessChrome/156.0.0.0",
+    "formFactor": "mobile",
+    "throttlingMethod": "simulate",
+    "throttling": {
+      "rttMs": 150,
+      "throughputKbps": 1638.4,
+      "cpuSlowdownMultiplier": 4
+    }
+  },
+  "runs": [
+    {
+      "attempt": 1,
+      "lcpMs": 3237.4585,
+      "cls": 0.03502823531995759,
+      "tbtMs": 0,
+      "benchmarkIndex": 856.5,
+      "slowHostCpuWarning": true
+    },
+    {
+      "attempt": 2,
+      "lcpMs": 2559.6461,
+      "cls": 0.03502823531995759,
+      "tbtMs": 725,
+      "benchmarkIndex": 775.5,
+      "slowHostCpuWarning": true
+    },
+    {
+      "attempt": 3,
+      "lcpMs": 2513.56775,
+      "cls": 0,
+      "tbtMs": 629.9999999999998,
+      "benchmarkIndex": 811,
+      "slowHostCpuWarning": true
+    },
+    {
+      "attempt": 4,
+      "lcpMs": 2555.5066,
+      "cls": 0.03502823531995759,
+      "tbtMs": 777,
+      "benchmarkIndex": 809,
+      "slowHostCpuWarning": true
+    },
+    {
+      "attempt": 5,
+      "lcpMs": 2956.7165,
+      "cls": 0.03502823531995759,
+      "tbtMs": 0,
+      "benchmarkIndex": 817.5,
+      "slowHostCpuWarning": true
+    }
+  ],
+  "medians": {
+    "lcpMs": 2559.6461,
+    "cls": 0.03502823531995759,
+    "tbtMs": 629.9999999999998
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "file": "attempt-1.json",
+      "valid": true,
+      "reasons": [],
+      "metrics": {
+        "lcpMs": 3237.4585,
+        "cls": 0.03502823531995759,
+        "tbtMs": 0
+      },
+      "benchmarkIndex": 856.5,
+      "slowHostCpuWarning": true,
+      "fetchTime": "2026-10-28T03:30:05.335Z",
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "configHash": "80bad53803f8f14b469b4f6e19a31ec73d81d51084d16a6dba0707aafa285eaf",
+      "reportSha256": "f6d9bb63e779d9560dd34b4f1fad7a2e54a0af24c41724a3ed73e5fc59c7ec18"
+    },
+    {
+      "attempt": 2,
+      "file": "attempt-2.json",
+      "valid": true,
+      "reasons": [],
+      "metrics": {
+        "lcpMs": 2559.6461,
+        "cls": 0.03502823531995759,
+        "tbtMs": 725
+      },
+      "benchmarkIndex": 775.5,
+      "slowHostCpuWarning": true,
+      "fetchTime": "2026-10-28T03:30:31.049Z",
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "configHash": "80bad53803f8f14b469b4f6e19a31ec73d81d51084d16a6dba0707aafa285eaf",
+      "reportSha256": "8aa2af61ed58f6db56b2eba29fa0e6b732b732e8f5307a41b84a87bd6e2dc315"
+    },
+    {
+      "attempt": 3,
+      "file": "attempt-3.json",
+      "valid": true,
+      "reasons": [],
+      "metrics": {
+        "lcpMs": 2513.56775,
+        "cls": 0,
+        "tbtMs": 629.9999999999998
+      },
+      "benchmarkIndex": 811,
+      "slowHostCpuWarning": true,
+      "fetchTime": "2026-10-28T03:30:57.136Z",
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "configHash": "80bad53803f8f14b469b4f6e19a31ec73d81d51084d16a6dba0707aafa285eaf",
+      "reportSha256": "92f158af26170ba7f6a6f131be4f2558420145d590d6776d0efd67282fa014d5"
+    },
+    {
+      "attempt": 4,
+      "file": "attempt-4.json",
+      "valid": true,
+      "reasons": [],
+      "metrics": {
+        "lcpMs": 2555.5066,
+        "cls": 0.03502823531995759,
+        "tbtMs": 777
+      },
+      "benchmarkIndex": 809,
+      "slowHostCpuWarning": true,
+      "fetchTime": "2026-10-28T03:31:22.674Z",
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "configHash": "80bad53803f8f14b469b4f6e19a31ec73d81d51084d16a6dba0707aafa285eaf",
+      "reportSha256": "4828a6f6c44e76c6df0a2084b8876c3da2aec3aedcd2d56332a2a85006af05b8"
+    },
+    {
+      "attempt": 5,
+      "file": "attempt-5.json",
+      "valid": true,
+      "reasons": [],
+      "metrics": {
+        "lcpMs": 2956.7165,
+        "cls": 0.03502823531995759,
+        "tbtMs": 0
+      },
+      "benchmarkIndex": 817.5,
+      "slowHostCpuWarning": true,
+      "fetchTime": "2026-10-28T03:31:48.735Z",
+      "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "configHash": "80bad53803f8f14b469b4f6e19a31ec73d81d51084d16a6dba0707aafa285eaf",
+      "reportSha256": "b75a22cbd6576099dde9ac2301de9100cae5e5d3c9c97707ccc54cbd8fd39a9f"
+    }
+  ],
+  "assets": {
+    "method": "Size set: every Script and Stylesheet request in the Lighthouse network-requests audit of each of the five used (valid) cold runs (the navigation through the settled gallery page) that is same-origin under the base path, unioned with the <script src>, <link rel=stylesheet> and <link rel=modulepreload> URLs in dist index.html (<noscript> excluded), de-duplicated by built file path. The extraction fails if the loaded set differs between runs, if any request cannot be resolved to a build file, or if Lighthouse's resourceSize disagrees with the file's bytes. Sizes come only from the production-build files: raw = file bytes; gzip = zlib gzip level 9 of those bytes. Lighthouse transfer sizes are never used as gzip sizes; resourceSize is used only to verify the file match. Inline CSS = each <style> element's text in index.html (UTF-8) sized and gzipped individually, then summed. Combined CSS = external + inline. JS total = loaded external files only; inline <script> blocks are listed separately and excluded from every total. Compare before and after by the totals only: filenames carry content hashes and the file set may change between builds, so the per-file stem field in summary.json is informational only.The identical script and rule are applied to the after measurement.",
+    "checks": {
+      "loadedSetConsistentAcrossRuns": true,
+      "unresolvedRequests": [],
+      "lighthouseResourceSizeMismatches": [],
+      "htmlReferencedButNotLoaded": []
+    },
+    "js": {
+      "files": [
+        {
+          "path": "chunk-AHKUZRML.js",
+          "stem": "chunk.js",
+          "role": "html-referenced",
+          "htmlReferences": [
+            "modulepreload"
+          ],
+          "loadedInRuns": 5,
+          "raw": 137041,
+          "gzip": 45965
+        },
+        {
+          "path": "chunk-RK6W3FLA.js",
+          "stem": "chunk.js",
+          "role": "startup-loaded",
+          "htmlReferences": [],
+          "loadedInRuns": 5,
+          "raw": 63719,
+          "gzip": 16359
+        },
+        {
+          "path": "main-GFT2O7PC.js",
+          "stem": "main.js",
+          "role": "html-referenced",
+          "htmlReferences": [
+            "script"
+          ],
+          "loadedInRuns": 5,
+          "raw": 88452,
+          "gzip": 25016
+        }
+      ],
+      "total": {
+        "raw": 289212,
+        "gzip": 87340
+      }
+    },
+    "css": {
+      "external": {
+        "files": [
+          {
+            "path": "styles-MWHECO2O.css",
+            "stem": "styles.css",
+            "role": "html-referenced",
+            "htmlReferences": [
+              "stylesheet"
+            ],
+            "loadedInRuns": 5,
+            "raw": 8256,
+            "gzip": 1655
+          }
+        ],
+        "total": {
+          "raw": 8256,
+          "gzip": 1655
+        }
+      },
+      "inline": {
+        "blocks": [
+          {
+            "index": 0,
+            "raw": 38,
+            "gzip": 55
+          }
+        ],
+        "total": {
+          "raw": 38,
+          "gzip": 55
+        }
+      },
+      "combined": {
+        "raw": 8294,
+        "gzip": 1710
+      }
+    },
+    "inlineJs": {
+      "blocks": [
+        {
+          "index": 0,
+          "raw": 163,
+          "gzip": 128
+        }
+      ],
+      "total": {
+        "raw": 163,
+        "gzip": 128
+      }
+    },
+    "jsPlusCssCombined": {
+      "raw": 297506,
+      "gzip": 89050
+    },
+    "indexHtml": {
+      "sha256": "d7e48a158d165162fb8bcb6203ea6e13421a04580fa5c8311d212099cb4da2d2",
+      "raw": 921,
+      "gzip": 497
+    }
+  }
+}

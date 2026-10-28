@@ -1,0 +1,8 @@
+{
+  "name": "bui-d12-lighthouse-tooling",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "lighthouse": "13.5.0"
+  }
+}

@@ -1,0 +1,7 @@
+main HEAD: 55fbf3b82d9f6de9060fac7cd77e52b18af0479f
+main branch: feature/atomic-design
+main status lines: 0
+main diff hash: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+bd241525a93afa468d069ca42bc300f62af3bd91	refs/tags/v1.0.0^{}
+local peel: bd241525a93afa468d069ca42bc300f62af3bd91
+ancestor: yes

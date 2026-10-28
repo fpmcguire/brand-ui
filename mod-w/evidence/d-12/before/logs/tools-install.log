@@ -1,0 +1,8 @@
+npm warn deprecated @opentelemetry/sdk-trace-base@2.12.0: Use @opentelemetry/sdk-trace package
+
+added 114 packages in 5m
+tools npm ci exit: 0
+bui-d12-lighthouse-tooling@0.0.0 C:\Users\User\AppData\Local\Temp\bui-d12\tools
+`-- lighthouse@13.5.0
+
+      "integrity": "sha512-w/yYIwg7mP9pCwkcbAXRztnvKHua2dJnZaNptPLa1cEw+akr6lbsIDiUOLsQwvaiAUr0xvxdmwvAzl3pj3Np0A==",

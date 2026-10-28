@@ -1,0 +1,27 @@
+v26.0.0
+11.12.1
+
+added 320 packages in 5m
+npm ci exit: 0
+### build
+
+> brand-ui@1.0.0 build:subfolder
+> ng build gallery --base-href /brand-ui/
+
+❯ Building...
+✔ Building...
+Initial chunk files | Names                  |  Raw size | Estimated transfer size
+chunk-AHKUZRML.js   | -                      | 137.04 kB |                40.90 kB
+main-GFT2O7PC.js    | main                   |  88.45 kB |                22.43 kB
+styles-MWHECO2O.css | styles                 |   8.26 kB |                 1.39 kB
+
+                    | Initial total          | 233.75 kB |                64.73 kB
+
+Lazy chunk files    | Names                  |  Raw size | Estimated transfer size
+chunk-RK6W3FLA.js   | gallery-page-component |  63.72 kB |                13.95 kB
+
+Application bundle generation complete. [8.016 seconds] - 2026-10-28T03:29:41.123Z
+
+Output location: C:\Users\User\AppData\Local\Temp\bui-d12\wt\dist\gallery
+
+build exit: 0

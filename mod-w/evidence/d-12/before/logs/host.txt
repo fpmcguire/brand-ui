@@ -1,0 +1,1 @@
+CPU=Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz cores=2 logical=4 maxMHz=2904 RAMGB=15.9 OS=Microsoft Windows 10 Home 10.0.19045 POWER=Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)

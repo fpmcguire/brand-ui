@@ -1,18 +1,18 @@
-# Tech Lead Review — STEP-04 Static subfolder deployment
+# Tech Lead Review — D-12 Before Measurement
 
 ## Verdict
 
-**Pass.** The implementation, local `/brand-ui/` deployment, and authorized remote publication meet STEP-04. The previously public deployment archive was removed and returned 404 on focused re-check. This verdict is for the Moderator; it is not self-approval or Moderator acceptance.
+**Pass.** The revised D-12 before-measurement satisfies S-18, AC-26, A-19, and the approved D-12 conditions. The prior size-baseline finding is resolved: the startup-loaded gallery route chunk is included, and the raw and gzip totals are computed from production-build files. This verdict is advice to the Moderator; it is not self-approval, Moderator acceptance, STEP-05 activation, or approval of a Development Team STEP-05 plan.
 
-**Moderator disposition:** Review approved on 2026-10-19; STEP-04 released to QA. Final acceptance remains pending QA evidence and Moderator decision.
+**Moderator disposition:** Accepted on 2026-10-28. The Moderator authorized the conventional commit of this review and the accepted D-12 before-measurement evidence. STEP-05 remains inactive.
 
 ## Scope check
 
-- Implementation diff: only `package.json`, `projects/gallery/src/index.html`, and new `projects/gallery/public/robots.txt`.
-- Exactly one `build:subfolder` script exists and equals `ng build gallery --base-href /brand-ui/`.
-- No dependency/lockfile, route, SSR/service-worker, analytics, library/public API, token, `Navigation`, Design-ID, About lifecycle/content, first-visit, `mod-w/design/**`, `angular.json`, or `playwright.config.ts` change.
-- No test file changed. Exactly three Chromium specs remain; no skipped/only/fixme test, disabled axe rule, excluded surface, snapshot, or assertion weakening entered the diff.
-- No Design ID applies. The rejected prototype was irrelevant and unused.
+- The evidence remains unstaged and uncommitted under `mod-w/evidence/d-12/before/`.
+- The focused revision changed only `scripts/extract.mjs`, `summary.json`, `summary.md`, `commands.md`, and `hashes.sha256`, and added `logs/frozen-rebuild-for-size-baseline.log`.
+- Application code, tests, dependencies, lockfiles, planning artifacts, and `mod-w/design/**` were not changed.
+- The current branch remains `feature/atomic-design` at `55fbf3b82d9f6de9060fac7cd77e52b18af0479f`; frozen reference `bd241525a93afa468d069ca42bc300f62af3bd91` remains an ancestor.
+- STEP-05 remains inactive. This review covers only the D-12 before-measurement evidence.
 
 ## Findings
 
@@ -22,34 +22,25 @@ None.
 
 ### Could fix later
 
-- Root `/robots.txt` returns 404. The deployed page-level `noindex, nofollow` is the effective AC-19 control, so this is not a STEP-04 blocker. Any root rule is host-wide policy and should be separately authorized; if added, scope it to `/brand-ui/`.
-- HTTP serves the gallery with 200 and does not redirect to HTTPS. No STEP-04 requirement mandates a redirect and the site carries no sensitive transaction, so this is host hardening, not an acceptance blocker.
+- The accepted slow-host warning and large timing variance remain material caveats for STEP-08. The after run must retain the same machine, Balanced power plan, Chrome/Lighthouse versions, throttling, and cold-run procedure; environment drift must stop the comparison and be reported.
+- The generated method sentence in `summary.json` and `summary.md` lacks a space before “The identical script”. This is editorial only and does not affect the recorded method or calculations.
 
-## Acceptance and evidence mapping
+## Acceptance and Design-ID evidence mapping
 
-| STEP-04 check | Result | Independent evidence |
+| Requirement / decision | Result | Evidence |
 |---|---|---|
-| AC-19 static site under `/brand-ui/` | **Met** | Subfolder build passed. Local real-path Chromium load and refresh returned 200 with no failed/off-origin request; hashed CSS/JS, favicon, and local fonts resolved. About first-visit, close, refresh, and manual reopen remained intact. |
-| AC-19 no indexing | **Met** | Source and emitted HTML contain `noindex, nofollow`; emitted and live `/brand-ui/robots.txt` contain exactly `User-agent: *` and `Disallow: /`. Emitted base is `/brand-ui/`; default build base is `/`. |
-| AC-19 assets | **Met** | `check:assets` passed. Emitted CSS references seven local WOFF2 files; Chromium loaded local fonts/favicon; no remote or third-party brand asset request occurred. |
-| Exact root script | **Met** | One occurrence; exact required command with trailing slash. |
-| No prohibited scope change | **Met** | Commit path/diff inspection and targeted status/diff checks were clean for all prohibited surfaces. |
-| Accepted STEP-01–03 coverage | **Met** | `ui` 68/68, gallery 64/64, Chromium 70/70 in exactly three specs. Complete-gallery and open-dialog axe checks passed unchanged. |
-| All prescribed Node 26 gates | **Met** | Versions and every formatting, token, asset, typecheck, unit, browser, default-build, subfolder-build, diff, and scope command passed. |
-| Authorized remote publication | **Met** | Focused Chromium re-check confirmed the upload ZIP now returns 404. The authorized HTTPS page remains healthy with only same-origin 200 resources and intact About/refresh behavior. |
-
-## Command and browser evidence
-
-- Runtime: Node `26.0.0`, npm `11.12.1`, Angular CLI/Angular `22.2.3`, TypeScript `6.0.3` via fnm.
-- Passed: `format:check`, `lint:tokens` (51 tokens/four scopes), `check:assets`, `typecheck:e2e`, `npm test`, `test:e2e`, `build`, `build:subfolder`, `git diff --check`, both status commands.
-- Live Chromium: `https://www.frank-mcguire.com/brand-ui/` returned 200; base and robots meta were correct; hashed same-origin bundles, local fonts, favicon, and robots returned 200; no failed/off-origin request; refresh and About behavior passed.
-- Focused remote re-check after Moderator cleanup: deployment ZIP 404; gallery, hashed bundles, local fonts, favicon, and subfolder robots remained 200; no failed/off-origin request; refresh and About behavior remained intact.
-- Non-blocking host observations remain: root robots 404; HTTP remains on HTTP with 200.
+| S-18, AC-26, A-19 — frozen before run | **Met** | `env.json`, `commands.md`, `logs/main-before.txt`, and the rebuild log identify frozen `v1.0.0` / `bd24152`, the production `/brand-ui/` build, Node 26.0.0, and npm 11.12.1. |
+| D-12 — five cold mobile runs under fixed conditions | **Met with accepted caveat** | Five unchanged Lighthouse 13.5.0 reports use the approved mobile emulation, simulated throttling, cold storage/profile procedure, pinned Chrome, and one configuration hash. Each contains only the Moderator-accepted slow-CPU warning. |
+| D-12 — median LCP, CLS, and TBT | **Met** | Raw reports reproduce medians of 2559.6461 ms LCP, 0.035028 CLS, and 630 ms TBT. The reports were not rerun or modified. |
+| D-12 — raw and gzip startup JS/CSS totals | **Met** | All five raw Lighthouse reports contain the identical four-resource startup set. The corrected baseline includes `chunk-RK6W3FLA.js` and totals 297,506 raw bytes and 89,050 gzip-level-9 bytes for external JS plus combined CSS. |
+| Size method reusable for STEP-08 | **Met** | `extract.mjs` unions same-origin Script/Stylesheet requests with index references, de-duplicates by built path, rejects inconsistent/unresolved/mismatched sets, sizes production files rather than transfers, and compares totals independently of hashed filenames. |
+| Evidence integrity | **Met** | All 29 manifest entries match, cover every evidence file except `hashes.sha256` itself, and are unique. Summary arithmetic reconciles exactly; extractor syntax validation passed. |
+| Design IDs | **Not applicable** | This evidence-only gate implements no visual design and changes no DS-030/031/035 or DS-061–066 surface. |
 
 ## Reference Implementation compliance
 
-The prototype remains rejected as a Reference Implementation and was not used. STEP-04 has no Design ID and adds no badge or placeholder.
+The prototype remains rejected as a Reference Implementation and was not used as implementation authority. No prototype or `mod-w/design/**` artifact changed. D-12 and the existing Card behavior contract remain authoritative.
 
 ## Next action
 
-QA hand-off authorized by the Moderator. QA should independently verify STEP-04 and return its evidence for the Moderator's final acceptance decision.
+The frozen-v1.0.0 full-project study review remains the next recorded gate. STEP-05 must remain inactive until the Moderator completes that gate, confirms all pre-Step gates, activates STEP-05, and separately approves the Development Team's exact STEP-05 implementation and verification plan.

@@ -1,75 +1,110 @@
-# Tech Lead Implementation Review — STEP-06
+# Tech Lead Plan Re-review — STEP-07 Revision 5
 
 ## Verdict
 
-**APPROVE FOR FRESH QA.** The implementation matches the Moderator-approved Revision 4 plan and bounded source-map/tooling amendment. Static review found no code, scope, API, accessibility, token, package-boundary, provenance, or Reference Implementation defect.
+**APPROVE PLAN FOR MODERATOR CONSIDERATION.** Revision 5 resolves the Revision 4 runner lifecycle, embedded-checker, deterministic-path, ignore-check, K3 containment, status-language, and dry-run-evidence findings. The proposed ten-file implementation and two-phase verification plan are coherent, executable in the governed Windows PowerShell 5.1 environment once the required toolchain and approved planning SHA exist, and ready for the Moderator's separate decisions.
 
-The Tech Lead's independent command sequence stopped at its environment precheck because that shell exposed Node v24.13.0 and npm 11.6.2 rather than the required Node 26.x and npm 11.12.1. The Development Team supplied final-tree Node v26.0.0/npm 11.12.1 command evidence for every approved gate. On 2026-10-28, the Moderator approved this Tech Lead review and the Development Team's STEP-06 work and authorized progression to fresh QA. Fresh QA must independently rerun the exact gates under the required toolchain; Product Owner sign-off and final Moderator acceptance still remain. This is not self-approval by the Development Team and does not activate STEP-07.
+This is Tech Lead advice only—not Moderator approval, STEP-07 activation, implementation authorization, STEP acceptance, or acceptance of the AC-20 exception. No implementation gate was run during this review.
+
+**Moderator disposition:** Approved on 2026-10-28. The Moderator approved this Tech Lead review and the exact Development Team Revision 5 plan, recorded in `mod-w/step-07-plan.md`, including its five decisions: AC-20 Option A with its recorded reason, the caption-visibility rule, the token-derived responsive track rule, the static-check policy with its two-phase PowerShell execution plan, and the DS-035 no-heading correction. STEP-07 is active and implementation is authorized under that exact plan. The two non-blocking Tech Lead clarifications (Phase B label order and literal hash-comparison evidence) are recorded as approval conditions in the plan. This is plan approval, not STEP-07 acceptance; Tech Lead implementation review, fresh QA, Product Owner sign-off, and final Moderator acceptance remain required.
 
 ## Scope check
 
-- HEAD before the implementation commit was `c52e50a` on `feature/atomic-design`.
-- The implementation scope is exactly 39 paths: 24 new, 13 modified, and 2 deleted. The deleted files are `projects/ui/src/lib/card/card.html` and `projects/ui/src/lib/card/card.scss`.
-- `.step06-harness/` and the compile-probe folder are absent. The committed evidence log is the single approved harness artifact.
-- `projects/ui/src/lib/card/card.spec.ts` and `projects/ui/src/public-api.ts` are byte-unchanged. Exactly three E2E specifications remain; the only E2E edit is the formatted source-path literal in `long-label-and-bevel.spec.ts`.
-- No STEP-07 work, gallery structure view, token value, brand structure, existing Design ID, Button/TextInput/Navigation move, publication, or deployment is included.
+- The implementation remains exactly five created and five edited paths. No atomic source, archive, manifest, lockfile, `ui`, token, Design-ID, brand/scope, helper, script, `mod-w/**`, or fourth Playwright specification change is proposed (`mod-w/step-07.md:15-21`).
+- The two PowerShell scripts are temporary verification machinery at fixed paths outside the repository. Their submitted LF/UTF-8-without-BOM SHA-256 values match the Appendix A text.
+- Installed secondary-entry imports, gallery ownership, eight figures plus DS-061, P1–P3 normalization, exact captions, the token-derived responsive track, and DS-035's no-heading correction remain conformant.
+- AC-20 Option A remains exactly two selector-only edits retaining the six-card count and `[0,1,1,1,1,0]` vector. No structure element carries `data-specimen`.
+- STEP-06 received final Moderator acceptance and is tagged `step-06-complete`; it is not a STEP-07 blocker.
 
 ## Findings
 
-### Must fix before QA
+### Must fix before approval
 
 None.
 
 ### Should fix
 
-None.
+- Align the Phase B table labels with Appendix A2: the script validates PowerShell/repository state, checks B1 toolchain versions, and then performs the B0 HEAD equality check. This is non-mutating and functionally safe, but the table currently lists the complete B0 check before B1.
+- In implementation evidence, show the two literal `Get-FileHash` commands and their comparisons with the recorded hashes immediately before each invocation. Section 7 already makes a mismatch a stop condition; spelling out the comparisons will make that evidence self-contained.
+
+These are documentation/evidence clarifications, not plan blockers and do not change the approved commands, scope, tests, or acceptance mapping.
 
 ### Could fix later
 
 None.
 
-## Implementation review
+## Revision 4 finding disposition
 
-- `projects/ui/src/lib/card/card.ts` is exactly `export { Card } from '@brand-ui/atomic/organisms';`. `card-export.spec.ts` proves class identity; there is no wrapper or duplicate Card.
-- Card retains the `bui-card` selector, eight signal inputs, required title, optional-input defaults, loading boolean transform, h3 title, one native title link/tab stop, host-title suppression, `aria-busy`, one Loading span, and loading/non-interactive behavior.
-- `Tag`, `SkeletonBlock`, `CodeWell`, `MediaArea`, and `LoadingSkeleton` match D-12 ownership. They use semantic tokens, add no focus target, role, live region, or busy state, and use neither explicit standalone/OnPush nor `HostBinding`/`HostListener`. Only `SkeletonBlock` and `LoadingSkeleton` hosts own `aria-hidden`.
-- The archive has the approved nine files, no maps/CSS/assets, SHA-256 `59893275deda6cf582ad855fac4845bb86b5fb888780392a787612508e372c79`, and lock integrity `sha512-2dbAP1Wqjnb3fQHt0O8h9ay5ikBVioujwmLxPshotXfM/IQzLd06nbbVGyjT5yUsA5mC/R4Frl67SrHaE6yVXQ==`. Atomic peers on `@angular/core` `^22.2.0`; `ui` peers on `@brand-ui/atomic` `^1.1.0`.
-- `sanitize-atomic-dist.mjs` is the shared manual/verifier helper, strictly requires the three expected maps and matching terminal references, rejects malformed inventory/reference cases before mutation, removes only the approved material, and proves no map/reference remains. Its nine fixtures pass in the reported verifier run.
-- `atomic-tsconfig.mjs` structurally parses JSONC, resolves relative `extends`, evaluates effective `paths`/`baseUrl`, rejects key shadowing and forbidden targets, enforces the exact producer-test exception, rejects inheritance from it, and has the approved N1–N14 plus positive fixtures. The installed-consumer verifier was strengthened, not loosened.
-- `card.contract.spec.ts` checks all input names, title requiredness by behavior, defaults for description, meta, tag, mediaLabel, href, codeSample and loading, and the loading transform by behavior.
+| Revision 4 finding | Revision 5 disposition |
+|---|---|
+| Impossible clean-tree/ten-change lifecycle | **Resolved.** Phase A validates the clean approved baseline and exits; Phase B verifies the dirty implementation tree using the same explicit approved SHA |
+| G8 placeholder | **Resolved.** Appendix A2 embeds the complete checker with exactly one `TOKEN_DIR`; no splice remains |
+| Non-deterministic runner path/working directory | **Resolved.** Fixed temporary paths, validated `RepoPath`, pre-Git `Set-Location`, fixed hashes, invocations and cleanup are specified |
+| Missing `node_modules` ignore proof | **Resolved.** All four ignored paths are checked independently using the working trailing-slash form |
+| Missing K3 viewport-left assertion | **Resolved.** Left, top, right and bottom viewport bounds are now explicit |
+| Incorrect pre-review blocker title | **Resolved.** Preconditions are correctly classified as pre-implementation conditions |
+| Dry-run claims did not match exact submitted text | **Resolved.** Claims identify submitted versus derivative scripts and retain implementation-evidence limits |
 
-## Disclosed deviation rulings
+## Command and evidence review
 
-1. **D1 — accepted.** `--_stretch-0: ''` avoids a false drive-letter match while `.link::after` retains computed empty content. The verifier was not loosened; final equivalence is zero-difference.
-2. **D2 — accepted.** `min-width`/`min-height` are excluded because relocation changes their computed-value context from flex-item `auto` to `0px`. Used rectangles at all widths, including 200px, and loading rest dimensions preserve the behavioral check.
-3. **D3 — accepted.** The evidence log identifies the final archive hash and records final control, normal, and deliberate-mutation runs after D1.
-4. **D4 — accepted.** `atomic.architect.test.options.include: ["../**/*.spec.ts"]` is the exact approved producer-test configuration.
+- Both Appendix scripts parse with zero errors under the installed Windows PowerShell 5.1 parser.
+- The preflight script hash is `359844fa8c91b3f9367f2177ec1af3d5894f349b450b650645fd3e70169717af`, matching the plan.
+- The verification script hash is `d2677ed93916dac93849610820582f2803f3dca843cfd3683bbbb2c979f70081`, matching the plan.
+- The embedded 114-line checker is byte-identical to Revision 3 lines 2874–2987 and contains one `TOKEN_DIR` declaration.
+- `git check-ignore -q` returns zero for `dist/`, `test-results/`, `playwright-report/`, and `node_modules/` in the current repository.
+- Phase A stops after the clean-baseline checks. Phase B assigns `$BASE` from the approved SHA, does not demand a clean tree, and rechecks HEAD and exact scope at G3 and G18.
+- Native-command exit checks, exact-ten comparison, deletion detection, excluded-path detection, five-new/five-modified identities, tracked/untracked whitespace checks, and unchanged `card.spec.ts` proof are exact and fail closed.
+- The Team's fixture evidence is appropriately bounded. Node 26/npm 11.12.1, the real implementation files, and G1–G18 remain unverified until authorized implementation.
+
+## Test-feasibility review
+
+- The Vitest plan proves the exact groups, captions, headings, semantics, counts, Code-well differences and ID uniqueness without a component API change.
+- B1–B3 prove placement, exact cross-scope structure under P1–P3, captions/IDs and token paint in all four scopes.
+- K1–K5 cover the sole link/tab stop, hidden skeletons, busy/Loading ownership, geometry/paint/motion, reduced motion, narrow layout, Card usability, axe and four-scope heading order.
+- K3 now establishes figure and per-block visibility before geometry, figure containment, all four viewport edges, token paint, 1.4-second infinite CSS animation, reduced-motion removal and restoration.
+- The static checker retains its self-tests, token discovery, source checks, missing-file failure and non-zero exit behavior without adding a repository file.
 
 ## Acceptance and Design-ID evidence mapping
 
-| Check | Evidence | Disposition |
+| Check | Plan disposition | Implementation evidence still required |
 |---|---|---|
-| AC-20 | Empty unchanged-test/public-API diffs; Card 7/7 reported pass; contract/export identity specs; installed compile probe; 648-record zero-difference equivalence; path-only E2E edit | Sufficient for QA |
-| AC-21 | D-12 atom/molecule/organism contracts, exports, ownership, semantics, and retained Card behavior | Sufficient for QA |
-| AC-22 | Independent atomic build/pack report; nine-file archive; peer/inventory/security checks; sanitizer; normalized no-drift result | Sufficient for QA |
-| AC-23 | Exact producer-test exception; structural verifier; file-installed dependency; consumer scans, builds, and compile probes | Sufficient for QA |
-| AC-24 | Reported format, token, asset, typecheck, unit, exactly-three-spec E2E/axe, and production-build gates | Fresh QA must confirm |
-| DS-030 | Static style, geometry, accessibility, real theme/font, and four-scope equivalence | Sufficient |
-| DS-031 | One native title link/tab stop and stretched-hit equivalence in four scopes | Sufficient |
-| DS-032 | Forced-state and real-hover records | Sufficient |
-| DS-033 | Forced-state and real-focus records, including focus-ring behavior | Sufficient |
-| DS-034 | Forced-state and real-active records | Sufficient |
-| DS-035 | Loading semantics, 32 rest, 128 normal-motion, 64 reduced-motion, and pulse-keyframe checks | Sufficient |
-
-The evidence vector is `576 + 16 + 12 + 12 + 4 + 12 + 16 = 648`; old-vs-old and old-vs-installed-new each report zero differences. The deliberate 1px mutation reports 36 differences. The log records 82 sentinel checks, seven `@font-face` rules, repository-relative real theme inputs, and explicitly identifies the seven kind labels as implementation labels rather than recovered Revision 2 wording.
+| AC-20 | Ready for separate Moderator exception decision | Exact two-selector reason; retained count/vector; unchanged Card spec; all unit/E2E gates |
+| AC-23 | Plan complete | Phase A baseline; installed imports; clean install/archive verification; exact scope; production/subfolder builds |
+| AC-24 | Plan complete | Format, token, asset, typecheck, unit, exactly-three-spec E2E/axe, G8 and final hygiene |
+| AC-25 / DS-061 | Plan complete | Last placement, exact groups/captions/IDs/order, token-only shell and gallery ownership |
+| DS-062 | Plan complete | Installed Tag and four-scope token paint |
+| DS-063 | Plan complete | Non-zero contained hidden block, sunken paint and normal/reduced motion |
+| DS-064 | Plan complete | Installed CodeWell for CodeCraft and exact fallback elsewhere |
+| DS-065 | Plan complete | Installed MediaArea and sunken paint |
+| DS-066 | Plan complete | Four contained hidden blocks and normal/reduced motion |
+| DS-030 | Plan complete | Static Card, h3, captions/ID and no link |
+| DS-031 | Plan complete | h3, one native link/tab stop and focus ring |
+| DS-035 | Ready for separate no-heading decision | No heading; sole busy/Loading Card; four hidden animated blocks and reduced-motion stop |
 
 ## Reference Implementation compliance
 
-No Reference Implementation exists for the Atomic Design extension. The prototype remains rejected and was neither copied nor treated as technical authority. AC-20's unchanged Card contract and approved D-12 boundaries control STEP-06. No prototype, `mod-w/design/`, token-value, or Design-ID change is present.
+No Reference Implementation exists for the Atomic Design extension. The prototype remains rejected and is not used as technical authority. Revision 5 proposes no prototype, `mod-w/design/**`, token-value, public-API, or Design-ID change.
+
+## Moderator decisions
+
+The following are ready for separate Moderator consideration; none is approved by this review:
+
+1. AC-20 Option A and its exact recorded reason.
+2. The caption-visibility rule.
+3. The token-derived responsive track rule.
+4. The static-check policy and complete two-phase PowerShell execution plan.
+5. The DS-035 no-heading correction.
+
+## Evidence reviewed
+
+- Development Team STEP-07 Implementation Plan Revision 5, including complete proposed source/test bodies and Appendices A1/A2.
+- `mod-w/product.md`, `mod-w/architecture.md`, `mod-w/domain-language.md`, `mod-w/step-07.md`, current source/tests, and prior STEP-07 reviews.
+- STEP-06 final acceptance at HEAD `74dbd2e`, tagged `step-06-complete`.
+- Read-only PowerShell parsing, SHA-256 calculation, checker comparison, command discovery and ignore probes. No implementation gate was run.
 
 ## Next action
 
-Fresh QA must independently run the complete STEP-06 gate set under Node 26.x/npm 11.12.1 and review the final commit. If QA passes, request Product Owner sign-off, then final Moderator acceptance. STEP-07 remains blocked until that sequence completes.
+The Moderator approved Revision 5 and its five decisions on 2026-10-28. The review and approval record are committed as the planning baseline, and that commit's full SHA is passed unchanged to both scripts. Phase A must pass under Node 26.x/npm 11.12.1 before any implementation edit. The Development Team may implement only the exact approved plan in `mod-w/step-07-plan.md`, must stop on any recorded stop condition, and must then provide the complete implementation evidence for Tech Lead review. STEP-08 remains blocked until STEP-07 receives Tech Lead review, fresh QA, Product Owner sign-off, and Moderator acceptance.
 
 ---
 

@@ -1,6 +1,8 @@
 # STEP-07 — Gallery Card structure view
 
-**Status:** Step plan approved by the Moderator, 2026-10-28; blocked by STEP-06 acceptance and separate approval of the Development Team's exact plan. **Estimate:** 5 hours.
+**Status:** Active. STEP-06 is accepted (`step-06-complete`). On 2026-10-28 the Moderator approved the Tech Lead's Revision 5 review and the exact Development Team Revision 5 plan recorded in `mod-w/step-07-plan.md`, including AC-20 Option A, the caption-visibility rule, the token-derived responsive track rule, the static-check policy with its two-phase PowerShell execution plan, and the DS-035 no-heading correction. Implementation is authorized under that exact plan only: ten paths (five created, five edited), Phase A preflight before any edit, Phase B verification after. Stop on any recorded stop condition, then stop for Tech Lead review; fresh QA, Product Owner sign-off, and final Moderator acceptance remain required. Do not begin STEP-08. **Estimate:** 5 hours.
+
+The exact gate sequence, scripts, and file bodies are in `mod-w/step-07-plan.md`. Where the command list below differs, that plan controls.
 
 ## Goal
 

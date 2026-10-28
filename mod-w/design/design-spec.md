@@ -5,6 +5,7 @@
 **Authored in:** CLAUDE_DESIGN
 **Prototype:** `mod-w/design/project/` (`Main.dc.html`, `canvas.json`)
 **Depth:** options for brand identities (Section 1), minimal everywhere else. Brand options chosen by the Moderator: A1, M1, C1; CodeCraft Academy was then reworked on request into a light and dark pair built from C3 (see 1.6), replacing C1.
+**Revision 2026-10-27 (Atomic Design extension, product.md v0.6):** authored in Claude chatbot, Designer + Prototyper role, text-only per MD-10. Adds a classification line in 3.2, 3.3.1 to 3.3.4, 3.6, one pointer line in 4.1, 4.2, DS-061 to DS-066 (Proposed; the organism specimens carry the existing DS-030, DS-031 and DS-035), six domain-language proposals and Section 10.1 to 10.2. Depth for this revision: options for the classification (3.3.3), minimal everywhere else. Nothing earlier in this spec is changed: DS-001 to DS-060, tokens, brand values and gallery scopes are as approved. No prototype or canvas change. Every classification is advisory.
 
 ---
 
@@ -41,6 +42,20 @@ The prototype is evidence for this spec, not an authoritative production source.
 - **Moderator:** Frank McGuire
 - **Date:** 2026-10-18
 - **Conditions:** none stated. The open questions in Section 10 remain open, including the AC-16 thumbnail check, font licenses and the unrendered-prototype caveat. Product Owner approval was stated afterwards (see above). The Moderator and Product Owner roles are both held by Frank McGuire. The Tech Lead pre-review is still pending and is advisory.
+
+### Atomic Design extension revision (2026-10-27)
+
+- **Status:** Approved by the Moderator on 2026-10-28, after Product Owner review with conditions
+- **Covers:** the classification line in 3.2, 3.3.1 to 3.3.4, 3.6, the pointer line in 4.1, 4.2, DS-061 to DS-066 in Section 6, the three notes under the Section 6 table, the six proposals added in Section 7, and Section 10.1 to 10.2. The approvals above cover the earlier revision (Gallery version 18) only and do not cover this one.
+- **Product Owner review (2026-10-28):** Approve with conditions. Conditions 1 to 8 were text changes, applied by the Moderator; condition 1 was reworded to "any move is S-19, which is excluded (MD-4)" because the Product Owner's wording contradicted MD-4. Conditions A to C are carried to the Tech Lead as Step inputs: confirm `architecture.md` D-05 against 4.2, confirm the card title renders at h3, and add a QA check on rendered heading order in all four scopes (not covered by AC-8).
+- **Moderator approval:** 2026-10-28, by Frank McGuire, as Moderator (AC-21 a).
+- **Source:** product.md v0.6 (approved 2026-10-27): S-14, S-17, AC-21(a), AC-25, A-20, MD-4, MD-8, MD-10.
+- **Designer:** Claude chatbot, Designer + Prototyper role, text-only.
+- **Review order:** Product Owner reviews first, then the Moderator approves (A-21). The Moderator approves this document (AC-21 a) before the Tech Lead records the decomposition in `architecture.md` and `domain-language.md` (AC-21 b), and both before the first build Step.
+- **Tech Lead feasibility pre-review:** Pending, advisory. Concerns are listed separately in 10.2.
+- **Moderator input recorded 2026-10-27:** answers to the four design questions in 10.1 (option B as advisory input, caption for the code well outside CodeCraft Academy, section at the end of each panel, interactive card kept). This is input to the review, not approval.
+- **Moderator decisions on proposals recorded 2026-10-27:** the organism specimens in 4.2 carry the existing Design IDs DS-030, DS-031 and DS-035 with the caption "Shows the state of DS-0xx" and no proposed ID of their own (Product Owner reading of AC-25); the code well follows gallery specimen data (the Moderator cites `architecture.md` D-05, which the Designer has not seen); the heading-level, accessible-name, classification-note and feasibility-note changes are applied. Nothing is approved.
+- **Authority:** all classifications and the DS-061 to DS-066 rows are proposals. They become authoritative only after the Tech Lead ratifies, modifies or rejects each one (MD-8) and the Moderator approves.
 
 Product Owner and Moderator approval are required before this spec becomes authoritative within its boundary. Tech Lead pre-review is advisory and does not transfer architecture authority. Approval of this spec does not make the prototype authoritative.
 
@@ -236,6 +251,7 @@ States use the Product vocabulary: default, hover, active, focus, disabled, load
 - **Variants:** none in this spike.
 - **Behavior:** the label is always visible above the field; placeholder is a hint, not the label. Error replaces helper text with an icon and message. Focus draws a ring in the focus token.
 - **data-testid:** `gallery-input-{element}-{state}` (element: field, label, help, error)
+- **Atomic classification (advisory):** molecule, see 3.6. The `gallery-input-` prefix above and the word "Input" in the names of DS-020 to DS-025 are names, not a level. No existing name changes.
 
 ### 3.3 Card
 
@@ -244,6 +260,71 @@ States use the Product vocabulary: default, hover, active, focus, disabled, load
 - **Variants:** static, interactive.
 - **Behavior:** an interactive card has one link on its title whose hit area stretches over the whole card, so the card is one tab stop. Hover raises the card (border darkens; shadow where the brand has one). The image area shows a labelled placeholder and a "Sample" tag in the accent color. The meta line carries brand-specific placeholder fields; for ArtAnon Shop it reads SKU, size and price ([SKU], [SIZE], [PRICE]) so every artwork card shows its SKU. CodeCraft Academy cards also show a short code sample in the mono type token, in a bordered well on the page-ground color (text 16.03:1 on it, the existing text/bg pair); the sample wraps and never scrolls.
 - **data-testid:** `gallery-card-{element}-{state}`
+
+#### 3.3.1 Visual parts (Atomic Design revision)
+
+The card's visible parts, named in design language. These are not component names; the Tech Lead decides the technical decomposition (MD-8). The states, variants and Design IDs above are unchanged.
+
+| Part | What a reviewer sees | Shown by | Own state beyond the card's |
+|---|---|---|---|
+| Shell | Bordered, rounded, elevated surface (CodeCraft Academy: notched top-right corner). Interactive cards raise on hover and show the focus ring around the whole card | DS-030 to DS-035 | None. Hover, focus and active are the card's states, drawn on the shell |
+| Media area | A 4:3 sunken block holding a labelled placeholder, never a real image. It holds the media label and the Tag | DS-030 to DS-034 | None |
+| Media label | Optional short text at the top of the media area | DS-030 to DS-034 | None |
+| Tag | Accent-colored pill at the bottom of the media area, reading "Sample" in the spec's sample content | DS-030 to DS-034 | None |
+| Title | Display-type heading, level 3. On an interactive card it carries the card's single link, whose hit area covers the whole card | DS-030 to DS-034 (link on DS-031 to DS-034 only) | None. Its focus is drawn as the card's focus ring (DS-033) |
+| Description | Optional paragraph | DS-030 to DS-034 wherever the sample content supplies it | None |
+| Code well | Optional bordered monospace block on the page-ground color. The consumer supplies the content; the part itself does not change with the active scope | DS-030 to DS-034 in the CodeCraft Academy scopes | None |
+| Meta line | Optional muted small line of placeholder fields (ArtAnon Shop: [SKU] · [SIZE] · [PRICE]) | DS-030 to DS-034 wherever supplied | None |
+| Loading skeleton | A media-sized block, a title bar at 60% width and two text lines at 100% and 40%. Non-interactive, no link | DS-035 | The pulse, which stops under reduced motion (Section 2). The screen-reader text "Loading" and the busy state belong to the loading card, not to this part |
+
+Hover raise, focus ring and active styling are not parts. They are states of the shell and title, specified in DS-032 to DS-034.
+
+#### 3.3.2 Classification (proposed, advisory)
+
+Levels follow Atomic Design (Brad Frost, https://atomicdesign.bradfrost.com/): an atom is a basic building block, a molecule is a small group of atoms that works as one unit, and an organism is a distinct section built from molecules and atoms. The table shows the recommended slicing, option B in 3.3.3. It is advisory until the Tech Lead ratifies it and the Moderator approves it (MD-8, AC-21).
+
+"Stays part of its parent?" asks whether the part is used anywhere in this spec outside its parent. None is, so the answer is Yes throughout; the note names the strongest case for reuse.
+
+| Part | Proposed level | Reason | Independent behavior or states? | Stays part of its parent? |
+|---|---|---|---|---|
+| Card (whole) | Organism | Composes one molecule (media area), atoms and plain text parts into a distinct section. It owns the only link, the one tab stop and every card state | Yes: link, tab stop, hover, focus, active, loading (DS-030 to DS-035) | It has no parent here. Other libraries often call a card a molecule; organism is used because it composes a molecule and owns interactive behavior |
+| Media area | Molecule | Combines the sunken 4:3 surface, the optional media label and the Tag into one unit | No | Yes. Only the card uses it. A future teaser or hero (S-10, out of scope) could reuse it, which is the reason to keep it a unit |
+| Tag | Atom | One pill with one text and the accent and on-accent pair; it cannot be broken down further | No | Yes, inside the media area. Reuse is plausible but not specified |
+| Skeleton block | Atom | One sunken-surface block with the pulse. It is the smallest placeholder shape and is used four times in the loading card | The pulse only. It is an animation, not a component state, and stops under reduced motion | Yes, inside the loading skeleton |
+| Code well | Atom | One bordered monospace block with consumer-supplied content and one token set | No | Yes, inside the card. Weakest atom candidate: only CodeCraft Academy cards show it. It is kept because it is the one part whose content comes from the consumer |
+| Loading skeleton | Molecule | Four skeleton blocks arranged to mirror the card: media, title bar, two text lines | No. The "Loading" text, the busy state and the absence of a link belong to the loading card | Yes. Weakest molecule candidate: it exists only for the card's loading state |
+
+#### 3.3.3 Classification options (options depth)
+
+Three ways to slice the card. All three keep the card an organism and keep the behavior contract of AC-20: no second link and no second tab stop.
+
+| | A. Coarse | B. Medium (recommended) | C. Fine |
+|---|---|---|---|
+| Atoms | Tag | Tag, Skeleton block, Code well | Tag, Media label, Skeleton block, Title, Description, Code well, Meta line |
+| Molecules | Media area | Media area, Loading skeleton | Media area, Text group (title and description), Card footer (code well and meta line), Loading skeleton |
+| Organism | Card | Card | Card |
+| Easier to review in the gallery | All three levels exist with the fewest specimens. A reviewer sees what an atom, a molecule and an organism are | Each reusable visual unit on its own, and where it is reused: Tag inside the media area, Skeleton block four times inside the loading skeleton, the consumer-supplied Code well | A complete inventory of every visible element |
+| Over-decomposition risk | Low. The cost is the opposite: the four skeleton shapes and the code well stay unnamed inside the card | Low to medium. The loading skeleton exists for one state only, and the Code well appears in one scope | High. Media label, Description and Meta line are single styled text elements. Text group and Card footer exist only to group. A Title as its own part invites a second link or tab stop, which AC-20 forbids |
+| If the Tech Lead chooses it | DS-063, DS-064 and DS-066 are withdrawn, not renumbered | DS-061 to DS-066 stand as proposed | The Designer re-cuts the rows; new IDs continue after DS-066 |
+
+**Recommendation: B.** A leaves the repeated skeleton shapes and the consumer-supplied code well unexplained. C turns styled text into parts. B stops where each part is repeated or reused (Tag, Skeleton block), composed of smaller parts (Media area, Loading skeleton), or distinct in token pair or content source (Tag, Code well). A single styled text element that meets none of these stays unsplit.
+
+#### 3.3.4 Not-split list (advisory)
+
+What should not become its own part, so the Tech Lead and Moderator can see where this design stops.
+
+| Item | Reason it is not split |
+|---|---|
+| Shell (border, radius, elevation, notched top-right corner) | It is the organism's own surface, styled by tokens. A separate part would have nothing inside it |
+| Title | The stretched link depends on the card surface. A separate part invites a second link or tab stop (AC-20). It is a heading with one link, not a reusable unit |
+| Description | A styled paragraph with no behavior and no composition |
+| Meta line | A styled small line of text. The separators are content, not parts |
+| Media label | A single styled text element inside the media area |
+| Placeholder surface of the media area | The sunken 4:3 block is the surface of the media area molecule and has no use of its own |
+| Hover raise, focus ring, active styling | States of the shell and title (DS-032 to DS-034), not parts |
+| Stretched link hit area | Behavior of the title and the shell together, not a visual part |
+| "Loading" screen-reader text and busy state | Behavior of the loading card (Section 2), not part of the loading skeleton |
+| Text group and Card footer (option C groupings) | They exist only to group other parts |
 
 ### 3.4 Navigation bar
 
@@ -259,6 +340,24 @@ States use the Product vocabulary: default, hover, active, focus, disabled, load
 - **Navigation item (DS-051):** the label wraps to two lines, then truncates with an ellipsis. The full text stays in the page as the link's accessible name and is repeated as a tooltip. Items are at most 16rem wide.
 - Test labels per brand are in the gallery under "Long label", at full width, 280px, 180px and 360px.
 
+### 3.6 Atomic classification of Button, text input and navigation bar (proposed, advisory)
+
+Classified now; any move is S-19, which is excluded (MD-4), so nothing moves here and no behavior, state or Design ID changes. The Tech Lead decides; the Moderator approves.
+
+| Component | Proposed level | Reasoning |
+|---|---|---|
+| Button | Atom | One native control with a label and, while loading, a spinner. It composes no other library component, and its states (DS-010 to DS-015) belong to it alone. The spinner is part of the Button, not a separate part |
+| Text input | Molecule | See below |
+| Navigation bar | Molecule (organism is defensible; medium confidence) | Composes a wordmark and a group of navigation items under one landmark. It contains no molecule of its own and has no search, actions or further sections, so molecule is the closer fit. If it later gains those, organism fits. A navigation item on its own would be an atom, but its states depend on the bar (current page, long-label clamp), so no separate part is proposed |
+
+**Text input is a molecule, not an atom.** In Atomic Design terms the bare field is the atom. This component bundles a label, the field, help text and an error message, and a label paired with a field is the textbook form-field molecule. The error message replaces the help text inside the same unit, which supports treating it as one molecule rather than separate parts.
+
+What this means for the vocabulary:
+
+- Say "text input (molecule)" and not "input atom". In everyday speech "input" suggests the atom.
+- The names field, label, help and error in the 3.2 `data-testid` convention are the molecule's internal elements. They are not proposed as separate parts, because the text input is not decomposed in this extension (MD-4; S-19 excluded).
+- The three level names mean the same thing wherever they are used. A later decision on S-19 would apply this vocabulary, not change it.
+
 ---
 
 ## 4. Screen Layouts
@@ -267,9 +366,58 @@ States use the Product vocabulary: default, hover, active, focus, disabled, load
 
 - **Header (sticky):** title, brand switcher (ArtAnon Shop, IT English Mentor, CodeCraft Academy Light, CodeCraft Academy Dark, All brands), "Design IDs" checkbox (DS-004), and a status note (DS-005).
 - **Body:** one panel per brand shown (one panel, or three in "All brands"). Each panel is painted with that brand's ground and tokens and contains, in order: Tokens (color, type, space/radius/elevation), Button, Text input, Card, Navigation bar, Long label, Contrast evidence.
+- **Card structure (Atomic Design revision, proposed):** one added section at the end of each panel, after Contrast evidence, so existing sections keep their positions (Moderator decision, 2026-10-27). See 4.2.
 - **State grids:** each component shows its states side by side in a wrapping grid; each state has a caption and, when Design IDs are on, its Design ID badge.
 - **Responsive:** grids wrap to one column on a phone; below 640px the panels lose side padding and the contrast list stacks. The header wraps.
 - **Empty, loading, error:** not applicable to the gallery itself.
+
+### 4.2 Card structure view (Atomic Design revision, proposed; S-17, AC-25)
+
+- **Ownership:** gallery-owned presentation, not library API. The view itself adds no token, no component of its own and no card state, and changes no existing Design ID. It reuses the existing state-grid pattern, caption style and Design ID badges (S-9). It is specified for the recommended option B (3.3.3); if the Tech Lead ratifies a different slicing, the specimens change as 3.3.3 describes.
+- **What a reviewer sees:** a section titled "Card structure" with three labelled groups in this order: Atoms, Molecules, Organism. Each part is shown on its own, and each caption gives the part name and its level. Molecule and organism captions add "Built from:" with the parts and their levels, so a reviewer can follow how parts compose into the card.
+
+| Group | Specimen | Design ID | Shows | Caption "Built from" |
+|---|---|---|---|---|
+| Atoms | Tag | DS-062 | The pill alone, reading "Sample" | none |
+| Atoms | Skeleton block | DS-063 | One block with the pulse | none |
+| Atoms | Code well | DS-064 | The well with the card's sample code text, where the scope's sample data supplies one (today the CodeCraft Academy scopes) | none |
+| Molecules | Media area | DS-065 | The sunken 4:3 surface with its label and Tag, as in the card | Tag (atom), media label text |
+| Molecules | Loading skeleton | DS-066 | Four skeleton blocks in the loading-card arrangement | Skeleton block, four times (atom) |
+| Organism | Card, static | DS-030 (existing) | The static card. Caption: "Shows the state of DS-030" | Media area (molecule), title, description, meta line, code well (atom, where the sample data supplies one) |
+| Organism | Card, interactive default | DS-031 (existing) | The interactive card. Caption: "Shows the state of DS-031" | Same parts as the static card |
+| Organism | Card, loading | DS-035 (existing) | The loading card. Caption: "Shows the state of DS-035" | Loading skeleton (molecule) |
+
+- **Section shell (DS-061):** the "Card structure" heading, the three group labels and the caption pattern. When Design IDs are on, its badge sits beside the heading.
+- **Design IDs of the organism specimens:** each carries the existing Design ID of the state it shows (DS-030 static, DS-031 interactive default, DS-035 loading) and the caption "Shows the state of DS-0xx". No new ID is proposed for them. The state's definition, and any change to it, stays with the existing ID; the Card section and this section are two appearances of the same state.
+- **Placement and scopes:** inside each scope's panel, as the last section, after Contrast evidence (Moderator decision, 2026-10-27). With a single scope selected the section appears once. In "All brands" it appears once in each of the four stacked panels, painted with that scope's tokens. Structure never changes between scopes; only token values do. The brand scope switcher, the Design IDs checkbox and the no-reload switching of 4.1 and Section 5 apply unchanged.
+- **Code well and sample data:** the optional code sample in a card comes from the sample content supplied for each scope, not from which brand is active (Tech Lead to confirm against `architecture.md` D-05). Where a scope's sample card supplies a code sample (today the CodeCraft Academy scopes), the DS-064 specimen shows the well. Where it does not (today ArtAnon Shop and IT English Mentor), the slot shows the one-line caption "Not used in this scope", which keeps the DS-064 badge. The sections, groups, specimen slots, order, Design IDs and test IDs are identical in every scope; only the content of this one slot follows the sample data, and no component structure depends on the active scope. This adds no new visual and no new token pair (Moderator decision, 2026-10-27; see 10.1).
+- **States shown:** only existing states, as in the table: static, interactive default and loading for the organism, the single default appearance for every other part. Hover, focus and active are not repeated here; they stay in the Card section (DS-032 to DS-034), and each organism caption points there. No part has a state of its own (3.3.1) except the Skeleton block's pulse.
+- **Responsive:** the groups wrap to one column on a phone, as in 4.1. Specimens never exceed their container, and below 640px the panel padding follows 4.1.
+- **Accessibility and reading order:**
+  - Reading order and tab order follow the document order: Atoms, Molecules, Organism, each from small to large, left to right and then top to bottom. The section is the last in the panel, after Contrast evidence.
+  - The three group labels are labelled groups with the group name as accessible name, not headings. The card title stays at level 3 inside the organism specimens, so the section does not disturb heading order.
+  - The level is stated in caption text, never by color alone.
+  - The only focusable specimen is the interactive card specimen (shows DS-031): one native link on its title and one tab stop, as in DS-031, with the focus ring of DS-033. Static and loading specimens, and every atom and molecule specimen, have no link and no tab stop.
+  - The isolated Skeleton block and Loading skeleton specimens (DS-063, DS-066) are decorative shapes and are hidden from assistive technology; their captions name them. Only the loading card specimen (shows DS-035) exposes the busy state and the "Loading" text, as in DS-035. This is design intent, not verified. That specimen is a second loading card in the panel, so each scope has two loading cards, one in the Card section and one here. That is the card's own behavior shown twice; the isolated specimens add no further "Loading" status.
+  - Captions use the existing state-caption style and text pairs, the Tag uses the accent and on-accent pair, and no new token pair is introduced (AC-7).
+  - The pulse stops under reduced motion in DS-063, DS-066 and the loading card specimen (Section 2).
+  - Heading level: the "Card structure" heading is at the same level as the other component section headings (Button, Text input, Card and the rest). The card titles in the organism specimens are level 3, as in the Card section, so this section adds no heading-level skip that the Card section does not already have. This spec does not fix the absolute levels of the existing headings; this is parity with them.
+  - Accessible names: the section is named by its heading, as the other sections are. The three groups are each named by their group name (Atoms, Molecules, Organism). Each specimen is associated with its caption. The interactive card's link is named by the card title, as in DS-031. In "All brands" the group names repeat once per scope panel, as section names already do.
+- **data-testid:** `gallery-structure-{part}-{state}`, one scope per panel as for the other sections. Parts: section, tag, skeleton-block, code-well, media-area, loading-skeleton, card. States use the existing names (default, loading, static, interactive-default).
+
+| Design ID | data-testid |
+|---|---|
+| DS-061 | `gallery-structure-section-default`; group containers use `gallery-structure-group-{level}` (atoms, molecules, organism), a container extension with no state |
+| DS-062 | `gallery-structure-tag-default` |
+| DS-063 | `gallery-structure-skeleton-block-loading` |
+| DS-064 | `gallery-structure-code-well-default` |
+| DS-065 | `gallery-structure-media-area-default` |
+| DS-066 | `gallery-structure-loading-skeleton-loading` |
+| DS-030 (specimen in this view) | `gallery-structure-card-static` |
+| DS-031 (specimen in this view) | `gallery-structure-card-interactive-default` |
+| DS-035 (specimen in this view) | `gallery-structure-card-loading` |
+
+- **Not in this view:** Button, text input and navigation bar specimens. By Moderator direction in this session they are classified in the text only (3.6). Also excluded: new states, real images and any new library component.
 
 ---
 
@@ -320,6 +468,18 @@ Product requirement IDs are the S- (scope) and AC- (acceptance criteria) IDs fro
 | DS-050 | Button long-label rule | S-5, AC-10 | Gallery > Long label | TBD | Wrap and grow |
 | DS-051 | Nav long-label rule | S-5, AC-10 | Gallery > Long label | TBD | Two lines then ellipsis |
 | DS-060 | Contrast evidence per brand | S-6, AC-7 | Gallery > Contrast evidence | TBD | Computed ratios; real check is a test |
+| DS-061 | Card structure section: heading, group labels, caption pattern | S-17, AC-25 | None (text-only session, MD-10) | TBD | Proposed. Gallery-owned; see 4.2 |
+| DS-062 | Structure view: Tag specimen (atom) | S-17, AC-25 | None (text-only session, MD-10) | TBD | Proposed |
+| DS-063 | Structure view: Skeleton block specimen (atom) | S-17, AC-25 | None (text-only session, MD-10) | TBD | Proposed. Decorative; pulse off under reduced motion |
+| DS-064 | Structure view: Code well specimen (atom) | S-17, AC-25 | None (text-only session, MD-10) | TBD | Proposed. CodeCraft Academy scopes; caption only elsewhere (10.1) |
+| DS-065 | Structure view: Media area specimen (molecule) | S-17, AC-25 | None (text-only session, MD-10) | TBD | Proposed |
+| DS-066 | Structure view: Loading skeleton specimen (molecule) | S-17, AC-25 | None (text-only session, MD-10) | TBD | Proposed. Decorative; weakest molecule candidate (3.3.2) |
+
+DS-061 to DS-066 are Proposed until the Tech Lead ratifies the decomposition and the Moderator approves them. They add no state. Withdrawn IDs are not renumbered or reused.
+
+The organism specimens in 4.2 are further appearances of DS-030, DS-031 and DS-035 and carry those IDs, with the caption "Shows the state of DS-0xx". They also serve S-17 and AC-25. The rows above are unchanged and no new ID is proposed for them.
+
+DS-020 to DS-025 name states of the text input, which is classified as a molecule (3.6). Their names are unchanged, and "Input" in them implies no level.
 
 Not designed (cut or Could): S-10 alert and teaser/hero, S-11 About panel, S-12 CMS page, S-13 deployment.
 
@@ -335,6 +495,12 @@ Not designed (cut or Could): S-10 alert and teaser/hero, S-11 About panel, S-12 
 | Long-label case | value | The test of a very long label on button and navigation item in every brand | S-5, A-4 | product.md S-5 |
 | Design ID | type | Stable ID (`DS-nnn`) for a designed element or state | MOD-W traceability, S-9 | This spec, 6 |
 | Forced state | type | A gallery-only way to show hover, active or focus without interaction | The gallery must show all states (AC-5) | Prototype |
+| Atom | value | The lowest classification level: a basic building block that cannot usefully be broken down further, such as the Tag. One of three levels, as used for this project | Gives S-14 and S-17 a shared, closed vocabulary (Brad Frost, Atomic Design) | This spec, 3.3.2 |
+| Molecule | value | The middle level: a small group of atoms that works as one unit, such as the media area. The text input is classified here (3.6) | Same as Atom | This spec, 3.3.2 |
+| Organism | value | The top level: a distinct section built from molecules and atoms that owns its own behavior. The card is classified here | Same as Atom | This spec, 3.3.2 |
+| Visual part | type | A named, visible piece of a component described in design language. It is not a component name and implies no technical decomposition | Keeps the Designer's proposals separate from the Tech Lead's component names (MD-8) | This spec, 3.3.1 |
+| Structure view | type | The gallery-owned section that shows a component's atoms, molecules and organism with their Design IDs. Not library API | S-17 and AC-25 need one name for the surface | This spec, 4.2 |
+| Not-split list | type | The advisory list of items that should not become their own part, each with a reason | S-14 and MD-8 require it | This spec, 3.3.4 |
 
 ---
 
@@ -368,6 +534,26 @@ Not designed (cut or Could): S-10 alert and teaser/hero, S-11 About panel, S-12 
 | Narrow navigation wraps instead of collapsing to a menu. Accept for this spike? | Product Owner | Open |
 | Focus ring uses the primary color in ArtAnon Shop and IT English Mentor. Accept, or give the ring its own color? | Moderator | Open |
 | The "Sample" card tag and bracketed placeholders ([PRICE], [SIZE], etc.) are intentional sample content. Confirm wording. | Product Owner | Open |
+
+### 10.1 Atomic Design revision: design questions (2026-10-27)
+
+| Question | Owner | Status |
+| -------- | ----- | ------ |
+| Recommended option B includes the loading skeleton as a molecule, the weakest candidate (3.3.2). Accept option B, or prefer the coarser option A or the finer option C (3.3.3)? The Tech Lead decides the decomposition; this is the Moderator's view of the design. | Moderator | Answered by the Moderator 2026-10-27: option B accepted as advisory input; the Tech Lead decides the real decomposition |
+| Code well in the ArtAnon Shop and IT English Mentor scopes: show the caption "Not used in this scope" (recommended, no new visual), or render the well there with the system monospace type, which would be its first visible use in those scopes? | Moderator | Answered by the Moderator 2026-10-27: keep the caption; no new visible element in those scopes |
+| Place the Card structure section directly after Card (proposed, next to what it explains) or at the end of each panel after Contrast evidence? | Product Owner | Answered by the Moderator 2026-10-27: end of each panel, after Contrast evidence, to shift existing sections least |
+| Show the interactive card in the organism row (shows DS-031, adds one tab stop per scope) or only the static and loading cards? | Moderator | Answered by the Moderator 2026-10-27: keep the interactive card, so the one-link, one-tab-stop contract is shown surviving the split |
+
+### 10.2 Atomic Design revision: feasibility concerns for the Tech Lead (advisory, not decisions)
+
+| Concern | Owner | Status |
+| ------- | ----- | ------ |
+| Advisory feasibility note for the Tech Lead only: a part can be shown in the structure view only if the gallery obtains it the way any outside consumer does (S-16). If a classified part is not available that way, its specimen would need new public surface. | Tech Lead | Open |
+| The section adds one tab stop per scope (the interactive card specimen, DS-031) at the end of each panel, after Contrast evidence; existing sections keep their positions. The keyboard specification, the accessibility scan and any position-dependent assertions must still pass without edits (AC-20, AC-24). | Tech Lead | Open |
+| The isolated skeleton specimens (DS-063, DS-066) should be hidden from assistive technology so no second "Loading" or busy state is exposed. How is a technical decision. | Tech Lead | Open |
+| If the Tech Lead chooses option A or C, the affected rows are withdrawn or re-cut as described in 3.3.3 (option A withdraws DS-063, DS-064 and DS-066). | Tech Lead | Open |
+| Each scope panel gains a second loading card (DS-035 specimen, a second "Loading" status and busy state) and a second card link with the same accessible name (DS-031 specimen). Existing assertions that select or count loading cards, "Loading" text or card links must pass without edits (AC-20, AC-24). | Tech Lead | Open |
+| Navigation bar is proposed as a molecule at medium confidence and Button as an atom; the Tech Lead decides each (MD-4). No move happens (S-19 excluded). | Tech Lead | Open |
 
 ---
 

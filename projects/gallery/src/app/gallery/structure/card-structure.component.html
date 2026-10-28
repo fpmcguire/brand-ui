@@ -1,0 +1,86 @@
+<section
+  class="block"
+  data-testid="gallery-structure-section-default"
+  [attr.aria-labelledby]="scopeId() + '-structure'"
+>
+  <h3 class="block-title" [id]="scopeId() + '-structure'">
+    Card structure
+    @if (showDesignIds()) {
+      <span class="id">DS-061</span>
+    }
+  </h3>
+
+  @for (group of groups; track group.id) {
+    <div
+      class="group"
+      role="group"
+      [attr.aria-labelledby]="scopeId() + '-structure-' + group.id"
+      [attr.data-testid]="'gallery-structure-group-' + group.id"
+    >
+      <p class="group-label" [id]="scopeId() + '-structure-' + group.id">{{ group.label }}</p>
+      <div class="grid">
+        @for (specimen of group.specimens; track specimen.designId) {
+          <figure
+            class="specimen"
+            [attr.data-testid]="specimen.testId"
+            [attr.data-structure-part]="specimen.body"
+            (click)="keepOnPage($event)"
+          >
+            <figcaption class="caption">
+              <span class="line">
+                <span class="label">{{ specimen.part }} · {{ specimen.level }}</span>
+                @if (showDesignIds()) {
+                  <span class="id">{{ specimen.designId }}</span>
+                }
+              </span>
+              @if (specimen.builtFrom; as builtFrom) {
+                <span class="line built">Built from: {{ builtFrom }}</span>
+              }
+              @if (specimen.showsState && showDesignIds()) {
+                <span class="line state">Shows the state of {{ specimen.designId }}</span>
+              }
+            </figcaption>
+
+            @switch (specimen.body) {
+              @case ('tag') {
+                <bui-tag>{{ content().tag }}</bui-tag>
+              }
+              @case ('skeleton-block') {
+                <div class="arrangement">
+                  <bui-skeleton-block />
+                </div>
+              }
+              @case ('code-well') {
+                <div class="code-slot" data-code-slot>
+                  @if (content().codeSample; as code) {
+                    <bui-code-well>{{ code }}</bui-code-well>
+                  } @else {
+                    <p class="not-used">Not used in this scope</p>
+                  }
+                </div>
+              }
+              @case ('media-area') {
+                <bui-media-area [label]="content().mediaLabel" [tag]="content().tag" />
+              }
+              @case ('loading-skeleton') {
+                <bui-loading-skeleton />
+              }
+              @case ('card') {
+                <bui-card
+                  [title]="content().title"
+                  [description]="content().description"
+                  [meta]="content().meta"
+                  [tag]="content().tag"
+                  [mediaLabel]="content().mediaLabel"
+                  [codeSample]="content().codeSample"
+                  [href]="specimen.linked ? '#sample' : undefined"
+                  [loading]="specimen.loading === true"
+                />
+              }
+            }
+          </figure>
+        }
+      </div>
+    </div>
+  }
+</section>

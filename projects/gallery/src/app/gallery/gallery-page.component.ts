@@ -14,6 +14,7 @@ import {
   CARD_CONTENT,
   CARD_SPECIMENS,
 } from './specimens/specimens';
+import { CardStructure } from './structure/card-structure.component';
 import { TokenGroupComponent } from './token-group.component';
 import { TOKEN_GROUPS } from './token-inspector';
 
@@ -23,6 +24,7 @@ import { TOKEN_GROUPS } from './token-inspector';
     Button,
     ButtonFormFixtureComponent,
     Card,
+    CardStructure,
     ContrastEvidenceComponent,
     InputSampleComponent,
     Navigation,

@@ -203,7 +203,7 @@ describe('GalleryPage', () => {
     }
     expect(root.querySelectorAll('[data-specimen="button"] bui-button')).toHaveLength(12);
     expect(root.querySelectorAll('bui-text-input')).toHaveLength(6);
-    expect(root.querySelectorAll('bui-card')).toHaveLength(6);
+    expect(root.querySelectorAll('[data-specimen="card"] bui-card')).toHaveLength(6);
     expect(root.querySelectorAll('[data-specimen="nav"] bui-navigation')).toHaveLength(6);
 
     const checkbox = root.querySelector<HTMLInputElement>('input[type="checkbox"]')!;
@@ -392,7 +392,7 @@ describe('GalleryPage', () => {
 
   it('gives the interactive card specimens exactly one link each and keeps loading cards inert', async () => {
     const { root } = await setup();
-    const cards = Array.from(root.querySelectorAll('bui-card'));
+    const cards = Array.from(root.querySelectorAll('[data-specimen="card"] bui-card'));
     expect(cards.map((card) => card.querySelectorAll('a').length)).toEqual([0, 1, 1, 1, 1, 0]);
     expect(cards[5].querySelector('article')?.getAttribute('aria-busy')).toBe('true');
   });
@@ -403,5 +403,16 @@ describe('GalleryPage', () => {
     const event = new MouseEvent('click', { bubbles: true, cancelable: true });
     link.dispatchEvent(event);
     expect(event.defaultPrevented).toBe(true);
+  });
+
+  it('places the Card structure view last in every scope panel, after the contrast evidence', async () => {
+    const { press, panels } = await setup();
+    await press('gallery-switch-all');
+    expect(panels()).toHaveLength(4);
+    for (const panel of panels()) {
+      const children = Array.from(panel.children);
+      expect(children[children.length - 1].tagName).toBe('GAL-CARD-STRUCTURE');
+      expect(children[children.length - 2].getAttribute('aria-labelledby')).toMatch(/-contrast$/);
+    }
   });
 });

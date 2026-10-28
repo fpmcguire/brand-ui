@@ -652,3 +652,302 @@ test.describe('About panel', () => {
     });
   }
 });
+
+const structure = (page: Page, scope: Scope) =>
+  panel(page, scope).getByTestId('gallery-structure-section-default');
+
+type Motion = {
+  readonly isCss: boolean;
+  readonly hasEffect: boolean;
+  readonly name: string | null;
+  readonly duration: number | null;
+  readonly iterations: number | 'infinite' | null;
+};
+
+/** Reads animations inside the page. `Infinity` is encoded as 'infinite' for serialization. */
+async function motionOf(block: Locator): Promise<Motion[]> {
+  return block.evaluate((element): Motion[] =>
+    element.getAnimations().map((animation) => {
+      const timing = animation.effect?.getComputedTiming();
+      const duration = timing?.duration;
+      const iterations = timing?.iterations;
+      return {
+        isCss: animation instanceof CSSAnimation,
+        hasEffect: animation.effect !== null,
+        name: animation instanceof CSSAnimation ? animation.animationName : null,
+        duration: typeof duration === 'number' ? duration : null,
+        iterations:
+          iterations === Infinity ? 'infinite' : typeof iterations === 'number' ? iterations : null,
+      };
+    }),
+  );
+}
+
+test.describe('Card structure view', () => {
+  for (const scope of SCOPES) {
+    test(`the structure view has one link and one tab stop, on the interactive card, in ${scope.label}`, async ({
+      page,
+    }) => {
+      await openGallery(page, scope.id);
+      const section = structure(page, scope);
+      const figure = section.getByTestId('gallery-structure-card-interactive-default');
+      const link = figure.getByRole('link');
+      await expect(link).toHaveCount(1);
+      const title = (await figure.getByRole('heading', { level: 3 }).textContent())!.trim();
+      await expect(link).toHaveAccessibleName(title);
+      expect(
+        await section.evaluate(
+          (root, selector) => root.querySelectorAll(selector).length,
+          FOCUSABLE,
+        ),
+      ).toBe(1);
+      await expect(
+        section.getByTestId('gallery-structure-card-static').locator(FOCUSABLE),
+      ).toHaveCount(0);
+      await expect(
+        section.getByTestId('gallery-structure-card-loading').locator(FOCUSABLE),
+      ).toHaveCount(0);
+      await tabTo(page, link);
+      await expectFocusRing(scope, page, link, figure.locator('article'));
+    });
+
+    test(`hides the isolated skeletons and gives busy and Loading only to the DS-035 card, in ${scope.label}`, async ({
+      page,
+    }) => {
+      await openGallery(page, scope.id);
+      const section = structure(page, scope);
+      await expect(section.locator('bui-skeleton-block')).toHaveCount(9);
+      await expect(section.locator('bui-loading-skeleton')).toHaveCount(2);
+      const allHidden = await section.evaluate((root) =>
+        Array.from(root.querySelectorAll('bui-skeleton-block, bui-loading-skeleton')).every(
+          (element) => element.getAttribute('aria-hidden') === 'true',
+        ),
+      );
+      expect(allHidden).toBe(true);
+      await expect(section.locator('[aria-busy="true"]')).toHaveCount(1);
+      const loadingCard = section.getByTestId('gallery-structure-card-loading');
+      await expect(loadingCard.locator('article[aria-busy="true"]')).toHaveCount(1);
+      await expect(section.getByText('Loading', { exact: true })).toHaveCount(1);
+      await expect(loadingCard.getByText('Loading', { exact: true })).toHaveCount(1);
+    });
+
+    test(`the isolated skeletons are visible, contained, sunken, animate normally and stop under reduced motion, in ${scope.label}`, async ({
+      page,
+    }) => {
+      await openGallery(page, scope.id);
+      const scoped = panel(page, scope);
+      const section = structure(page, scope);
+      const sunken = await resolveColor(scoped, '--bui-color-surface-sunken');
+      const viewport = (await page.viewportSize())!;
+      const targets = [
+        {
+          name: 'DS-063',
+          figure: section.getByTestId('gallery-structure-skeleton-block-loading'),
+          blocks: 1,
+        },
+        {
+          name: 'DS-066',
+          figure: section.getByTestId('gallery-structure-loading-skeleton-loading'),
+          blocks: 4,
+        },
+        {
+          name: 'DS-035',
+          figure: section.getByTestId('gallery-structure-card-loading'),
+          blocks: 4,
+        },
+      ] as const;
+      const blocks = targets.map((target) => target.figure.locator('bui-skeleton-block'));
+
+      for (const [index, target] of targets.entries()) {
+        await expect(blocks[index], `${target.name} block count`).toHaveCount(target.blocks);
+      }
+
+      // Geometry and paint, in normal motion.
+      for (const [index, target] of targets.entries()) {
+        await target.figure.scrollIntoViewIfNeeded();
+        await expect(target.figure, `${target.name} figure visible`).toBeVisible();
+        const figureBox = (await target.figure.boundingBox())!;
+        for (let i = 0; i < target.blocks; i++) {
+          const block = blocks[index].nth(i);
+          await expect(block, `${target.name} block ${i} visible`).toBeVisible();
+          const box = (await block.boundingBox())!;
+          expect(box.width, `${target.name} block ${i} width`).toBeGreaterThan(0);
+          expect(box.height, `${target.name} block ${i} height`).toBeGreaterThan(0);
+          expect(box.x, `${target.name} block ${i} inside figure, left`).toBeGreaterThanOrEqual(
+            figureBox.x - 0.5,
+          );
+          expect(box.y, `${target.name} block ${i} inside figure, top`).toBeGreaterThanOrEqual(
+            figureBox.y - 0.5,
+          );
+          expect(
+            box.x + box.width,
+            `${target.name} block ${i} inside figure, right`,
+          ).toBeLessThanOrEqual(figureBox.x + figureBox.width + 0.5);
+          expect(
+            box.y + box.height,
+            `${target.name} block ${i} inside figure, bottom`,
+          ).toBeLessThanOrEqual(figureBox.y + figureBox.height + 0.5);
+          expect(box.x, `${target.name} block ${i} inside viewport, left`).toBeGreaterThanOrEqual(
+            -0.5,
+          );
+          expect(box.y, `${target.name} block ${i} inside viewport, top`).toBeGreaterThanOrEqual(0);
+          expect(
+            box.x + box.width,
+            `${target.name} block ${i} inside viewport, right`,
+          ).toBeLessThanOrEqual(viewport.width + 0.5);
+          expect(
+            box.y + box.height,
+            `${target.name} block ${i} inside viewport, bottom`,
+          ).toBeLessThanOrEqual(viewport.height + 0.5);
+          const fill = await block.evaluate((element) => getComputedStyle(element).backgroundColor);
+          expect(parseRgb(fill), `${target.name} block ${i} paint`).toEqual(sunken);
+        }
+      }
+
+      try {
+        // Normal motion: every block animates as the atom specifies.
+        await page.emulateMedia({ reducedMotion: 'no-preference' });
+        for (const [index, target] of targets.entries()) {
+          for (let i = 0; i < target.blocks; i++) {
+            const motion = (await motionOf(blocks[index].nth(i))).filter((entry) => entry.isCss);
+            expect(motion.length, `${target.name} block ${i} CSS animations`).toBeGreaterThan(0);
+            const first = motion[0]!;
+            expect(first.hasEffect, `${target.name} block ${i} effect present`).toBe(true);
+            expect(first.name, `${target.name} block ${i} animation name`).not.toBe('none');
+            expect(first.name, `${target.name} block ${i} animation name`).toBeTruthy();
+            expect(first.duration, `${target.name} block ${i} duration`).toBe(1400);
+            expect(first.iterations, `${target.name} block ${i} iterations`).toBe('infinite');
+          }
+        }
+
+        // Reduced motion: one switch, then every block is checked.
+        await page.emulateMedia({ reducedMotion: 'reduce' });
+        for (const [index, target] of targets.entries()) {
+          for (let i = 0; i < target.blocks; i++) {
+            const block = blocks[index].nth(i);
+            expect(await motionOf(block), `${target.name} block ${i} animations`).toEqual([]);
+            expect(
+              await block.evaluate((element) => getComputedStyle(element).animationName),
+              `${target.name} block ${i} animation-name`,
+            ).toBe('none');
+          }
+        }
+      } finally {
+        await page.emulateMedia({ reducedMotion: 'no-preference' });
+      }
+    });
+  }
+
+  test('the view stacks to one column with no horizontal overflow, and its Cards stay usable, at phone width', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 400, height: 900 });
+    await openGallery(page, 'all');
+    for (const scope of SCOPES) {
+      const section = structure(page, scope);
+      const groups = await section.evaluate((root) =>
+        Array.from(root.querySelectorAll<HTMLElement>('[role="group"]')).map((group) => {
+          const figures = Array.from(group.querySelectorAll('figure')).map((figure) =>
+            figure.getBoundingClientRect(),
+          );
+          return {
+            lefts: new Set(figures.map((rect) => Math.round(rect.left))).size,
+            stacked: figures.every(
+              (rect, index) => index === 0 || rect.top >= figures[index - 1].bottom - 0.5,
+            ),
+          };
+        }),
+      );
+      for (const group of groups) {
+        expect(group.lefts, `${scope.label}: one column`).toBe(1);
+        expect(group.stacked, `${scope.label}: figures stacked`).toBe(true);
+      }
+      const tops = await section.evaluate((root) =>
+        Array.from(root.querySelectorAll<HTMLElement>('[role="group"]')).map(
+          (group) => group.getBoundingClientRect().top,
+        ),
+      );
+      expect(tops, `${scope.label}: reading order`).toEqual([...tops].sort((a, b) => a - b));
+
+      const overflow = await section.evaluate((root) => {
+        const bounds = root.getBoundingClientRect();
+        const outside = Array.from(root.querySelectorAll('figure, figure *')).filter((element) => {
+          const box = element.getBoundingClientRect();
+          return box.right > bounds.right + 0.5 || box.left < bounds.left - 0.5;
+        }).length;
+        return { scroll: root.scrollWidth - root.clientWidth, outside };
+      });
+      expect(overflow, `${scope.label}: no horizontal overflow`).toEqual({ scroll: 0, outside: 0 });
+
+      for (const testId of [
+        'gallery-structure-card-static',
+        'gallery-structure-card-interactive-default',
+      ]) {
+        const usable = await section
+          .getByTestId(testId)
+          .locator('article')
+          .evaluate((article) => {
+            const card = article.getBoundingClientRect();
+            return Array.from(article.querySelectorAll('h3, p.text, p.meta, a')).every(
+              (element) => {
+                const box = element.getBoundingClientRect();
+                return (
+                  box.width > 0 && box.left >= card.left - 0.5 && box.right <= card.right + 0.5
+                );
+              },
+            );
+          });
+        expect(usable, `${scope.label}: ${testId} content inside its Card`).toBe(true);
+      }
+      await expect(
+        section.getByTestId('gallery-structure-card-interactive-default').getByRole('link'),
+      ).toBeVisible();
+    }
+  });
+
+  test('heading order, the panel h2, the h3 Card structure heading, the h3 organism titles, the absent DS-035 heading and non-heading group labels are explicit in every scope', async ({
+    page,
+  }) => {
+    await openGallery(page, 'all');
+    for (const scope of SCOPES) {
+      const scoped = panel(page, scope);
+      const headings = await scoped.evaluate((root) =>
+        Array.from(root.querySelectorAll('h1,h2,h3,h4,h5,h6')).map((heading) => ({
+          level: Number(heading.tagName.slice(1)),
+          text: (heading.textContent ?? '').replace(/\s+/g, ' ').trim(),
+        })),
+      );
+      expect(headings[0]?.level, `${scope.label}: panel begins with h2`).toBe(2);
+      expect(headings[0]?.text, `${scope.label}: panel h2 text`).toBe(scope.label);
+      for (let i = 1; i < headings.length; i++) {
+        expect(
+          headings[i].level - headings[i - 1].level,
+          `${scope.label}: no skip before "${headings[i].text}"`,
+        ).toBeLessThanOrEqual(1);
+      }
+
+      const section = structure(page, scope);
+      await expect(section.getByRole('heading', { level: 3, name: /^Card structure/ })).toHaveCount(
+        1,
+      );
+      await expect(section.getByRole('heading', { level: 3 })).toHaveCount(3);
+      for (const testId of [
+        'gallery-structure-card-static',
+        'gallery-structure-card-interactive-default',
+      ]) {
+        const figure = section.getByTestId(testId);
+        const title = (await figure.getByRole('heading', { level: 3 }).textContent())!.trim();
+        await expect(
+          figure.getByRole('heading', { level: 3, name: title, exact: true }),
+        ).toHaveCount(1);
+      }
+      await expect(
+        section.getByTestId('gallery-structure-card-loading').getByRole('heading'),
+      ).toHaveCount(0);
+      for (const name of ['Atoms', 'Molecules', 'Organism']) {
+        await expect(section.getByRole('group', { name, exact: true })).toHaveCount(1);
+        await expect(section.getByRole('heading', { name, exact: true })).toHaveCount(0);
+      }
+    }
+  });
+});

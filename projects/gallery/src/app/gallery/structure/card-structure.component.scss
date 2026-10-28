@@ -1,0 +1,97 @@
+// Tokens only. Every value is a var(--bui-*) reference, a keyword on the static-check allowlist,
+// 0, or 100%. This component-scoped sheet carries its own copies of the block, caption and badge
+// rules. It has no media query: the grid collapses to one column by its track minimum.
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bui-space-3);
+  margin-top: var(--bui-space-5);
+  padding-top: var(--bui-space-4);
+  border-top: var(--bui-border-width) solid var(--bui-color-border);
+}
+
+.block-title {
+  margin: 0;
+  font-family: var(--bui-font-display);
+  font-size: var(--bui-size-title);
+  font-weight: var(--bui-weight-display);
+  line-height: var(--bui-line-height-title);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bui-space-2);
+  min-width: 0;
+}
+
+.group-label {
+  margin: 0;
+  font-family: var(--bui-font-ui);
+  font-size: var(--bui-size-ui);
+  font-weight: var(--bui-weight-ui);
+  letter-spacing: var(--bui-letter-spacing-ui);
+}
+
+// Track minimum: six control heights, identical in every brand. A container narrower than two
+// tracks plus the gap takes one column. min(100%, …) keeps a single track inside a narrower container.
+.grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(min(100%, calc(var(--bui-control-height) * 6)), 1fr)
+  );
+  gap: var(--bui-space-4);
+  align-items: start;
+}
+
+// Figures carry the browser's default margin; reset it so each specimen stays in its column.
+.specimen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bui-space-2);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.caption,
+.not-used {
+  margin: 0;
+  color: var(--bui-color-text-muted);
+  font-size: var(--bui-size-small);
+}
+
+.line {
+  display: block;
+}
+
+.id {
+  display: inline-block;
+  padding: 0 var(--bui-space-1);
+  border: var(--bui-border-width) solid currentColor;
+  font-size: var(--bui-size-small);
+}
+
+// DS-063: the atom has no size of its own. The arrangement gives it the full specimen width, the
+// token height of a title bar, and the control radius. The block is decorative and has no text.
+.arrangement {
+  min-width: 0;
+}
+
+.arrangement bui-skeleton-block {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--bui-space-5);
+  border-radius: var(--bui-radius-control);
+}
+
+.code-slot {
+  min-width: 0;
+}

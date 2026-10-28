@@ -1,4 +1,5 @@
-import { expect, test } from '@playwright/test';
+import { Page, expect, test } from '@playwright/test';
+import { STRUCTURE_GROUPS } from '../projects/gallery/src/app/gallery/specimens/structure-specimens';
 import {
   REQUIRED_RATIO,
   USAGE_PAIRS,
@@ -6,6 +7,7 @@ import {
 import { contrastRatio, parseRgb } from './helpers/contrast';
 import {
   SCOPES,
+  Scope,
   aboutDialog,
   aboutTrigger,
   computed,
@@ -412,5 +414,165 @@ test.describe('About panel tokens', () => {
       await expect(dialog).toHaveCount(0);
     }
     expect(new Set(shapes).size, 'one dialog structure in all four scopes').toBe(1);
+  });
+});
+
+const STRUCTURE_SPECIMENS = STRUCTURE_GROUPS.flatMap((group) => group.specimens);
+const structure = (page: Page, scope: Scope) =>
+  panel(page, scope).getByTestId('gallery-structure-section-default');
+
+/** Same rule as the `skeleton()` helper, plus the P1/P2 normalization. Self-contained for evaluate. */
+function normalizeStructure(root: Element): string {
+  const clone = root.cloneNode(true) as Element;
+  for (const slot of Array.from(clone.querySelectorAll('[data-code-slot]'))) {
+    slot.replaceChildren(document.createElement('x-code-slot'));
+  }
+  for (const well of Array.from(clone.querySelectorAll('bui-code-well'))) well.remove();
+  const ignored = /^(_ng|ng-|data-testid$|id$|for$|aria-labelledby$|aria-describedby$)/;
+  const describe = (element: Element): string => {
+    const names = element
+      .getAttributeNames()
+      .filter((name) => !ignored.test(name))
+      .sort()
+      .join(',');
+    return `<${element.tagName.toLowerCase()} ${names}>${Array.from(element.children).map(describe).join('')}</>`;
+  };
+  return describe(clone);
+}
+
+const EXPECTED_SEQUENCE = [
+  'gallery-structure-section-default',
+  'gallery-structure-group-atoms',
+  'gallery-structure-tag-default',
+  'gallery-structure-skeleton-block-loading',
+  'gallery-structure-code-well-default',
+  'gallery-structure-group-molecules',
+  'gallery-structure-media-area-default',
+  'gallery-structure-loading-skeleton-loading',
+  'gallery-structure-group-organism',
+  'gallery-structure-card-static',
+  'gallery-structure-card-interactive-default',
+  'gallery-structure-card-loading',
+];
+
+test.describe('Card structure view', () => {
+  test('places the view last, with groups, captions and Design IDs, in every scope', async ({
+    page,
+  }) => {
+    for (const scope of SCOPES) {
+      await openGallery(page, scope.id);
+      const shape = await panel(page, scope).evaluate((element) => ({
+        last: element.lastElementChild?.tagName,
+        beforeLast: element.children[element.children.length - 2]?.getAttribute('aria-labelledby'),
+      }));
+      expect(shape.last, `${scope.label}: last child`).toBe('GAL-CARD-STRUCTURE');
+      expect(shape.beforeLast, `${scope.label}: child before the view`).toMatch(/-contrast$/);
+
+      const section = structure(page, scope);
+      await expect(section).toHaveAttribute('aria-labelledby', `${scope.id}-structure`);
+      for (const name of ['Atoms', 'Molecules', 'Organism']) {
+        await expect(section.getByRole('group', { name, exact: true })).toHaveCount(1);
+      }
+      await expect(section.locator('figure')).toHaveCount(8);
+      for (const specimen of STRUCTURE_SPECIMENS) {
+        const figure = section.getByTestId(specimen.testId);
+        await expect(figure, specimen.testId).toHaveCount(1);
+        await expect(figure.locator('.label')).toHaveText(`${specimen.part} · ${specimen.level}`);
+        await expect(figure.locator('.id')).toHaveText(specimen.designId);
+        if (specimen.builtFrom) {
+          await expect(figure.locator('.built')).toHaveText(`Built from: ${specimen.builtFrom}`);
+        } else {
+          await expect(figure.locator('.built')).toHaveCount(0);
+        }
+        if (specimen.showsState) {
+          await expect(figure.locator('.state')).toHaveText(
+            `Shows the state of ${specimen.designId}`,
+          );
+        } else {
+          await expect(figure.locator('.state')).toHaveCount(0);
+        }
+      }
+    }
+  });
+
+  test('keeps the view identical across scopes, except the authorized P1 and P2 differences', async ({
+    page,
+  }) => {
+    await openGallery(page, 'all');
+    const shapes: string[] = [];
+    const sequences: (string | undefined)[][] = [];
+    const codeWells: number[] = [];
+    const notUsed: number[] = [];
+    for (const scope of SCOPES) {
+      const section = structure(page, scope);
+      shapes.push(await section.evaluate(normalizeStructure));
+      // The section root is prepended explicitly: querySelectorAll returns descendants only.
+      sequences.push(
+        await section.evaluate((root) =>
+          [
+            root as HTMLElement,
+            ...Array.from(root.querySelectorAll<HTMLElement>('[data-testid]')),
+          ].map((element) => element.dataset['testid']),
+        ),
+      );
+      codeWells.push(await section.locator('bui-code-well').count());
+      notUsed.push(await section.locator('[data-code-slot] .not-used').count());
+    }
+    expect(new Set(shapes).size, 'one normalized structure in all four scopes').toBe(1);
+    for (const sequence of sequences) expect(sequence).toEqual(EXPECTED_SEQUENCE);
+    // Order: ArtAnon, Mentor, CodeCraft Light, CodeCraft Dark.
+    expect(codeWells).toEqual([0, 0, 3, 3]);
+    expect(notUsed).toEqual([1, 1, 0, 0]);
+  });
+
+  test('paints each structure specimen from its own tokens in every scope', async ({ page }) => {
+    for (const scope of SCOPES) {
+      await openGallery(page, scope.id);
+      const scoped = panel(page, scope);
+      const section = structure(page, scope);
+      const color = (token: string) => resolveColor(scoped, token);
+      const sunken = await color('--bui-color-surface-sunken');
+
+      const tag = await computed(
+        section.getByTestId('gallery-structure-tag-default').locator('bui-tag'),
+        ['background-color', 'color'],
+      );
+      expect(parseRgb(tag['background-color']), `${scope.label} Tag fill`).toEqual(
+        await color('--bui-color-accent'),
+      );
+      expect(parseRgb(tag['color']), `${scope.label} Tag label`).toEqual(
+        await color('--bui-color-on-accent'),
+      );
+
+      const skeleton = await computed(
+        section
+          .getByTestId('gallery-structure-skeleton-block-loading')
+          .locator('bui-skeleton-block'),
+        ['background-color'],
+      );
+      expect(parseRgb(skeleton['background-color']), `${scope.label} DS-063 block`).toEqual(sunken);
+
+      const media = await computed(
+        section.getByTestId('gallery-structure-media-area-default').locator('bui-media-area'),
+        ['background-color'],
+      );
+      expect(parseRgb(media['background-color']), `${scope.label} DS-065 surface`).toEqual(sunken);
+
+      const caption = await computed(
+        section.getByTestId('gallery-structure-tag-default').locator('figcaption'),
+        ['color'],
+      );
+      expect(parseRgb(caption['color']), `${scope.label} caption`).toEqual(
+        await color('--bui-color-text-muted'),
+      );
+
+      const title = await computed(
+        section.getByTestId('gallery-structure-card-static').getByRole('heading', { level: 3 }),
+        ['color'],
+      );
+      expect(parseRgb(title['color']), `${scope.label} DS-030 title`).toEqual(
+        await color('--bui-color-text'),
+      );
+    }
   });
 });

@@ -46,7 +46,7 @@ The prototype and `architecture-notes.md` are evidence only. Never import/copy i
 ## Scope discipline
 
 - S-10, S-12, and S-19 are unauthorized. STEP-01 through STEP-04 are accepted. D-12, its domain terms, and the STEP-05 through STEP-09 plan were approved by the Moderator on 2026-10-28. No extension implementation begins until the Moderator activates the individual Step and separately approves the Development Team's exact plan.
-- Before STEP-05, the frozen-v1.0.0 study review, remote `v1.0.0` verification, extension branch from `bd24152`, and D-12 before-measurement must be complete.
+- Before STEP-05, remote `v1.0.0` verification, the extension branch from `bd24152`, and the D-12 before-measurement must be complete. The Moderator rescheduled all study-review gates to one additional final gate after STEP-09; it remains required before any release, publish, or deployment decision.
 - Only the active extension Step may change `projects/atomic` or its reviewed `npm pack` archive. The package is installed from that file archive and is never published.
 - CodeCraft is the first approved cut if Must completion is threatened.
 - STEP-01 and STEP-02 are accepted. STEP-03 and its bounded design authority are approved. The Development Team may inspect and submit its exact implementation plan, but must not implement until the Moderator separately approves that plan.

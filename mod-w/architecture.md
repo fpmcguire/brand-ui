@@ -363,7 +363,7 @@ No production source may import from `mod-w/design`.
 
 ## Constraints and Open Product Wording
 
-- The original one-working-day sequence and between-Step study break were superseded by the Moderator on 2026-10-19: STEP-02 may proceed now, followed by static deployment and a fuller project/UI-library study review.
+- The original one-working-day sequence and between-Step study break were superseded by the Moderator on 2026-10-19. On 2026-10-28, the Moderator rescheduled all study-review gates as one additional final gate after STEP-09 and before any release, publish, or deployment decision; the review is no longer a STEP-05 prerequisite.
 - S-10 and S-12 are excluded. S-11 is wanted and planned as STEP-03. S-13 static deployment remains required after STEP-03 acceptance.
 - CodeCraft is the first approved cut if Must completion is threatened.
 - “All brands shows three panels” is a wording defect: it means three brands across four panels/scopes.
@@ -377,6 +377,7 @@ No production source may import from `mod-w/design`.
 | 2026-10-19 | D-11 native About-dialog lifecycle approved | Moderator approved the STEP-03 bounded authority and S-11-before-S-13 sequencing |
 | 2026-10-19 | D-11 repository-link content amendment | Moderator and Product Owner required a distinct About section linking to the public `brand-ui` GitHub repository; no API, token, asset, or behavior expansion |
 | 2026-10-28 | D-12 atomic decomposition and package boundary | Moderator approved the Tech Lead decomposition and domain terms after the approved design proposal |
+| 2026-10-28 | Study-review gate sequencing | Moderator consolidated all study-review gates as one additional final gate after STEP-09; the gate remains required before release, publish, or deployment |
 
 ---
 

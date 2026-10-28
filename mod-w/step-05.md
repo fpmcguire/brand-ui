@@ -1,8 +1,8 @@
 # STEP-05 — Atomic package scaffold, pack, and installed consumption
 
-**Status:** Step plan approved by the Moderator, 2026-10-28; pre-Step gates and separate approval of the Development Team's exact plan remain required.
+**Status:** Step plan approved by the Moderator, 2026-10-28; STEP-05 remains inactive, and the remaining pre-Step gates plus separate approval of the Development Team's exact plan are required.
 
-**Estimate:** 5 hours. **Dependencies:** approved D-12/domain terms; completed frozen-v1.0.0 study review; `v1.0.0` pushed and verified on `origin`; extension branch created from `v1.0.0`; before-measurement recorded under D-12.
+**Estimate:** 5 hours. **Dependencies:** approved D-12/domain terms; `v1.0.0` pushed and verified on `origin`; extension branch created from `v1.0.0`; before-measurement recorded under D-12. By Moderator decision on 2026-10-28, the study-review gates are consolidated as one additional final gate after STEP-09 and are not a STEP-05 dependency.
 
 ## Goal
 

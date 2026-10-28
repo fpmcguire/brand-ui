@@ -2,13 +2,13 @@
 
 **Project:** brand-ui  
 **Date:** 2026-10-28
-**Status:** STEP-04 and the D-12 before-measurement gate accepted; frozen-v1.0.0 study review remains pending before STEP-05
+**Status:** STEP-04 and the D-12 before-measurement gate accepted; study-review gates rescheduled as one additional final gate after STEP-09
 
 ---
 
 ## Summary
 
-The accepted v1.0.0 spike is followed by a Moderator-initiated Atomic Design extension. Before any build Step, the Moderator completes the frozen-baseline study review, pushes and verifies the `v1.0.0` tag on `origin`, creates the extension branch from that reference point, and records the D-12 before-measurement. Five small Steps then scaffold the package, move Card without behavior change, add the structure view, enforce measurement/gates, and reconcile v1.1.0 documentation. S-10, S-12, and S-19 remain excluded.
+The accepted v1.0.0 spike is followed by a Moderator-initiated Atomic Design extension. Before STEP-05, the Moderator pushes and verifies the `v1.0.0` tag on `origin`, creates the extension branch from that reference point, and records the D-12 before-measurement. Five small Steps then scaffold the package, move Card without behavior change, add the structure view, enforce measurement/gates, and reconcile v1.1.0 documentation. By Moderator decision on 2026-10-28, all study-review gates are consolidated as one additional final gate after STEP-09 and before any release, publish, or deployment decision. S-10, S-12, and S-19 remain excluded.
 
 ## Steps
 
@@ -18,7 +18,6 @@ The accepted v1.0.0 spike is followed by a Moderator-initiated Atomic Design ext
 | STEP-02 | Input, navigation, long labels, and final verification | remaining S-3 to S-7, S-9; AC-4 to AC-15                       | Claude Code      | Accepted 2026-10-19                    | Playwright, axe, README, final gates complete   |
 | STEP-03 | Gallery About panel                                    | S-11, AC-17; recheck AC-4, AC-8, AC-9, AC-12                   | Claude Code      | Accepted 2026-10-19                    | About panel with source-repository link         |
 | STEP-04 | Static subfolder deployment                            | S-13, AC-19                                                    | Development Team | Accepted 2026-10-19                   | `/brand-ui/`; no indexing or third-party assets |
-| Gate    | Full project study review                              | Moderator decision                                             | Moderator        | Required after deployment              | Covers the workspace projects and UI library    |
 | Gate | Remote reference and branch | MD-9, A-16 | Moderator | Required before STEP-05 | Push/verify `v1.0.0`; branch from `bd24152` |
 | Gate | Before measurement | S-18, AC-26, A-19; D-12 | Moderator/Development Team | Accepted 2026-10-28 | Frozen v1.0.0, five-run baseline before code |
 | STEP-05 | Atomic package scaffold, pack, and installed consumption | S-15, S-16; AC-22 to AC-24 | Development Team | Plan approved; pre-gates pending | 5h; no Card move |
@@ -26,6 +25,7 @@ The accepted v1.0.0 spike is followed by a Moderator-initiated Atomic Design ext
 | STEP-07 | Gallery Card structure view | S-17; AC-20, AC-23 to AC-25 | Development Team | Plan approved; blocked by STEP-06 | 5h; DS-061–066 plus DS-030/031/035 |
 | STEP-08 | Regression measurement and hardened gates | S-18; AC-22 to AC-26 | Development Team | Plan approved; blocked by STEP-07 | 4h; after run and threshold |
 | STEP-09 | v1.1.0 documentation and release-candidate truth | AC-12, AC-17, AC-20 to AC-27 | Development Team | Plan approved; blocked by STEP-08 | 3h; no publish/deploy |
+| Gate | Consolidated full-project study review | Moderator decisions of 2026-10-19 and 2026-10-28 | Moderator | Required after STEP-09 | Additional final gate before release/publish/deploy; covers the workspace projects and UI library |
 
 ## STEP-01
 
@@ -38,6 +38,8 @@ The accepted v1.0.0 spike is followed by a Moderator-initiated Atomic Design ext
 ## Moderator sequencing decision
 
 On 2026-10-19, the Moderator moved the study break until after STEP-02 completion and static deployment and authorized STEP-02 to proceed. The later gate is a fuller study review of the workspace projects and UI library, including the original theme attachment, CSS-token authority, signal/native-button behavior, and loading-suppression topics. STEP-02 acceptance and deployment evidence are prerequisites for that review.
+
+On 2026-10-28, the Moderator rescheduled all study-review gates as one additional final step after STEP-09. The review remains mandatory and retains its full scope, but it is no longer a STEP-05 prerequisite. It must be completed before any release, publish, or deployment decision. This sequencing decision does not activate STEP-05 or approve a Development Team exact plan.
 
 ## STEP-02
 
@@ -88,7 +90,7 @@ The estimated implementation effort is 21 hours over 4–5 working days, within 
 
 | Step | Estimate | Dependency | First Design IDs | AC coverage |
 | --- | ---: | --- | --- | --- |
-| STEP-05 | 5h | All three pre-Step gates | None | AC-20, AC-22, AC-23, AC-24; recheck AC-19 |
+| STEP-05 | 5h | Remote-reference/branch and before-measurement gates | None | AC-20, AC-22, AC-23, AC-24; recheck AC-19 |
 | STEP-06 | 4h | STEP-05 accepted | DS-030–035 behavior evidence | AC-20–24 |
 | STEP-07 | 5h | STEP-06 accepted | DS-061–066; reused DS-030/031/035 | AC-20, AC-23–25 |
 | STEP-08 | 4h | STEP-07 accepted and valid before run | Regression coverage only | AC-20, AC-22–26 |
@@ -120,7 +122,8 @@ The estimated implementation effort is 21 hours over 4–5 working days, within 
 - **2026-10-28 — STEP-05 through STEP-09 plan:** approved by the Moderator.
 - **2026-10-28 — `CLAUDE.md` and `AGENTS.md` extension changes:** approved by the Moderator and applied.
 - **2026-10-28 — D-12 before measurement:** Tech Lead Pass accepted by the Moderator; corrected baseline records 2559.6461 ms median LCP, 0.035028 median CLS, 630 ms median TBT, and 89,050 bytes gzip-level-9 startup JS plus combined CSS. The accepted slow-host warning remains a STEP-08 comparison caveat.
-- **Limit:** approval of the Step plan is not activation or implementation approval. The pre-Step gates remain required, and each active Step requires separate Moderator approval of the Development Team's exact plan.
+- **2026-10-28 — study-review sequencing:** the Moderator rescheduled all study-review gates as one additional final gate after STEP-09 and before any release, publish, or deployment decision. The gate remains pending and was not declared complete.
+- **Limit:** approval of the Step plan is not activation or implementation approval. The remaining pre-Step gates remain required, and each active Step requires separate Moderator approval of the Development Team's exact plan.
 
 ## Cut order
 
@@ -144,7 +147,7 @@ On 2026-10-19, the Moderator activated S-13 as STEP-04 and directed a subfolder 
 
 On 2026-10-19, the Moderator approved the Development Team plan. The Team implemented the three allowed files and the Moderator deployed the `/brand-ui/` build to `https://www.frank-mcguire.com/brand-ui/`. The Tech Lead independently verified the implementation, gates, local subfolder behavior, and live deployment. After the Moderator removed the publicly exposed upload archive, the focused remote re-check passed. The Moderator approved the Tech Lead review on 2026-10-19 and released STEP-04 to QA. QA independently re-ran every gate and verified the local `/brand-ui/` run and the live deployment, recorded Pass with notes in `mod-w/qa.md`, and the Moderator approved the QA review on 2026-10-19. The Product Owner then validated acceptance and signed off "Accepted with notes" in `mod-w/po-signoff-step-04.md`: the page-level `noindex, nofollow` meta is the effective AC-19 control, the `/brand-ui/robots.txt` copy is non-effective defense-in-depth, and O-1 to O-4 do not affect acceptance.
 
-On 2026-10-19, the Moderator approved the Product Owner's review and accepted STEP-04. The Step is tagged `step-04-complete` at `f205dc3`. Notes O-1 to O-4 are recorded and open as host or tooling matters outside this Step: a root `robots.txt` (host-wide policy; if added, weigh that it would stop crawlers reading the page-level `noindex`), an HTTP-to-HTTPS redirect, and a Node-version pin. Each needs separate Moderator authorization. The full project study review gate is next.
+On 2026-10-19, the Moderator approved the Product Owner's review and accepted STEP-04. The Step is tagged `step-04-complete` at `f205dc3`. Notes O-1 to O-4 are recorded and open as host or tooling matters outside this Step: a root `robots.txt` (host-wide policy; if added, weigh that it would stop crawlers reading the page-level `noindex`), an HTTP-to-HTTPS redirect, and a Node-version pin. Each needs separate Moderator authorization. The full project study review was next until the Moderator's 2026-10-28 decision rescheduled all study-review gates as one additional final gate after STEP-09.
 
 ---
 

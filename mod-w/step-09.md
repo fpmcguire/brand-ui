@@ -57,5 +57,9 @@ Review must search for publishing instructions, false “four components” impl
 
 ## Stop conditions and sequence
 
+After STEP-09 acceptance, the separate consolidated study review uses written guides under
+`study-guides/`, requires the Moderator's own-words demonstration, and remains pending until the
+Moderator explicitly decides it is complete. Completing STEP-09 does not complete that gate.
+
 Stop for Product meaning change, new external link, release/publish/deploy need, inaccurate statement needing wider authority, or failed gate. Exact Team plan → Moderator approval → implementation → Tech Lead review → fresh QA → Product Owner sign-off validating AC-20–27 coverage → Moderator acceptance. Release actions remain separate Moderator decisions.
 

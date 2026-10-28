@@ -1,6 +1,6 @@
 # STEP-06 — Move Card behind the installed atomic package
 
-**Status:** Active for planning only, 2026-10-28. STEP-05 is accepted. Development Team plan revision 3 requires correction after Tech Lead review and has not received separate Moderator approval for implementation. **Estimate:** 4 hours.
+**Status:** Exact Development Team plan Revision 4 and Tech Lead re-review approved by the Moderator on 2026-10-28; implementation is authorized. The four plan decisions are approved: the exact producer-test-only `paths` exception, `ui` peer `^1.1.0`, `card-export.spec.ts`, and the single committed equivalence log. After implementation evidence, stop for Tech Lead review; fresh QA, Product Owner sign-off, and final Moderator acceptance remain required. **Estimate:** 4 hours.
 
 ## Goal
 

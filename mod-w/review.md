@@ -4,6 +4,8 @@
 
 **APPROVE FOR MODERATOR CONSIDERATION.** Revision 4 closes all four Revision 3 Must-fix findings without weakening the accepted plan. This is Tech Lead advice only—not Moderator approval, STEP-06 implementation activation, acceptance, or permission to implement.
 
+**Moderator disposition:** Approved on 2026-10-28. The Moderator approved this Tech Lead review, the exact Development Team Revision 4 plan, and all four recommendations: the exact producer-test-only `paths` exception, `ui` peer `^1.1.0`, `card-export.spec.ts`, and the single committed equivalence log. STEP-06 implementation is authorized under that exact plan. This is plan approval, not STEP-06 acceptance; Tech Lead implementation review, fresh QA, Product Owner sign-off, and final Moderator acceptance remain required.
+
 ## Scope check
 
 - The six D-12 parts, installed Card re-export, archive refresh, atomic test target, path-only Playwright repair, and package peers remain within STEP-06 (`mod-w/step-06.md:15-29`; `mod-w/architecture.md:238-247,277-291`).
@@ -60,4 +62,4 @@ The prototype remains rejected as a Reference Implementation. Existing AC-20 Car
 
 ## Next action
 
-The Moderator should decide the four still-undecided items and then separately approve or reject this exact Revision 4. The Tech Lead recommendations remain **Approve** for the exact producer-test-only `paths` exception, `ui` peer `^1.1.0`, `card-export.spec.ts`, and the single committed equivalence log. Only after those decisions and exact-plan approval may implementation begin; STEP-07 remains blocked until STEP-06 receives implementation evidence, Tech Lead review, fresh QA, Product Owner sign-off, and Moderator acceptance (`mod-w/step-06.md:61-63`).
+The Development Team may implement only the exact approved Revision 4 plan, must stop on any recorded stop condition, and must then provide the complete implementation evidence for Tech Lead review. STEP-07 remains blocked until STEP-06 receives Tech Lead review, fresh QA, Product Owner sign-off, and Moderator acceptance (`mod-w/step-06.md:61-63`).

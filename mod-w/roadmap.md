@@ -2,7 +2,7 @@
 
 **Project:** brand-ui  
 **Date:** 2026-10-28
-**Status:** STEP-04 and the D-12 before-measurement gate accepted; written study-review gate required after STEP-09
+**Status:** STEP-05 accepted; STEP-06 active for planning only; corrected exact plan pending separate Moderator approval; written study-review gate required after STEP-09
 
 ---
 
@@ -20,8 +20,8 @@ The accepted v1.0.0 spike is followed by a Moderator-initiated Atomic Design ext
 | STEP-04 | Static subfolder deployment                            | S-13, AC-19                                                    | Development Team | Accepted 2026-10-19                   | `/brand-ui/`; no indexing or third-party assets |
 | Gate | Remote reference and branch | MD-9, A-16 | Moderator | Accepted 2026-10-28 | Origin tag dereferences to `bd241525`; extension branch descends from it |
 | Gate | Before measurement | S-18, AC-26, A-19; D-12 | Moderator/Development Team | Accepted 2026-10-28 | Frozen v1.0.0, five-run baseline before code |
-| STEP-05 | Atomic package scaffold, pack, and installed consumption | S-15, S-16; AC-22 to AC-24 | Development Team | Planning active; exact plan pending approval | 5h; no Card move or implementation yet |
-| STEP-06 | Move Card behind installed atomic package | S-14 to S-16; AC-20 to AC-24 | Development Team | Plan approved; blocked by STEP-05 | 4h; unchanged behavior/assertions |
+| STEP-05 | Atomic package scaffold, pack, and installed consumption | S-15, S-16; AC-22 to AC-24 | Development Team | Accepted 2026-10-28 | Tech Lead, fresh QA, Product Owner, and Moderator reviews complete |
+| STEP-06 | Move Card behind installed atomic package | S-14 to S-16; AC-20 to AC-24 | Development Team | Planning active; revised exact plan pending approval | 4h; revision 3 requires correction; no implementation yet |
 | STEP-07 | Gallery Card structure view | S-17; AC-20, AC-23 to AC-25 | Development Team | Plan approved; blocked by STEP-06 | 5h; DS-061–066 plus DS-030/031/035 |
 | STEP-08 | Regression measurement and hardened gates | S-18; AC-22 to AC-26 | Development Team | Plan approved; blocked by STEP-07 | 4h; after run and threshold |
 | STEP-09 | v1.1.0 documentation and release-candidate truth | AC-12, AC-17, AC-20 to AC-27 | Development Team | Plan approved; blocked by STEP-08 | 3h; no publish/deploy |
@@ -39,7 +39,7 @@ The accepted v1.0.0 spike is followed by a Moderator-initiated Atomic Design ext
 
 On 2026-10-19, the Moderator moved the study break until after STEP-02 completion and static deployment and authorized STEP-02 to proceed. The later gate is a fuller study review of the workspace projects and UI library, including the original theme attachment, CSS-token authority, signal/native-button behavior, and loading-suppression topics. STEP-02 acceptance and deployment evidence are prerequisites for that review.
 
-On 2026-10-28, the Moderator rescheduled all study-review gates as one additional final step after STEP-09. The review remains mandatory and retains its full scope, but it is not a prerequisite for work through STEP-09. It must be completed before any release, publish, or deployment decision. The Moderator subsequently activated STEP-05 for planning only; that activation does not approve implementation or the Development Team's exact plan.
+On 2026-10-28, the Moderator rescheduled all study-review gates as one additional final step after STEP-09. The review remains mandatory and retains its full scope, but it is not a prerequisite for work through STEP-09. It must be completed before any release, publish, or deployment decision. The Moderator accepted STEP-05 after Tech Lead review, fresh QA, and Product Owner sign-off, then activated STEP-06 for planning only. STEP-06 implementation still requires separate Moderator approval of the Development Team's corrected exact plan.
 
 Also on 2026-10-28, the Moderator replaced the interactive study-quiz format with written study guides stored under `study-guides/`. Each guide supplies the explanation, source/test evidence, self-check prompts, a topic assessment, unanswered questions, further-study subjects, and a gate-readiness recommendation. The Moderator must still explain the implementation in their own words, but that demonstration does not block planning, implementation, review, QA, sign-off, or acceptance from proceeding through STEP-09. It applies only at the separate consolidated post-STEP-09 gate before a release, publish, or deployment decision. Creating or reading a guide, or observing that code exists, does not complete the gate; the Moderator alone records the completion decision.
 
@@ -78,9 +78,9 @@ Also on 2026-10-28, the Moderator replaced the interactive study-quiz format wit
 | AC-6 to AC-12  | STEP-02                      | Planned                                                             |
 | AC-13 to AC-15 | Both                         | Should                                                              |
 | AC-16          | Human review                 | Passed 2026-10-18                                                   |
-| S-14, AC-20, AC-21 | D-12 gate; STEP-06; rechecked STEP-07–09 | D-12/domain approved; implementation draft |
-| S-15, S-16, AC-22, AC-23 | STEP-05; completed by STEP-06; rechecked STEP-07–09 | Draft |
-| AC-24 | STEP-05 then every extension Step | Draft; package scan/self-test first enters STEP-05 |
+| S-14, AC-20, AC-21 | D-12 gate; STEP-06; rechecked STEP-07–09 | D-12/domain approved; STEP-06 planning active |
+| S-15, S-16, AC-22, AC-23 | STEP-05; completed by STEP-06; rechecked STEP-07–09 | STEP-05 accepted; STEP-06 refresh pending |
+| AC-24 | STEP-05 then every extension Step | STEP-05 accepted; recheck pending in each later Step |
 | S-17, AC-25 | STEP-07; rechecked STEP-08–09 | Draft; DS-061–066 and reused DS-030/031/035 |
 | S-18, AC-26 | Pre-Step baseline and STEP-08; rechecked STEP-09 | Draft |
 | AC-27 | STEP-09 | Draft |
@@ -126,10 +126,12 @@ The estimated implementation effort is 21 hours over 4–5 working days, within 
 - **2026-10-28 — D-12 before measurement:** Tech Lead Pass accepted by the Moderator; corrected baseline records 2559.6461 ms median LCP, 0.035028 median CLS, 630 ms median TBT, and 89,050 bytes gzip-level-9 startup JS plus combined CSS. The accepted slow-host warning remains a STEP-08 comparison caveat.
 - **2026-10-28 — remote reference and branch:** the Moderator accepted evidence that origin's annotated `v1.0.0` tag dereferences to `bd241525a93afa468d069ca42bc300f62af3bd91` and `feature/atomic-design` descends from that frozen reference.
 - **2026-10-28 — STEP-05 activation:** activated for planning only. The exact Development Team implementation and verification plan requires separate Moderator approval before any implementation operation.
+- **2026-10-28 — STEP-05 acceptance:** accepted by the Moderator as complete after Tech Lead review, fresh QA, and Product Owner sign-off.
+- **2026-10-28 — STEP-06 activation:** activated for planning only. Development Team plan revision 3 requires correction after Tech Lead review; implementation requires separate Moderator approval of the corrected exact plan.
 - **2026-10-28 — study-review sequencing:** the Moderator rescheduled all study-review gates as one additional final gate after STEP-09 and before any release, publish, or deployment decision. The gate remains pending and was not declared complete.
 - **2026-10-28 — study-review format:** the Moderator replaced interactive quizzes with written guides under `study-guides/`. The own-words demonstration and Moderator-only completion decision remain required.
 - **2026-10-28 — study-review sequencing clarification:** the Moderator determined that the own-words demonstration does not block work through STEP-09; it remains part of the later consolidated gate before release, publish, or deployment.
-- **Limit:** approval of the roadmap Step plan is not implementation approval. Each active Step requires separate Moderator approval of the Development Team's exact plan; STEP-05 is currently at that approval gate.
+- **Limit:** approval of the roadmap Step plan is not implementation approval. Each active Step requires separate Moderator approval of the Development Team's exact plan; STEP-06 is currently active for planning only and its corrected exact plan remains at that approval gate.
 
 ## Cut order
 

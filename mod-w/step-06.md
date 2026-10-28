@@ -1,6 +1,6 @@
 # STEP-06 — Move Card behind the installed atomic package
 
-**Status:** Step plan approved by the Moderator, 2026-10-28; blocked by STEP-05 acceptance and separate approval of the Development Team's exact plan. **Estimate:** 4 hours.
+**Status:** Active for planning only, 2026-10-28. STEP-05 is accepted. Development Team plan revision 3 requires correction after Tech Lead review and has not received separate Moderator approval for implementation. **Estimate:** 4 hours.
 
 ## Goal
 

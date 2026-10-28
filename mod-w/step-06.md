@@ -1,6 +1,6 @@
 # STEP-06 — Move Card behind the installed atomic package
 
-**Status:** Exact Development Team plan Revision 4 and Tech Lead re-review approved by the Moderator on 2026-10-28; implementation is authorized. The four plan decisions are approved: the exact producer-test-only `paths` exception, `ui` peer `^1.1.0`, `card-export.spec.ts`, and the single committed equivalence log. After implementation evidence, stop for Tech Lead review; fresh QA, Product Owner sign-off, and final Moderator acceptance remain required. **Estimate:** 4 hours.
+**Status:** Exact Development Team plan Revision 4, Tech Lead re-review, and the bounded source-map/tooling amendment below were approved by the Moderator on 2026-10-28; implementation is authorized. The four original plan decisions are approved: the exact producer-test-only `paths` exception, `ui` peer `^1.1.0`, `card-export.spec.ts`, and the single committed equivalence log. After implementation evidence, stop for Tech Lead review; fresh QA, Product Owner sign-off, and final Moderator acceptance remain required. **Estimate:** 4 hours.
 
 ## Goal
 
@@ -16,6 +16,15 @@ Implement D-12's parts and move Card behind installed `@brand-ui/atomic`, preser
 
 - `projects/atomic/**` implementations/tests for `Tag`, `SkeletonBlock`, `CodeWell`, `MediaArea`, `LoadingSkeleton`, `Card`.
 - `projects/ui/src/public-api.ts`, removal of superseded Card source only after equivalence is proven, `projects/ui/package.json`, root manifest/lock/archive, and package verification scripts.
+
+### Approved Revision 4 implementation amendment
+
+The real Angular 22.2 ng-packagr output adds three secondary-entry FESM source maps and terminal `sourceMappingURL` comments, which violate the approved nine-file, no-source-path archive contract. The Moderator approved this bounded correction after the Development Team stopped at the archive gate:
+
+- Add dedicated `scripts/sanitize-atomic-dist.mjs` as the 39th changed path; the final scope is 24 new, 13 modified and 2 deleted paths. Do not place packaging logic in `scripts/atomic-tsconfig.mjs`.
+- The sanitizer must require exactly the three expected secondary-entry maps, remove only their matching terminal comments, delete those maps, reject missing/additional/malformed/nonterminal references, and prove no map or `sourceMappingURL` remains. The manual pack flow and verifier rebuild use the same helper; focused coverage belongs in the already-listed verifier self-test.
+- `atomic.architect.test.options.include` may be `["../**/*.spec.ts"]` because the secondary-entry specs are outside `projects/atomic/src`; this remains producer-test-only.
+- Card input requiredness and `booleanAttribute` may be proved behaviorally because `reflectComponentType` does not expose them. The contract spec must also assert `description`, `meta`, `tag`, `mediaLabel`, `href`, and `codeSample` default to `undefined`, and `loading` defaults to `false`.
 
 ## Out of scope
 

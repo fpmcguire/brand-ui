@@ -6,6 +6,8 @@
 
 **Moderator disposition:** Approved on 2026-10-28. The Moderator approved this Tech Lead review, the exact Development Team Revision 4 plan, and all four recommendations: the exact producer-test-only `paths` exception, `ui` peer `^1.1.0`, `card-export.spec.ts`, and the single committed equivalence log. STEP-06 implementation is authorized under that exact plan. This is plan approval, not STEP-06 acceptance; Tech Lead implementation review, fresh QA, Product Owner sign-off, and final Moderator acceptance remain required.
 
+**Moderator-approved implementation amendment:** After ng-packagr produced three secondary-entry source maps and terminal map references, the Development Team correctly stopped. The Moderator approved a dedicated `scripts/sanitize-atomic-dist.mjs` shared by manual packing and verifier rebuilding, with strict map/reference assertions and focused verifier self-tests. It is the 39th path, making the authorized scope 24 new, 13 modified and 2 deleted paths. The Moderator also approved `atomic.architect.test.options.include: ["../**/*.spec.ts"]` and behavioral Card requiredness/transform evidence, provided every optional input default is asserted. The nine-file, no-source-path archive contract is unchanged.
+
 ## Scope check
 
 - The six D-12 parts, installed Card re-export, archive refresh, atomic test target, path-only Playwright repair, and package peers remain within STEP-06 (`mod-w/step-06.md:15-29`; `mod-w/architecture.md:238-247,277-291`).
@@ -62,4 +64,4 @@ The prototype remains rejected as a Reference Implementation. Existing AC-20 Car
 
 ## Next action
 
-The Development Team may implement only the exact approved Revision 4 plan, must stop on any recorded stop condition, and must then provide the complete implementation evidence for Tech Lead review. STEP-07 remains blocked until STEP-06 receives Tech Lead review, fresh QA, Product Owner sign-off, and Moderator acceptance (`mod-w/step-06.md:61-63`).
+The Development Team may resume the approved Revision 4 plan as amended, must stop on any recorded stop condition, and must then provide the complete implementation evidence for Tech Lead review. STEP-07 remains blocked until STEP-06 receives Tech Lead review, fresh QA, Product Owner sign-off, and Moderator acceptance (`mod-w/step-06.md:70-72`).

@@ -94,3 +94,7 @@ The verdict is conditional on the Moderator's ruling on N1. The AC-22 peer claus
 ## Final Moderator approval
 
 **Date:** 2026-10-28. The Moderator gave final approval of STEP-05. The Product Owner's sign-off and the QA review were accepted before this, as recorded above. The approval is the Moderator's; the Product Owner did not accept the Step. The ruling on N1 is not restated in this record and should be entered by the Moderator. STEP-06 may proceed only after the Moderator activates it and separately approves the Development Team's exact plan.
+
+## N1 ruling
+
+**Date:** 2026-10-28. The Moderator approved Option A: N1 is accepted as met for STEP-05. The AC-22 peer clause is clarified as follows: the manifest declares as peer dependencies the Angular packages its emitted output imports (see D-12). At STEP-05 that set is empty, and `verify:atomic-archive` enforces both directions: it rejects a declared peer that is not imported, and an import of an undeclared Angular package. `mod-w/product.md` is unchanged pending the Moderator's confirmation of the clarification wording.

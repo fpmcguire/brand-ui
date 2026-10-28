@@ -3,7 +3,7 @@
 **Project:** brand-ui  
 **Date:** 2026-10-19
 **Tech Lead:** Codex  
-**Status:** Approved by the Moderator, 2026-10-18; D-11 amendment approved 2026-10-19
+**Status:** Approved by the Moderator, 2026-10-18; D-11 amendment approved 2026-10-19; D-12 approved 2026-10-28
 
 ---
 
@@ -31,6 +31,10 @@ The Design-canvas prototype is visual evidence only. It is neither Angular archi
 | AC-12                  | D-09 asset, provenance, and documentation controls                      |
 | AC-16                  | Human review passed on 2026-10-18                                       |
 | S-11, AC-17            | D-11 gallery-owned native About dialog and first-visit lifecycle        |
+| S-14, AC-20, AC-21     | D-12 behavior-preserving Card decomposition                             |
+| S-15, S-16, AC-22–24   | D-12 packed atomic-package boundary and installed consumption           |
+| S-17, AC-25            | D-12 gallery-owned structure view                                       |
+| S-18, AC-26            | D-12 reproducible before/after measurement gate                         |
 
 ## Technology Stack
 
@@ -223,9 +227,92 @@ The About content may contain exactly two external links: the approved MOD-W met
 
 No approved Design ID covers S-11. Trace implementation and review through the AC-17 sub-checks in STEP-03, do not invent a `DS-nnn`, and render no Design-ID badge or “no Design ID” placeholder for the panel.
 
+### D-12 — Card decomposition and installed atomic package
+
+**Status:** Active; approved by the Moderator on 2026-10-28
+
+**Related requirements:** S-14 to S-18; AC-20 to AC-27; MD-1 to MD-10; DS-030, DS-031, DS-035 and DS-061 to DS-066
+
+Use the Designer's medium slicing, option B, with these technical boundaries:
+
+| Public component | Level | Ownership |
+| --- | --- | --- |
+| `Tag` | Atom | Accent/on-accent pill and projected text; no independent state. |
+| `SkeletonBlock` | Atom | One decorative placeholder shape and reduced-motion-aware pulse; no loading status or busy state. |
+| `CodeWell` | Atom | `pre`/`code` semantics, wrapping, and token-only bordered surface for consumer-supplied code text; no brand knowledge. |
+| `MediaArea` | Molecule | The 4:3 sunken surface, optional media label, and optional `Tag`; no state or interaction. |
+| `LoadingSkeleton` | Molecule | The card-specific arrangement of four `SkeletonBlock` instances; decorative, with no loading status or busy state. |
+| `Card` | Organism | Existing `bui-card` selector and complete public input contract; shell, body layout, h3 title, optional description and meta line, composition, the only stretched native link and tab stop, state decisions, `aria-busy`, and the single screen-reader `Loading` status. |
+
+`Card` remains the only owner of card state. The parts do not accept card state, `href`, title-heading level, accessible loading text, or brand/scope inputs, and they create no links, tab stops, live regions, busy states, or forced-state APIs. The existing Card title is confirmed in source as an `h3`; the refactor preserves it and every existing `card.spec.ts` assertion unchanged.
+
+#### Classification disposition
+
+- Card as organism: **RATIFIED** — it is the stateful composition boundary and owns the complete single-link contract.
+- Media area as molecule: **RATIFIED** — it composes a surface, optional label, and Tag as one state-free unit.
+- Tag as atom: **RATIFIED** — it is one indivisible token-styled label.
+- Skeleton block as atom: **RATIFIED** — it is the repeated smallest placeholder shape; pulse is presentation, not state.
+- Code well as atom: **RATIFIED** — it is one semantic and visual unit with consumer-supplied content.
+- Loading skeleton as molecule: **RATIFIED** — its four-block arrangement is meaningful while Card retains loading semantics.
+- Button as atom: **RATIFIED** — its spinner is internal presentation, not another composition boundary.
+- TextInput as molecule: **RATIFIED** — it composes label, field, and mutually exclusive helper/error presentation.
+- Navigation as organism: **MODIFIED** from molecule — the named landmark, wordmark, and navigation-item collection form a distinct page section with collection-level behavior. MD-4 authorizes classification only, so no code or API moves.
+
+#### Reasoned not-split list
+
+- **Shell — RATIFIED:** Card's state-bearing host surface, not a content-bearing component.
+- **Title — MODIFIED rationale:** stays Card-owned to preserve the h3, only native link, stretched hit area, and one-tab-stop invariant together.
+- **Description — RATIFIED:** optional paragraph content with no behavior or composition boundary.
+- **Meta line — RATIFIED:** optional text content; separators belong to supplied content.
+- **Media label — RATIFIED:** internal text whose meaning depends on `MediaArea`.
+- **Media placeholder surface — RATIFIED:** `MediaArea`'s host surface and aspect ratio, with no independent semantics.
+- **Hover raise, focus ring, active styling — RATIFIED:** Card states, not parts.
+- **Stretched link hit area — RATIFIED:** coordinated Card shell/title-link behavior.
+- **`Loading` text and busy state — RATIFIED:** Card semantics; `LoadingSkeleton` remains decorative.
+- **Text group and Card footer — RATIFIED:** grouping wrappers without independent responsibility.
+- **Button spinner — ADDED:** Button-owned loading presentation; S-19 is excluded.
+- **TextInput field, label, helper, and error — ADDED:** remain one molecule; MD-4 authorizes classification only.
+- **Navigation item and wordmark — ADDED:** remain Navigation-owned; MD-4 authorizes no decomposition or move.
+
+#### Package architecture and installed consumption
+
+Add a second Angular CLI library at `projects/atomic`, built separately as `@brand-ui/atomic` version `1.1.0`, with canonical secondary entry points:
+
+- `@brand-ui/atomic/atoms`: `Tag`, `SkeletonBlock`, `CodeWell`;
+- `@brand-ui/atomic/molecules`: `MediaArea`, `LoadingSkeleton`;
+- `@brand-ui/atomic/organisms`: `Card`.
+
+The package root may re-export those symbols for discoverability. It declares compatible Angular 22 packages it imports, including `@angular/core`, as peer dependencies and keeps `tslib` as a runtime dependency where emitted output requires it. It has no gallery, `ui`, router, forms, asset, token-value, or brand dependency.
+
+`ui` imports `Card` from the installed `@brand-ui/atomic/organisms` entry point and re-exports that same symbol from its existing public entry point. Existing `import { Card } from 'ui'` therefore continues to compile and refers to the same component class. `ui` declares its package relationship to `@brand-ui/atomic`; it does not copy or wrap Card. Button, TextInput, Navigation, themes, and tokens remain in `ui`.
+
+The gallery imports structure specimens from installed atomic entry points. Neither it nor `ui` may use a TypeScript path mapping, workspace-source alias, or relative import into `projects/atomic`. The package builds to `dist/atomic`; `npm pack` creates `brand-ui-atomic-1.1.0.tgz`; nothing is published. Archive inspection must exclude gallery code, secrets, third-party brand assets, MOD-W files, and source-path disclosure.
+
+Commit the reviewed archive in a dedicated repository package-artifact directory and reference that exact file from the root manifest so clean `npm ci` can resolve it before Angular tooling is installed. This adds generated output and source/archive drift risk. Counter it by rebuilding and packing from approved source, inspecting normalized archive contents, and comparing normalized content checksums with the committed archive. Building first was rejected because it creates a bootstrap installation path outside the normal locked `npm ci`.
+
+#### Gallery, gates, and QA impact
+
+The gallery-owned structure view consumes only installed package exports, appears last in every scope panel, and follows DS-061 to DS-066 unchanged. Organism specimens reuse DS-030, DS-031, and DS-035. D-05 already supports the Code well: optional code is generic consumer-supplied sample data and is never inferred by Card or the package from the active theme. CodeCraft scopes supply code; ArtAnon and Mentor show `Not used in this scope`.
+
+Only the DS-031 specimen is focusable, with one title link and one tab stop. Isolated `SkeletonBlock` and `LoadingSkeleton` specimens are hidden from assistive technology. Only DS-035 Card specimens expose `aria-busy` and `Loading`. New tests target the structure section explicitly; existing Card-section and Playwright assertions remain unchanged. If the extra DS-031 link or DS-035 Card makes an existing assertion semantically incorrect, stop for a Moderator-recorded decision.
+
+The existing brand/contrast Playwright specification covers presence, Design IDs, installed-part rendering, and all four scopes. The existing keyboard/axe specification covers the extra interactive Card, loading semantics, hidden skeletons, rendered heading order in all four scopes, and complete-gallery axe. The long-label specification remains third. No fourth specification is added.
+
+`lint:tokens` scans both libraries. Its self-test must prove that the package scan, not only the shared parser, rejects a prohibited literal in atomic-package source. `check:assets` scans package source, the packed manifest, and archive file list; the atomic package duplicates no fonts or token values. `format:check`, unit tests, computed contrast, complete-gallery axe, and exactly three Playwright specification files remain gates. QA explicitly checks rendered heading order in all four scopes because AC-8 does not cover axe's moderate `heading-order` rule.
+
+#### Measurement conditions and regression threshold
+
+Take the before measurement from clean `v1.0.0` before extension source changes and the after measurement from the accepted candidate under identical conditions: production `/brand-ui/` build served locally over HTTP; pinned project Chromium on the same machine; Lighthouse mobile emulation with standard simulated mobile throttling; cold cache and fresh browser context per run; five runs; median LCP, CLS, and Total Blocking Time; and raw plus gzip-compressed initial JavaScript and CSS totals.
+
+Fail the measurement check when after exceeds before by more than the greater of 10% or 150 ms for LCP, the greater of 10% or 50 ms for Total Blocking Time, or 0.02 for CLS. CLS must also remain at or below 0.10. Initial compressed JavaScript plus CSS must not grow by more than the greater of 5% or 10 KiB. Report a breach to the Moderator; do not weaken thresholds. Measurements are evidence only and make no improvement claim.
+
+The extension is additive version `1.1.0`. README, the `ui` library note, this document's Public API section, and About wording distinguish the four established `ui` components from the installed atomic parts without implying publication or production use. No Reference Implementation exists for this extension; AC-20's existing Card behavior contract takes its place.
+
 ## Public API
 
-`projects/ui/src/public-api.ts` exports only the four components and public input types; `BrandId`, `CodeCraftMode`, and `ThemeSelection`; and `ThemeService` plus `ThemeScopeDirective`. Token inspection, gallery state, specimen metadata, Design IDs, and forced-state mechanisms are not public library API.
+`projects/ui/src/public-api.ts` continues to export the four established components and their public input types; its `Card` export re-exports the same `Card` class obtained from installed `@brand-ui/atomic/organisms`. It also exports `BrandId`, `CodeCraftMode`, `ThemeSelection`, `ThemeService`, and `ThemeScopeDirective`.
+
+Atomic parts are public through `@brand-ui/atomic` and its `atoms`, `molecules`, and `organisms` secondary entry points. Gallery state, specimen metadata, Design IDs, forced-state mechanisms, and the structure-view shell are not exported by either library.
 
 ## Testing Strategy
 
@@ -289,6 +376,7 @@ No production source may import from `mod-w/design`.
 | 2026-10-18 | Initial architecture approved               | Architecture Handoff and Definition                                              |
 | 2026-10-19 | D-11 native About-dialog lifecycle approved | Moderator approved the STEP-03 bounded authority and S-11-before-S-13 sequencing |
 | 2026-10-19 | D-11 repository-link content amendment | Moderator and Product Owner required a distinct About section linking to the public `brand-ui` GitHub repository; no API, token, asset, or behavior expansion |
+| 2026-10-28 | D-12 atomic decomposition and package boundary | Moderator approved the Tech Lead decomposition and domain terms after the approved design proposal |
 
 ---
 

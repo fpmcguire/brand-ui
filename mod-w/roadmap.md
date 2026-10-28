@@ -1,14 +1,14 @@
 # Roadmap
 
 **Project:** brand-ui  
-**Date:** 2026-10-19
-**Status:** STEP-04 accepted by the Moderator, 2026-10-19; full project study review gate pending
+**Date:** 2026-10-28
+**Status:** STEP-04 accepted; D-12/domain terms and STEP-05 through STEP-09 plan approved by the Moderator, 2026-10-28; pre-Step gates pending
 
 ---
 
 ## Summary
 
-The accepted two-Step component-library spike is followed by a small, separately reviewable S-11 About-panel Step, static deployment, and a fuller Moderator study review of the projects and UI library. S-10 and S-12 remain excluded. The Moderator promoted S-11 to wanted scope and S-13 deployment to a required gate on 2026-10-19.
+The accepted v1.0.0 spike is followed by a Moderator-initiated Atomic Design extension. Before any build Step, the Moderator completes the frozen-baseline study review, pushes and verifies the `v1.0.0` tag on `origin`, creates the extension branch from that reference point, and records the D-12 before-measurement. Five small Steps then scaffold the package, move Card without behavior change, add the structure view, enforce measurement/gates, and reconcile v1.1.0 documentation. S-10, S-12, and S-19 remain excluded.
 
 ## Steps
 
@@ -19,6 +19,13 @@ The accepted two-Step component-library spike is followed by a small, separately
 | STEP-03 | Gallery About panel                                    | S-11, AC-17; recheck AC-4, AC-8, AC-9, AC-12                   | Claude Code      | Accepted 2026-10-19                    | About panel with source-repository link         |
 | STEP-04 | Static subfolder deployment                            | S-13, AC-19                                                    | Development Team | Accepted 2026-10-19                   | `/brand-ui/`; no indexing or third-party assets |
 | Gate    | Full project study review                              | Moderator decision                                             | Moderator        | Required after deployment              | Covers the workspace projects and UI library    |
+| Gate | Remote reference and branch | MD-9, A-16 | Moderator | Required before STEP-05 | Push/verify `v1.0.0`; branch from `bd24152` |
+| Gate | Before measurement | S-18, AC-26, A-19; D-12 | Moderator/Development Team | Required before STEP-05 | Frozen v1.0.0, five-run baseline before code |
+| STEP-05 | Atomic package scaffold, pack, and installed consumption | S-15, S-16; AC-22 to AC-24 | Development Team | Plan approved; pre-gates pending | 5h; no Card move |
+| STEP-06 | Move Card behind installed atomic package | S-14 to S-16; AC-20 to AC-24 | Development Team | Plan approved; blocked by STEP-05 | 4h; unchanged behavior/assertions |
+| STEP-07 | Gallery Card structure view | S-17; AC-20, AC-23 to AC-25 | Development Team | Plan approved; blocked by STEP-06 | 5h; DS-061–066 plus DS-030/031/035 |
+| STEP-08 | Regression measurement and hardened gates | S-18; AC-22 to AC-26 | Development Team | Plan approved; blocked by STEP-07 | 4h; after run and threshold |
+| STEP-09 | v1.1.0 documentation and release-candidate truth | AC-12, AC-17, AC-20 to AC-27 | Development Team | Plan approved; blocked by STEP-08 | 3h; no publish/deploy |
 
 ## STEP-01
 
@@ -67,6 +74,52 @@ On 2026-10-19, the Moderator moved the study break until after STEP-02 completio
 | AC-6 to AC-12  | STEP-02                      | Planned                                                             |
 | AC-13 to AC-15 | Both                         | Should                                                              |
 | AC-16          | Human review                 | Passed 2026-10-18                                                   |
+| S-14, AC-20, AC-21 | D-12 gate; STEP-06; rechecked STEP-07–09 | D-12/domain approved; implementation draft |
+| S-15, S-16, AC-22, AC-23 | STEP-05; completed by STEP-06; rechecked STEP-07–09 | Draft |
+| AC-24 | STEP-05 then every extension Step | Draft; package scan/self-test first enters STEP-05 |
+| S-17, AC-25 | STEP-07; rechecked STEP-08–09 | Draft; DS-061–066 and reused DS-030/031/035 |
+| S-18, AC-26 | Pre-Step baseline and STEP-08; rechecked STEP-09 | Draft |
+| AC-27 | STEP-09 | Draft |
+| S-19 | None | Excluded by MD-4 |
+
+## Atomic extension order and size
+
+The estimated implementation effort is 21 hours over 4–5 working days, within A-14's 19–23 hour range. STEP-05 isolates workspace/package/bootstrap risk before runtime movement. STEP-06 makes the behavior-preserving move independently reviewable. STEP-07 adds the new review surface only after installed parts are stable. STEP-08 keeps measurement and gate mechanics separate from visual work. STEP-09 changes documentation only after the final architecture and measurements are factual. A-15 review, fresh QA, Product Owner sign-off, and Moderator acceptance occur after every Step.
+
+| Step | Estimate | Dependency | First Design IDs | AC coverage |
+| --- | ---: | --- | --- | --- |
+| STEP-05 | 5h | All three pre-Step gates | None | AC-20, AC-22, AC-23, AC-24; recheck AC-19 |
+| STEP-06 | 4h | STEP-05 accepted | DS-030–035 behavior evidence | AC-20–24 |
+| STEP-07 | 5h | STEP-06 accepted | DS-061–066; reused DS-030/031/035 | AC-20, AC-23–25 |
+| STEP-08 | 4h | STEP-07 accepted and valid before run | Regression coverage only | AC-20, AC-22–26 |
+| STEP-09 | 3h | STEP-08 accepted | Documentation links all extension IDs | AC-12, AC-17, AC-20–27 |
+
+## Extension Design-ID first-Step links
+
+| Design ID | First extension Step |
+| --- | --- |
+| DS-061 to DS-066 | STEP-07 |
+| DS-030, DS-031, DS-035 structure-view reuse | STEP-07 |
+
+## AC-20 to AC-27 plan matrix
+
+| AC | Authoritative check Step(s) |
+| --- | --- |
+| AC-20 | STEP-06 unchanged `card.spec.ts`, API/import compile probe, full unit/E2E; rechecked STEP-07–09 |
+| AC-21 | Moderator-approved D-12/domain gate before STEP-05; implementation conformity STEP-06 |
+| AC-22 | STEP-05 independent build/pack/manifest/inventory; refreshed STEP-06; rechecked STEP-08–09 |
+| AC-23 | STEP-05 clean `npm ci` and installed builds; checked every later Step |
+| AC-24 | STEP-05 atomic scan/self-test and asset archive coverage; complete gates every Step; structure axe/heading checks STEP-07 |
+| AC-25 | STEP-07 four-scope specimens/IDs/tokens/unit/E2E in exactly three specs; rechecked STEP-08–09 |
+| AC-26 | frozen before run before STEP-05; after run and threshold STEP-08; final check STEP-09 |
+| AC-27 | STEP-09 README/library note/Public API/About audit, version truth, and final gates |
+
+## Atomic extension approval record
+
+- **2026-10-28 — D-12 and domain terms:** approved by the Moderator.
+- **2026-10-28 — STEP-05 through STEP-09 plan:** approved by the Moderator.
+- **2026-10-28 — `CLAUDE.md` and `AGENTS.md` extension changes:** approved by the Moderator and applied.
+- **Limit:** approval of the Step plan is not activation or implementation approval. The pre-Step gates remain required, and each active Step requires separate Moderator approval of the Development Team's exact plan.
 
 ## Cut order
 

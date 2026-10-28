@@ -43,9 +43,12 @@ The Tech Lead maintains architecture, domain language, roadmap, Steps, role conf
 - Fonts are self-hosted only with matching OFL/provenance evidence.
 - CodeCraft bevel is progressive enhancement with rounded fallback.
 - ArtAnon logo, artwork, photography, and other third-party brand assets are prohibited.
-- S-10 and S-12 are excluded. S-11 is authorized only while a Moderator-approved STEP-03 is active and within its bounded design authority. The Moderator promoted S-13 static deployment to a required post-STEP-03 gate on 2026-10-19.
-- STEP-01 and STEP-02 are accepted. STEP-03, its bounded design authority, D-11, and S-11-before-S-13 sequencing were approved by the Moderator on 2026-10-19; implementation still requires separate approval of the Development Team's exact plan. The fuller project and UI-library study review remains after STEP-03 acceptance and deployment.
-- STEP-03 bounded design authority permits only the About dialog's layout, spacing, heading structure, backdrop treatment, and content presentation using existing semantic tokens, library components, and gallery patterns. It prohibits token, public-API, `Navigation`, existing Design-ID, `mod-w/design/`, brand-specific structure, animation-library, icon, and imagery changes. The panel must pass WCAG 2.2 AA and AC-7 contrast in all four scopes. It has no Design ID: trace AC-17 and show no placeholder badge.
+- S-10, S-12, and S-19 are excluded. STEP-01 through STEP-04 are accepted. D-12, its domain terms, and the STEP-05 through STEP-09 plan were approved by the Moderator on 2026-10-28; each build Step still requires activation and separate approval of the Development Team's exact plan.
+- The Atomic Design extension uses a second Angular CLI library, `@brand-ui/atomic`, with `atoms`, `molecules`, and `organisms` secondary entry points. Consumers obtain it through the reviewed installed archive, never a source alias or relative package-source import.
+- `ui` continues to export the four established components and re-exports the installed atomic `Card`. Button, TextInput, and Navigation do not move.
+- Before STEP-05: complete the frozen-v1.0.0 study review, push and verify the tag on `origin`, create the extension branch from `bd24152`, and record the D-12 before-measurement.
+- Every extension Step requires a Development Team plan, separate Moderator approval, Tech Lead review, fresh QA, Product Owner sign-off, and Moderator acceptance before the next Step.
+- Historical STEP-03 bounded design authority permitted only the About dialog's layout, spacing, heading structure, backdrop treatment, and content presentation using existing semantic tokens, library components, and gallery patterns. It prohibited token, public-API, `Navigation`, existing Design-ID, `mod-w/design/`, brand-specific structure, animation-library, icon, and imagery changes. The panel had to pass WCAG 2.2 AA and AC-7 contrast in all four scopes and carried no Design ID.
 
 ## Angular and TypeScript review criteria
 

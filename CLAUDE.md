@@ -38,25 +38,29 @@ The prototype and `architecture-notes.md` are evidence only. Never import/copy i
 - Use strict types; do not use `any` where `unknown` is correct.
 - Meet WCAG 2.2 AA and all active-Step accessibility checks.
 - Components consume semantic tokens only. Brand switching never selects component structure.
-- Gallery imports through `ui`, never library internals.
+- Gallery imports the four established components through `ui`. During an approved Atomic Design extension Step, structure specimens import approved parts through installed `@brand-ui/atomic` secondary entry points, never workspace source, a TypeScript alias, or a relative package-source path.
 - There are three brands across four scopes; CodeCraft Light/Dark are modes of one brand.
 - Never add ArtAnon logos, artwork, photography, or other third-party brand assets.
 - Preserve reference-spike and unofficial-concept wording; make no production/client-delivery claim.
 
 ## Scope discipline
 
-- S-10 and S-12 are unauthorized. STEP-03 has a Tech Lead Pass and its focused review is Moderator-approved. S-13 is STEP-04 (`mod-w/step-04.md`): implemented, deployed, and accepted by the Moderator on 2026-10-19 (tagged `step-04-complete`; Product Owner sign-off in `mod-w/po-signoff-step-04.md`). No further STEP-04 change is authorized.
+- S-10, S-12, and S-19 are unauthorized. STEP-01 through STEP-04 are accepted. D-12, its domain terms, and the STEP-05 through STEP-09 plan were approved by the Moderator on 2026-10-28. No extension implementation begins until the Moderator activates the individual Step and separately approves the Development Team's exact plan.
+- Before STEP-05, the frozen-v1.0.0 study review, remote `v1.0.0` verification, extension branch from `bd24152`, and D-12 before-measurement must be complete.
+- Only the active extension Step may change `projects/atomic` or its reviewed `npm pack` archive. The package is installed from that file archive and is never published.
 - CodeCraft is the first approved cut if Must completion is threatened.
 - STEP-01 and STEP-02 are accepted. STEP-03 and its bounded design authority are approved. The Development Team may inspect and submit its exact implementation plan, but must not implement until the Moderator separately approves that plan.
 - Do not silently change architecture, domain terms, APIs, acceptance intent, or Design IDs.
 
-## STEP-03 bounded design authority
+## Historical STEP-03 bounded design authority
 
 Only when STEP-03 is active, the Development Team may decide the About dialog's layout, spacing, heading structure, backdrop treatment, and content presentation using existing semantic tokens, existing library components, and established gallery patterns. It may not add or change tokens, token names, library components, `Navigation` or any public API, existing Design IDs, or anything under `mod-w/design/`; add brand-specific code/structure, animation libraries, icons, or imagery; or weaken WCAG 2.2 AA, AC-7 token-pair contrast, focus, axe, or exactly-three-specification checks. The panel must work in all four scopes through tokens alone. No Design ID exists: do not invent one or render a placeholder badge. Stop on any need to exceed these bounds.
 
 ## Reference Implementation
 
 `mod-w/design/project/Main.dc.html` is rejected as a Reference Implementation and retained as visual evidence only. Follow the disposition table in the active Step.
+
+No Reference Implementation exists for the Atomic Design extension. The unchanged Card behavior contract in AC-20 takes its place.
 
 ## Build gates
 

@@ -1,7 +1,7 @@
 # Domain Language
 
 **Project:** brand-ui  
-**Status:** Approved with Architecture Definition, 2026-10-18
+**Status:** Approved with Architecture Definition, 2026-10-18; atomic-extension terms approved 2026-10-28
 
 ---
 
@@ -39,6 +39,20 @@ The Tech Lead owns this vocabulary. Code, tests, documentation, Steps, and revie
 | Source repository        | Public `brand-ui` GitHub repository linked from its own About-panel section.                                                       | source repository link    | Download link, methodology link       |
 | Reference spike          | Exploratory implementation, not production delivery.                                                                             | README wording            | Production library                    |
 | Reference Implementation | Prototype code explicitly granted a Step disposition. None exists here.                                                          | Step disposition          | Visual reference                      |
+| Atom | Lowest project classification: an independently named building block that cannot usefully be decomposed further. | package level `atoms` | Synonym for every HTML element |
+| Molecule | Small unit composed from atoms or internal native elements, without page-section responsibility. | package level `molecules` | Any component containing children |
+| Organism | Distinct, behavior-owning section composed from atoms, molecules, or internal elements. | package level `organisms` | Necessarily a page or route |
+| Atomic package | Separately built, packed, and file-installed Angular package containing the approved Card decomposition; never published. | `@brand-ui/atomic` | Registry package, source alias |
+| Installed archive | Reviewed `npm pack` archive used as the atomic package's locked file dependency. | `brand-ui-atomic-1.1.0.tgz` | Registry install, `dist` source import |
+| Visual part | Designer's named visible portion of a component; it does not imply a technical component boundary. | design vocabulary | Public component |
+| Structure view | Gallery-owned section showing installed atoms, molecules, and Card organism with Design IDs in every scope. | gallery-local feature | Library API, Storybook |
+| Not-split list | Explicit record of candidate boundaries retained by their owner, with reasons. | D-12 decision record | Unreviewed implementation detail |
+| Tag | Atom rendering the Card media area's accent/on-accent text pill. | `Tag` | Card state |
+| Skeleton block | Decorative atom rendering one placeholder shape and reduced-motion-aware pulse; never owns loading semantics. | `SkeletonBlock` | Busy indicator |
+| Code well | Atom rendering consumer-supplied code with `pre`/`code` semantics and token-only presentation. | `CodeWell` | Brand-specific code |
+| Media area | Molecule owning the Card's 4:3 surface, optional media label, and optional Tag. | `MediaArea` | Image component |
+| Loading skeleton | Decorative molecule arranging four Skeleton blocks for Card's loading presentation; Card owns busy state and loading text. | `LoadingSkeleton` | Loading Card |
+| Card organism | Existing `bui-card` behavior boundary owning Card inputs, h3 title, single-link interaction, and loading semantics. | `Card` | Wrapper around another Card |
 
 ## Ratification of design proposals
 
@@ -50,6 +64,20 @@ The Tech Lead owns this vocabulary. Code, tests, documentation, Steps, and revie
 | Long-label case | Ratified    | Matches S-5 and AC-10                             |
 | Design ID       | Ratified    | Required traceability term                        |
 | Forced state    | Modified    | Gallery-owned, not a public component-state API   |
+| Atom            | Modified    | Level ratified; examples are governed by D-12 rather than advisory design wording |
+| Molecule        | Modified    | Level ratified; TextInput and approved Card subcompositions use it |
+| Organism        | Modified    | Level ratified; Card and Navigation are behavior-owning sections |
+| Visual part     | Ratified    | Preserves the boundary between design inventory and technical decomposition |
+| Structure view  | Ratified    | Correctly names the gallery-owned, non-library surface |
+| Not-split list  | Ratified    | Required decision record under MD-8 |
+
+## Atomic classification
+
+- `Tag`, `SkeletonBlock`, `CodeWell`, and Button are atoms.
+- `MediaArea`, `LoadingSkeleton`, and TextInput are molecules.
+- Card and Navigation are organisms.
+- MD-4 classifies Button, TextInput, and Navigation only; it authorizes no move or public-API change for them.
+- Only the approved Card parts enter the atomic package.
 
 ## Rules
 

@@ -1,5 +1,9 @@
 // Regression fixtures for the component-style rules in token-rules.mjs: every evasion category the
 // Tech Lead found must be detected, and clean token-only CSS must stay clean.
+import { spawnSync } from 'node:child_process';
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { checkStyleText, inlineStyles, templateStyles } from './token-rules.mjs';
 
 const mustFail = {
@@ -171,6 +175,49 @@ for (const [name, html] of Object.entries(templateMustPass)) {
   if (messages.length) failures.push(`false positive: ${name} -> ${messages.join('; ')}`);
 }
 
+// Package discovery: the real scanner, pointed at a temporary atomic-package fixture, must reject a
+// prohibited literal in every kind of atomic source and accept token-only source.
+const scanner = new URL('./lint-tokens.mjs', import.meta.url).pathname.replace(
+  /^\/([A-Za-z]:)/,
+  '$1',
+);
+const scanFixture = (files) => {
+  const dir = mkdtempSync(join(tmpdir(), 'atomic-lint-'));
+  try {
+    for (const [name, text] of Object.entries(files)) {
+      mkdirSync(join(dir, name, '..'), { recursive: true });
+      writeFileSync(join(dir, name), text);
+    }
+    return spawnSync(process.execPath, [scanner, '--atomic-root', dir], { encoding: 'utf8' });
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+};
+const packageMustFail = {
+  'atomic secondary entry stylesheet literal': {
+    'atoms/src/tag/tag.scss': '.a { padding: 4px; }',
+  },
+  'atomic inline component style literal': {
+    'molecules/src/media-area/media-area.ts':
+      '@Component({ styles: [`:host { border-radius: 0; }`] }) class A {}',
+  },
+  'atomic template style literal': {
+    'organisms/src/card/card.html': '<div style="color: #123456">x</div>',
+  },
+  'atomic brand name': {
+    'src/lib/brand.ts': "export const brand = 'artanon';",
+  },
+};
+for (const [name, files] of Object.entries(packageMustFail)) {
+  const result = scanFixture(files);
+  if (result.status === 0) failures.push(`package scan did not reject: ${name}`);
+}
+const clean = scanFixture({
+  'atoms/src/tag/tag.scss':
+    '.a { padding: var(--bui-space-2); border-radius: var(--bui-radius-card); }',
+});
+if (clean.status !== 0) failures.push(`package scan false positive: ${clean.stderr.trim()}`);
+
 if (failures.length) {
   console.error(`lint:tokens self-test failed (${failures.length}):\n- ${failures.join('\n- ')}`);
   process.exit(1);
@@ -179,7 +226,7 @@ const total =
   Object.keys(mustFail).length +
   Object.keys(inlineMustFail).length +
   Object.keys(templateMustFail).length;
-const clean = Object.keys(mustPass).length + Object.keys(templateMustPass).length;
+const cleanCount = Object.keys(mustPass).length + Object.keys(templateMustPass).length;
 console.log(
-  `lint:tokens self-test passed (${total} evasion fixtures detected; ${clean} clean fixtures accepted).`,
+  `lint:tokens self-test passed (${total} evasion fixtures detected; ${cleanCount} clean fixtures accepted; ${Object.keys(packageMustFail).length} atomic-package discovery fixtures rejected).`,
 );

@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build ui && ng build gallery",
+    "build": "ng build atomic && ng build ui && ng build gallery",
     "build:subfolder": "ng build gallery --base-href /brand-ui/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test ui --no-watch && ng test gallery --no-watch",
@@ -15,7 +15,8 @@
     "format": "prettier --write \"projects/**/*.{ts,html,scss,css,md,json}\" \"scripts/**/*.mjs\" \"e2e/**/*.{ts,json}\" angular.json package.json tsconfig.json playwright.config.ts",
     "format:check": "prettier --check \"projects/**/*.{ts,html,scss,css,md,json}\" \"scripts/**/*.mjs\" \"e2e/**/*.{ts,json}\" angular.json package.json tsconfig.json playwright.config.ts",
     "lint:tokens": "node scripts/lint-tokens.selftest.mjs && node scripts/lint-tokens.mjs",
-    "check:assets": "node scripts/check-assets.mjs"
+    "check:assets": "node scripts/check-assets.mjs",
+    "verify:atomic-archive": "node scripts/verify-atomic-archive.selftest.mjs && node scripts/verify-atomic-archive.mjs"
   },
   "private": true,
   "packageManager": "npm@11.12.1",
@@ -26,6 +27,7 @@
     "@angular/forms": "^22.2.0",
     "@angular/platform-browser": "^22.2.0",
     "@angular/router": "^22.2.0",
+    "@brand-ui/atomic": "file:package-artifacts/brand-ui-atomic-1.1.0.tgz",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },

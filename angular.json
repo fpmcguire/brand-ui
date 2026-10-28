@@ -32,6 +32,26 @@
         }
       }
     },
+    "atomic": {
+      "projectType": "library",
+      "root": "projects/atomic",
+      "sourceRoot": "projects/atomic/src",
+      "prefix": "bui",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/atomic/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/atomic/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
+    },
     "gallery": {
       "projectType": "application",
       "schematics": {

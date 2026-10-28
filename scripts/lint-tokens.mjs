@@ -1,18 +1,24 @@
 // Focused token-discipline checks (AC-1, AC-3, AC-13, AC-14). Not a general lint platform.
 //
-// 1. Component source (button, card, and later text-input/navigation) has no literal colors, no
-//    literal font families, no literal space/radius/elevation lengths, and no brand names.
+// 1. Component source (button, card, and later text-input/navigation, plus the whole atomic
+//    package) has no literal colors, no literal font families, no literal space/radius/elevation
+//    lengths, and no brand names.
 // 2. The token CSS files fill one identical contract: ArtAnon and Mentor completely, CodeCraft as a
 //    shared non-color base plus color-only Light and Dark modes. No token outside the contract.
 // 3. The gallery's token-name list matches the library's contract (names only, never values).
 //
 // Documented allowlist of structural literals (property -> allowed values): see ALLOWED_LITERALS.
 import { readFileSync, readdirSync, statSync } from 'node:fs';
-import { join, relative } from 'node:path';
+import { join, relative, resolve } from 'node:path';
 import { checkStyleText, inlineStyles, templateStyles } from './token-rules.mjs';
 
 const root = new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const lib = join(root, 'projects/ui/src/lib');
+// The atomic package root; `--atomic-root <dir>` lets the self-test prove package discovery on a
+// temporary fixture instead of the real source.
+const rootFlag = process.argv.indexOf('--atomic-root');
+const atomicRoot =
+  rootFlag > 0 ? resolve(process.argv[rootFlag + 1]) : join(root, 'projects/atomic');
 const problems = [];
 const fail = (file, message) => problems.push(`${relative(root, file)}: ${message}`);
 
@@ -28,14 +34,16 @@ const stripComments = (text) => text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^
 // --- 1. Component styles --------------------------------------------------------------------
 // Literal rules and the documented structural allowlist live in token-rules.mjs; its fixtures in
 // lint-tokens.selftest.mjs.
-const COMPONENT_DIRS = ['button', 'card', 'text-input', 'navigation'];
+const COMPONENT_DIRS = ['button', 'card', 'text-input', 'navigation'].map((dir) => join(lib, dir));
+const SOURCE_FILE = /.(?:ts|html|scss|css)$/; // atomic holds config JSON too
 const BRAND_NAME = /artanon|art-anon|mentor|codecraft|code-craft/i;
 
-for (const dir of COMPONENT_DIRS) {
-  const base = join(lib, dir);
+for (const base of [...COMPONENT_DIRS, atomicRoot]) {
   let files;
   try {
-    files = walk(base).filter((f) => !f.endsWith('.spec.ts'));
+    files = walk(base).filter(
+      (f) => !f.endsWith('.spec.ts') && (base !== atomicRoot || SOURCE_FILE.test(f)),
+    );
   } catch {
     continue; // component not built yet
   }

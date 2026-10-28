@@ -1,142 +1,149 @@
-# QA — STEP-05
+# QA — STEP-06
 
 **Date:** 2026-10-28
-**Tester independence:** Fresh QA session. I ran every command below myself and did not use Development Team or Tech Lead results as evidence. I read `mod-w/review.md` only to see how the Tech Lead treated peer dependencies. I changed no implementation, Product Owner, Tech Lead, prototype, design, architecture, roadmap, Step or study-guide file.
-**Baseline (pre-implementation):** `0481987`
-**Tested implementation:** `3f719fb` (Development Team)
-**Tested HEAD:** `43c469b` (Tech Lead review and Moderator QA authorization; changes only `mod-w/review.md` and `mod-w/step-05.md`)
-**Environment:** Windows 10, Git Bash, driven through `fnm exec --using=26.0.0 -- cmd.exe /d /s /c` with `MSYS_NO_PATHCONV=1`. Node v26.0.0, npm 11.12.1, TypeScript 6.0.3, Angular 22.2.x, ng-packagr 22.2.4.
-**Starting workspace:** `git status --short` was empty before testing and after the build and test gates (build output is git-ignored).
+**Tester independence:** Fresh QA session. I ran every gate below myself and used no Development Team or Tech Lead result as evidence. I read `mod-w/review.md` and `mod-w/step-06.md` only to learn the claims and the D1–D4 rulings under test. I changed no implementation, Product, Design, Architecture, Step, review or study-guide file. I did not commit, publish, deploy, self-approve or start STEP-07.
+**Original clean-start baseline:** `60b195c`
+**Amended baseline (parent):** `c52e50a`
+**Tested commit:** `6cfef8a6f931453345160aaf6f6cafbc688b891a` (`feat(atomic): move Card behind installed package`), branch `feature/atomic-design`
+**Starting workspace:** `git status --short` was empty before testing and empty after the last gate. Build output is git-ignored. The only change afterwards is this file.
 
-## Summary
+## Verdict
 
-**Pass with notes.**
+**PASS.**
 
-All 15 verification commands exit 0, the clean offline install succeeds, and I found no scope violation or regression. Two items need a Moderator ruling before acceptance (see Defects and observations):
+All 16 gate commands exit 0 with every expected count. I found no Must-fix or Should-fix defect and no scope violation. Two Could-fix observations and one environment note are below. None of them blocks sign-off.
 
-- **N1:** the archive manifest declares no `peerDependencies`.
-- **N2:** the entry points are empty `export {}` modules.
+**STEP-06 may proceed to Product Owner sign-off.** QA does not accept STEP-06. Product Owner sign-off and final Moderator acceptance remain required. STEP-07 stays blocked and I did not begin it.
 
-I did not round either up to an unqualified Pass.
+## Environment and commit identity
 
-**QA does not accept STEP-05.** Product Owner sign-off and final Moderator acceptance remain required. STEP-06 remains blocked and was not begun.
+The default shell exposed Node v24.13.0 and npm 11.6.2, which fails the precondition. Node v26.0.0 and npm 11.12.1 are installed under fnm, the toolchain the previous QA used. Every command below ran through `fnm exec --using=26.0.0 -- cmd.exe /d /s /c "<command>"` with `MSYS_NO_PATHCONV=1`. I did not treat the environment as Blocked, because the required toolchain was available and used.
 
-## Scope and diff audit
+| Item | Observed |
+| --- | --- |
+| Node (fnm 26.0.0) | v26.0.0 |
+| npm | 11.12.1 |
+| `git rev-parse HEAD` | `6cfef8a6f931453345160aaf6f6cafbc688b891a` |
+| `git status --short` at start | empty (clean) |
 
-I inspected `git diff 0481987..3f719fb` (22 files, +1534/−12) and `git diff --name-status 3f719fb..43c469b` (two `mod-w` documents).
+## Commands, exit codes and observed results
 
-| Check | Result | Evidence |
-| --- | --- | --- |
-| No Card move | Pass | No file under `projects/ui` or `projects/gallery` changed; `projects/atomic/**/public-api.ts` contain only `export {};`. |
-| No token, brand or Design-ID change | Pass | No CSS or token files changed. `check:assets` and `lint:tokens` found no token or font declarations in atomic source. |
-| No gallery structure view, deployment or publish | Pass | No gallery file changed. No publish script was added. The only new script is `verify:atomic-archive`. |
-| No source alias or relative atomic-source consumption | Pass | No `tsconfig*.json` has a `paths` entry. `angular.json` ui and gallery projects do not reference atomic. The verifier's consumer scan (every source file under `projects/ui`, `projects/gallery`, `e2e`) found no import of atomic source or output. |
-| No `mod-w/design` change | Pass | Not in either diff. |
-| Existing tests untouched | Pass | No `*.spec.ts` or `e2e/**` file appears in the diff, so no existing assertion was edited. |
-| Expected files only | Pass | Matches the STEP-05 scope list: `angular.json`, `package.json`, lockfile, `projects/atomic/**`, the archive, and the verify/lint/assets scripts. |
-| `@brand-ui/atomic` is 1.1.0 with root, atoms, molecules, organisms | Pass | Source `projects/atomic/package.json` and the archive manifest both say 1.1.0. The manifest `exports` has `.`, `./atoms`, `./molecules`, `./organisms` and `./package.json` only. |
-| Approved peer and runtime dependencies | **Partial, see N1** | The runtime dependency is exactly `tslib ^2.3.0`. The manifest has no `peerDependencies`. |
-| Committed archive is the installed dependency | Pass | `package.json` and the lockfile both give `file:package-artifacts/brand-ui-atomic-1.1.0.tgz`. The lockfile integrity matches the archive (verifier). The clean install resolved from the archive (below). |
-
-## Commands and exit codes
-
-All commands ran with Node 26.0.0 through `fnm exec`, from the repository root unless noted. Logs are in the session scratchpad `logs/` directory.
-
-| # | Command | Exit | Relevant output |
+| # | Command | Exit | Observed |
 | --- | --- | --- | --- |
 | 1 | `node --version` | 0 | v26.0.0 |
 | 2 | `npm --version` | 0 | 11.12.1 |
-| 3 | `npx ng version` | 0 | Angular 22.2.x, ng-packagr 22.2.4, typescript 6.0.3, vitest 5.0.5 |
-| 4 | `npx tsc --version` | 0 | Version 6.0.3 |
-| 5 | `npx ng build atomic` | 0 | Built to `dist/atomic` in about 1.2 s |
-| 6 | `npm pack ./dist/atomic --dry-run` | 0 | `@brand-ui/atomic@1.1.0`, 9 files, package size 470 B, unpacked 890 B, no registry contact |
-| 7 | `npm run verify:atomic-archive` | 0 | Self-test: 70 archive, 19 consumer and 17 output fixtures passed. Verifier: 9 files, sha256 `6fb1f6c6…d620`, no drift |
-| 8 | `npm run format:check` | 0 | All matched files use Prettier code style |
-| 9 | `npm run lint:tokens` | 0 | Self-test: 88 evasion fixtures detected, 21 clean accepted, 4 atomic-package discovery fixtures rejected. Main scan: 51 contract tokens, 4 scopes |
-| 10 | `npm run check:assets` | 0 | 6 font families, 9 atomic archive files, no restricted assets |
-| 11 | `npm run typecheck:e2e` | 0 | No errors |
-| 12 | `npm test` | 0 | ui: 5 files, 68 tests passed. gallery: 5 files, 64 tests passed (132 total) |
-| 13 | `npm run test:e2e` | 0 | 70 passed, 0 failed, 3 spec files |
-| 14 | `npm run build` | 0 | atomic, ui and gallery built |
-| 15 | `npm run build:subfolder` | 0 | `dist/gallery/browser/index.html` has `<base href="/brand-ui/">` and `<meta name="robots" content="noindex, nofollow">` |
-| 16 | `git diff --check` | 0 | No whitespace errors |
-| 17 | `git status --short` after the gates | empty | Workspace unchanged |
+| 3 | `git rev-parse HEAD` | 0 | `6cfef8a…891a` |
+| 4 | `git status --short` | 0 | empty |
+| 5 | `npm ci` | 0 on the second attempt | See the environment note. The first attempt failed with `EBUSY: resource busy or locked, rmdir …\node_modules\sass-embedded-win32-x64\dart-sass\src`. No sass or node process was holding the path. I changed nothing and retried the identical command once. It exited 0 and the working tree stayed clean. |
+| 6 | `npx ng build atomic` | 0 | Built. |
+| 7 | `npm run verify:atomic-archive` | 0 | Self-test: **70 archive, 19 consumer, 17 output, 9 sanitizer and 25 tsconfig fixtures**. Verifier: `@brand-ui/atomic@1.1.0; 9 files; archive sha256 59893275deda6cf582ad855fac4845bb86b5fb888780392a787612508e372c79; no drift from rebuilt package`. |
+| 8 | `npx ng build ui` | 0 | Built. |
+| 9 | `npm run format:check` | 0 | All matched files use Prettier code style. |
+| 10 | `npm run lint:tokens` | 0 | Self-test: 88 evasion fixtures detected, 21 clean accepted, 4 atomic-package discovery fixtures rejected. Run: 51 contract tokens, 4 scopes, components clean. |
+| 11 | `npm run check:assets` | 0 | 6 font families with OFL.txt and SOURCE.md; 9 atomic archive files; no restricted assets. |
+| 12 | `npm run typecheck:e2e` | 0 | No diagnostics. |
+| 13 | `npm test` | 0 | Atomic **6 files / 15 tests**; UI **6 files / 69 tests**; Gallery **5 files / 64 tests**. All passed. |
+| 14 | `npm run test:e2e` | 0 | **70 passed** (1.7 m), Chromium. |
+| 15 | `npm run build` | 0 | Production bundle generated. |
+| 16 | `npm run build:subfolder` | 0 | `/brand-ui/` bundle generated. |
+| 17 | `git diff --check c52e50a..6cfef8a` | 0 | No output (no whitespace errors, no CRLF warnings). |
+| 18 | `git ls-files "e2e/*.spec.ts"` | 0 | Exactly three: `brand-and-contrast.spec.ts`, `keyboard-and-accessibility.spec.ts`, `long-label-and-bevel.spec.ts`. |
+| 19 | `git status --short` | 0 | empty (clean) |
 
-Clean offline install (my own test, outside the repository, in `<scratchpad>\clean`):
+Archive sha256 recomputed with `sha256sum` on the committed file: `59893275deda6cf582ad855fac4845bb86b5fb888780392a787612508e372c79`, identical to the expected value and to the verifier's rebuild.
 
-- I copied `package.json`, `package-lock.json` and `package-artifacts/brand-ui-atomic-1.1.0.tgz` to the same relative paths. `cmp` confirmed all three are byte-identical to the repository copies.
-- `node_modules` was absent before the test.
-- `npm ci --offline` (no `--ignore-scripts`) exited 0: added 321 packages, 0 vulnerabilities, about 3 minutes.
-- `node_modules/@brand-ui/atomic` holds `package.json`, `fesm2022/` (4 files) and `types/`. Its `package.json` is byte-identical to the archive's.
-- The lockfile entry resolves to `file:package-artifacts/brand-ui-atomic-1.1.0.tgz` with the same sha512 integrity. There are no `registry.npmjs.org/@brand-ui` entries.
-- With `import.meta.resolve` from the clean directory, `@brand-ui/atomic`, `/atoms`, `/molecules` and `/organisms` each resolved to `node_modules/@brand-ui/atomic/fesm2022/…` and imported without error (each has zero exports).
-- No source alias, relative package-source import or pre-install bootstrap build was involved. The clean directory contains no `projects`, `dist` or `tsconfig`.
+## Findings
 
-## Archive and mode-transform findings
+### Must-fix
 
-- **Inventory (item 4):** `tar -tvzf` shows exactly 9 entries: `package/package.json`, 4 `fesm2022/*.mjs` (0 bytes each) and 4 `types/*.d.ts` (9 bytes each). Mtime is 1985-10-26 and owner is 0/0. I found no gallery, MOD-W, source-map, secret, font, image, token stylesheet or ArtAnon content. `check:assets` and the verifier also scan for these.
-- **Size and hash (item 5):** 470 B. SHA-256 `6fb1f6c60f53171bc3475d14421963f4465f96db214ab204b8c9d318c017d620` (`sha256sum`), matching the required value.
-- **Drift:** the verifier rebuilds `atomic` and repacks. It compares path and content hashes after normalizing volatile metadata, and found no drift. Byte-for-byte tarball equality is not asserted. The comparison is normalized by design.
-- **Parser strictness (item 6):** I reviewed `scripts/atomic-archive.mjs` and the 70 archive fixtures in `scripts/verify-atomic-archive.selftest.mjs`. The fixtures cover each of these, and each rejected case asserts its own reason regex:
-  - gzip header fields, trailer/deflate boundary, second member and trailing bytes;
-  - every tar header field (checksum, magic, version, uid/gid, device numbers, linkname, uname/gname, header tail, NUL-clean name/prefix);
-  - entry padding, truncation, missing or short terminator, payload after the terminator;
-  - PAX: global headers, unsupported fields, duplicates, record-length lies, carrier name/prefix/owner, path shadowing, absolute and parent paths;
-  - duplicate and case-folded effective paths, and symlink and GNU long-name types.
-  The import-boundary fixtures cover 15 consumer forms and 12 output forms, plus the clean cases. I found no bypass.
-- **`TAR_MODES` (item 7):** `scripts/atomic-archive.mjs:40` is `new Set(Array.from({ length: 0o1000 }, (_, mode) => (mode | 0o600) & ~0o022))`. I recomputed the image independently:
-  - It has 32 modes.
-  - Every mode has owner 6 or 7 and group and other each 0, 1, 4 or 5 (0 violations).
-  - I generated a checksum-valid one-file archive for every mode 0000–0777 and fed it to `parseArchive`. Accept/reject agreed with the formula for all 512 modes (0 mismatches).
+None.
 
-  | Mode | Result |
-  | --- | --- |
-  | 0600, 0755, 0640 | accepted |
-  | 0664, 0666, 0775, 0777, 0400, 0444, 0660 | rejected with `tar header mode NNN is not approved` |
+### Should-fix
 
-  0640 is accepted because the formula legitimately emits it. No fixture exercises 0640, so this was verified by my probe only (see O3).
-- **Correction fixtures (item 8):** the four mode fixtures are 0600 and 0755 (accepted) and 0664 and 0400 (rejected). Each builds the header by mutation, then recomputes the checksum when the header is sealed (`mutated()` → `entry()` → `header()` seals after `overrides.mutate`). The 0664 and 0400 cases assert `/tar header mode 664 is not approved/` and `/tar header mode 400 is not approved/`. These are exact literal messages with no alternation or wildcard. A mismatched reason is reported as a failure by the harness (`rejected for the wrong reason`).
-- **Actual npm-format positive fixture (item 9):** present, labelled "npm pack header format (gzip XFL 2/OS 255, padded octal fields, space-NUL terminators)". It builds an npm-style gzip header and ustar header with a space-NUL checksum, and passes.
+None.
 
-## Acceptance-check evidence
+### Could-fix
 
-| Check | Result | Evidence |
+- **C1 — The manual pack flow has no discoverable entry point.** `scripts/sanitize-atomic-dist.mjs:5` documents `node scripts/sanitize-atomic-dist.mjs [dist/atomic]`. No `package.json` script or doc I searched (`README.md`, `docs`, `mod-w/docs`) describes the build → sanitize → pack sequence. The verifier does call the helper (`scripts/verify-atomic-archive.mjs:21,61`), so correctness is covered. Only the manual procedure's discoverability is affected. This is documentation, not behavior, and I recommend no action in STEP-06.
+- **C2 — `npm ci` reports 3 vulnerabilities (1 low, 1 moderate, 1 high).** I did not triage them. They are outside STEP-06 scope and no STEP-06 gate depends on them. They may deserve a note at the consolidated release decision.
+
+### Environment note (not a defect)
+
+**E1 — One transient `EBUSY` during `npm ci`.** The first run failed on a Windows file lock. The identical retry passed. I believe this is a local indexer or antivirus lock and not a repository fault, but I cannot prove the cause. All later gates ran on the clean reinstall. Nothing in the implementation can cause it.
+
+## Acceptance-criteria and Design-ID evidence
+
+| Criterion | Evidence | Result |
 | --- | --- | --- |
-| **AC-22** package independently builds and packs, manifest correct, inventory clean, nothing published | **Pass with notes** | Commands 5–7, 10. Build and pack succeed; 9-file inventory is clean; name and version are correct; entry-point exports are correct; no scripts or install hooks; nothing was published. **N1:** the manifest declares no peers. |
-| **AC-23** clean `npm ci`, installed resolution, production and `/brand-ui/` builds, no alias or import | **Pass** | Clean offline install (exit 0) and installed resolution (above); commands 14–15; no `paths`, no consumer import, and ui/gallery do not reference atomic in `angular.json`. |
-| **AC-24** static gates scan the package; self-test catches an atomic-source violation | **Pass** | `lint:tokens` self-test spawns the real scanner against a temporary atomic root: 4 violation fixtures (stylesheet literal, inline style, template style, brand name) are rejected and 1 clean fixture is accepted. `check:assets` scans atomic source and the archive. `format:check`, `typecheck:e2e`, unit tests and e2e all pass. |
-| **AC-20** Card behavior and tests unchanged | **Pass** | No `projects/ui`, `projects/gallery` or spec change in the diff. 68 ui and 64 gallery tests pass. |
-| **AC-19** static noindex and asset behavior | **Pass** | Subfolder build serves `<base href="/brand-ui/">` and `noindex, nofollow`. `check:assets` reports no restricted assets. |
+| **AC-20** Behavior preserved | `git diff 60b195c..6cfef8a` and `c52e50a..6cfef8a` are empty for `projects/ui/src/lib/card/card.spec.ts` and `projects/ui/src/public-api.ts`. `card.spec.ts` has 7 `it(` cases, and all UI tests pass (6 files / 69 tests). `projects/ui/src/lib/card/card.ts:1` is exactly `export { Card } from '@brand-ui/atomic/organisms';`. `card-export.spec.ts:5-7` asserts `expect(Card).toBe(Installed)` (class identity, no wrapper or copy). `projects/atomic/organisms/src/card/card.ts`: selector `bui-card`; the eight inputs `title` (required `string`), `description`, `meta`, `tag`, `mediaLabel`, `href`, `codeSample` (each optional `string`, default `undefined`) and `loading` (default `false`, `booleanAttribute`); host `[attr.title]: null`. `card.html`: `<article>` with `[attr.aria-busy]` set only while loading; `<h3 class="title">` holding the only `<a class="link">`, rendered only when `interactive()` (`!loading && !!href`); a single `<span class="visually-hidden">Loading</span>`. Loading drops the link. `card.contract.spec.ts` proves requiredness, defaults and the transform by behavior, as the amendment allows. The three Playwright specs pass without assertion edits (70/70). | Pass |
+| **AC-21** Decomposition matches D-12 | `Tag` (atom): `template: '<ng-content />'`, no inputs. `SkeletonBlock` (atom): empty template, host `aria-hidden: 'true'`, pulse disabled under `prefers-reduced-motion`. `CodeWell` (atom): `<pre class="code"><code><ng-content /></code></pre>`. `MediaArea` (molecule): optional `label` and `tag`, composes `Tag`. `LoadingSkeleton` (molecule): host `aria-hidden: 'true'`, four `SkeletonBlock` instances, no text and no busy state. `Card` (organism): composes `CodeWell`, `LoadingSkeleton` and `MediaArea` and owns the title, link, state, `aria-busy` and `Loading`. Only `SkeletonBlock` and `LoadingSkeleton` hosts carry `aria-hidden`. No part adds a focus target, role, live region or busy state. A grep for `standalone`, `OnPush`, `HostBinding`, `HostListener`, `ngClass`, `ngStyle`, `CommonModule` and `any` over non-spec atomic TypeScript returns nothing. A grep for hex, `rgb` and `hsl` literals in atomic SCSS returns nothing, so no token values are duplicated. No part has a forced-state API or `.is-*` class. | Pass |
+| **AC-22** Package builds, packs, declares peers | `ng build atomic` passes. The verifier rebuilds and finds no drift from the committed archive. The archive has exactly nine files: `package.json`, four `fesm2022/*.mjs`, four `types/*.d.ts`. Its manifest peers on `@angular/core ^22.2.0`, with runtime dependency `tslib`. `projects/ui/package.json` peers on `@brand-ui/atomic ^1.1.0`. A scan of the extracted archive finds no `sourceMappingURL`, `.map`, `projects/atomic`, drive path, user path, ArtAnon string, secret pattern, `.scss`, `.css` or `data:image`. `check:assets` passes against the 9 archive files. Nothing is published. | Pass |
+| **AC-23** Consumed as installed | Root `package.json:30` and the lock pin `@brand-ui/atomic` to `file:package-artifacts/brand-ui-atomic-1.1.0.tgz`. The only `paths` blocks are the pre-existing root `ui` alias (`tsconfig.json:17`) and the exact exempt `projects/atomic/tsconfig.spec.json:8` (three producer-spec mappings). `angular.json` adds only the atomic `test` target with `include: ["../**/*.spec.ts"]`. No `projects/atomic`, `../atomic` or `dist/atomic` import exists in `projects/ui`, `projects/gallery` or `tsconfig*.json`. The sole textual reference outside the package is the E2E file-read path literal at `e2e/long-label-and-bevel.spec.ts:323`, which is a `readFileSync` path and not an import. The structural verifier in `scripts/atomic-tsconfig.mjs` and its 25 tsconfig fixtures cover JSONC, `extends` resolution, inherited effective values, target inspection, key shadowing (N1/N2/N5e), exemption structure (N6–N9), exempt content copied elsewhere (N10), exemption-inheritance rejection (N11) and missing `extends` (N14a). `ng build ui`, `npm run build` and `npm run build:subfolder` all pass against the installed archive. | Pass |
+| **AC-24** Existing gates hold | `format:check`, `lint:tokens` (including 4 atomic-discovery fixtures and the 88/21 self-test), `check:assets`, `typecheck:e2e`, unit tests, 70 Playwright tests (including axe), and both production builds exit 0. Exactly three E2E specs remain. The only E2E change is `e2e/long-label-and-bevel.spec.ts:322-325`, a formatted path literal changing `projects/ui/src/lib/card/card.scss` to `projects/atomic/organisms/src/card/card.scss`. No assertion changed. | Pass |
+| **DS-030** Static card | Unchanged Card template and styles, relocated by rename (`R053`, `R060`). The evidence log records 576 computed-style slots, 16 geometry-at-width, 12 accessibility and 12 tab-stop records at zero differences across four scopes. Specs pass 70/70. | Pass |
+| **DS-031** Interactive card | One native title link and one tab stop (`tab-stop-sequence` 12, `stretched-hit-test` 4, zero differences). Keyboard and axe specs pass. | Pass |
+| **DS-032** Hover | Hover records (part of the 12 `interaction` checks, 0 failed). No forced-state API exists in the source. | Pass |
+| **DS-033** Focus | Focus records (12 `interaction` checks, 0 failed). `keyboard-and-accessibility.spec.ts` passes in the 70/70 run. | Pass |
+| **DS-034** Active | Active records (12 `interaction` checks, 0 failed). | Pass |
+| **DS-035** Loading | `aria-busy` and a single `Loading` span are Card-owned. `LoadingSkeleton` and `SkeletonBlock` are `aria-hidden`. The evidence log records `loading-semantics` 12 and `pulse-keyframes` 16 at zero differences, plus 32 rest, 128 normal-motion and 64 reduced-motion checks with 0 failed. | Pass |
 
-## Regression and accessibility findings
+The harness that produced the equivalence log is deleted from the tree by design, so I could not re-execute it. I verified the log's internal consistency and the claims that depend on committed sources, and relied on the independently re-run gates for behavior.
 
-- **Unit tests:** 68 (ui) and 64 (gallery) pass. No spec file was edited, so the AC-20 assertions are unchanged.
-- **Playwright:** exactly three spec files (`brand-and-contrast`, `keyboard-and-accessibility`, `long-label-and-bevel`), 70 tests, all pass, including the About panel, DS-045/050/051 and the bevel fallback in four scopes.
-- **Accessibility and axe:** the existing axe coverage lives in `keyboard-and-accessibility.spec.ts` (13 references) and passes unchanged. This Step adds no UI, so there is nothing new to test. I did no manual or assistive-technology testing, because it is not applicable to a scaffold with no rendered output.
-- **Token discipline:** `lint:tokens` passes in all 4 scopes (51 contract tokens).
-- **Static subfolder behavior:** confirmed from the built `index.html` (see command 15).
-- **Regression found:** none.
+## Sanitizer review (`scripts/sanitize-atomic-dist.mjs`)
 
-## Defects, observations and known limitations
+| Requirement | Evidence |
+| --- | --- |
+| Shared by manual and verifier flows | Imported at `scripts/verify-atomic-archive.mjs:21` and called at `:61`. It is also a CLI entry (`sanitize-atomic-dist.mjs:5,92-102`) and is imported by the self-test. |
+| Requires exactly the three expected maps | `:38-42` report each missing expected map and each unexpected `.map`. |
+| Requires terminal matching references | `:46-62` require exactly one `sourceMappingURL` per bundle, as the terminal line, naming the bundle's own map. |
+| Rejects each bad case | Eight rejecting fixtures: missing map, additional map, missing reference, duplicate reference, non-terminal reference, malformed reference, reference to another map, reference in another file. Each fails for the right reason, and one clean case passes. That makes the 9 sanitizer fixtures observed in the verifier run. |
+| Atomic failure | All problems are collected and thrown before any write (`:64-70`). The files are only mutated afterwards. |
+| Proves nothing remains | Post-mutation scan at `:78-87` throws if any `.map` or `sourceMappingURL` text is left. The fixture checks that unrelated files are untouched. |
 
-No defect found.
+## Archive, installed-consumption, accessibility and scope rulings
 
-- **N1 (needs a Moderator ruling): no `peerDependencies` in the archive manifest.** AC-22 says the manifest "declares its peer dependencies", and STEP-05 says "D-12 peer/runtime dependencies". D-12 (`architecture.md` line 285) says the package "declares compatible Angular 22 packages it imports, including `@angular/core`, as peer dependencies". The scaffold imports nothing: the entry points are `export {};`. `scripts/verify-atomic-archive.mjs` deliberately fails a peer that is declared but not imported, and rejects an import of an undeclared Angular package. So the omission is consistent with D-12's "it imports" wording and with the verifier. A literal reading of AC-22 and item 2 of this QA brief is not demonstrable from the committed archive. I cannot decide this, so I record the peer clause as partially met. The Moderator should rule whether "declares its peer dependencies" is satisfied by the empty-peer scaffold, or must be revisited in the first Step that adds Angular imports (STEP-06 or later). The verifier would catch a missing peer then.
-- **N2 (observation): entry points export nothing.** Resolution and import of all four entry points was proven, but none has a symbol. This is the Step's "empty/public-boundary components only where needed" and fits the Step.
-- **O3 (observation): 0640 is not a fixture.** The accept/reject boundary was verified across all 512 modes by my own probe, not by a committed fixture. The committed fixtures cover 0600, 0755, 0664, 0400 and the wrong-reason guard.
-- **O4 (limitation): offline install used the local npm cache.** `npm ci --offline` succeeded, so no registry was contacted. It depends on this machine's cache already holding the 320 registry packages. I did not test a cold cache.
-- **O5 (limitation): install scripts ran** (no `--ignore-scripts`) and the install completed. I did not audit third-party install scripts.
-- **O6 (limitation): single platform.** All of this ran on Windows 10 with Node 26.0.0 and npm 11.12.1. I did not test Linux or macOS, so the tar and gzip normalization (npm's header format) is verified only against this npm version.
-- **O7: scratch files.** My probe scripts and the clean-install directory are in the session scratchpad, outside the repository. They are not committed.
+- **Archive:** Pass. The identity, file inventory, peer declarations and content scan are all as expected and match the rebuilt sanitized output. Lock integrity is recorded as `sha512-2dbAP1Wqjnb3fQHt0O8h9ay5ikBVioujwmLxPshotXfM/IQzLd06nbbVGyjT5yUsA5mC/R4Frl67SrHaE6yVXQ==` in the evidence log and is consistent with the clean `npm ci`. The package.json lock entry was not otherwise re-derived.
+- **Installed consumption:** Pass. `ui` resolves `@brand-ui/atomic` from `node_modules` (a file-installed tarball). The one `paths` exemption is exactly the producer's spec config, and the verifier rejects a copy of it or inheritance from it.
+- **Accessibility:** Pass. The axe, keyboard and contrast specs pass (70/70). The DOM semantics are the AC-20 semantics. The parts add no focus target, role, live region or busy state, and `aria-hidden` appears only on the two decorative hosts.
+- **Scope:** Pass. `git diff --name-status c52e50a..6cfef8a` lists 38 entries. Counting the two git renames as a delete plus an add, the implementation is **24 new, 13 modified, 2 deleted = 39 paths**, matching the approved amendment. The deleted files are `card.html` and `card.scss` under `projects/ui/src/lib/card/`. The two further paths are the MOD-W records `mod-w/review.md` and `mod-w/step-06.md`, which I treated separately. `git diff 60b195c..6cfef8a` shows no change under `projects/gallery`, `mod-w/design`, `mod-w/product.md`, `mod-w/architecture.md`, `mod-w/domain-language.md`, the theme/token files, or the Button, TextInput and Navigation sources. No gallery structure view, token value, Design ID, publication or deployment is present, and no STEP-07 work.
 
-## Final recommendation to the Moderator
+## Evidence-log audit (`mod-w/evidence/step-06/equivalence.txt`)
 
-Fresh QA finds STEP-05 behaving as specified: package, archive, installed boundary, scanners and preservation of existing behavior are all evidenced by independently run commands.
+| Claim | Observed in log |
+| --- | --- |
+| 648 ordered records | `576 + 16 + 12 + 12 + 4 + 12 + 16 = 648` in all three runs; each category's count equals its expectation. |
+| Control and normal runs have zero differences | Control `TOTAL differences: 0`. Normal `TOTAL differences: 0`. The two result JSON hashes are identical (`01f863b3…4ca12`), as expected for equivalent runs. |
+| Deliberate 1px mutation is caught | Mutate run `TOTAL differences: 36` (20 computed-style plus 16 geometry); the other categories stay at 0. |
+| Loading checks | 32 rest, 128 normal-motion, 64 reduced-motion, 0 failed in every run. |
+| Fonts and sentinels | `built bundle @font-face rules: old 7, new 7 (required 7)`; `sentinel: 82 checks, 0 failed`. |
+| Repository-relative paths only | Every path in the log is repository-relative. I found no drive letters or user paths. |
+| Archive identity | The log's sha256 matches the committed archive and my recomputation. |
+| Card sources identical across baselines | The log states that `card.ts` is the same at both baselines. The recorded `60b195c` hashes are consistent with the renamed files (`R053`/`R060`, which are renames and not rewrites). |
+| Unchanged files | `card.spec.ts` and `public-api.ts` hashes equal their baselines in the log and match my empty diffs. |
 
-**Recommend:** proceed to Product Owner review, and rule on N1 (peer dependencies in an import-free scaffold) before final acceptance. If you read AC-22 literally, N1 is a Must-fix before acceptance.
+## Deviation rulings (`mod-w/review.md`) in the built result
 
-QA does not accept STEP-05. Product Owner sign-off and final Moderator acceptance remain required, and STEP-06 remains blocked. I have not committed anything.
+| Deviation | QA ruling |
+| --- | --- |
+| **D1** `--_stretch-0: ''` avoids a false drive-letter match while `.link::after` keeps computed empty content | **Acceptable.** The built result shows zero stretched-hit differences (`stretched-hit-test` 4, 0 differences). The verifier was strengthened elsewhere, not loosened. |
+| **D2** `min-width`/`min-height` excluded from the computed-style list | **Acceptable.** The log explains why they differ (flex-item `auto` against `0px` after relocation). Used rectangles at 200, 280, 360 and 480px (geometry 16, 0 differences), the loading rest checks and the 36-difference mutation test show layout differences are still detected. |
+| **D3** The log identifies the final archive hash and records final runs after D1 | **Acceptable.** The hash matches the committed archive and my recomputation. |
+| **D4** `atomic.architect.test.options.include: ["../**/*.spec.ts"]` | **Acceptable.** `angular.json` shows exactly this producer-test-only setting, and the atomic suite runs 6 files / 15 tests. |
 
-## Moderator disposition
+## Statement
 
-**Date:** 2026-10-28. The Moderator accepted this QA review as the STEP-05 QA record. This is acceptance of the QA report only, not Step acceptance. Observation N1 (no `peerDependencies` in an import-free scaffold) remains open for the Product Owner and the Moderator's final gate. Product Owner sign-off and final Moderator acceptance remain required, and STEP-06 remains blocked.
+STEP-06 passes fresh QA at commit `6cfef8a`. All gates, counts and inspections match the stated expectations. There are no Must-fix or Should-fix findings. **STEP-06 may proceed to Product Owner sign-off.** Final Moderator acceptance is still required, and STEP-07 remains blocked until the sequence completes.
+
+## Moderator disposition of this QA review
+
+**Date:** 2026-10-28
+**Recorded at the Moderator's direction.** The Moderator accepted this QA review of STEP-06 (verdict **Pass**, commit `6cfef8a`) and directed it to be recorded here. No QA finding, evidence or ruling above was changed.
+
+- **What this records:** the Moderator accepted the QA review as sufficient evidence for the QA gate. It is not acceptance of STEP-06.
+- **Next gate:** Product Owner validation, recorded in `mod-w/po-signoff-step-06.md` (Product A-21). The Product Owner's sign-off is input to the Moderator's final gate and is not Step acceptance.
+- **Still required:** Product Owner sign-off, then final Moderator acceptance of STEP-06.
+- **STEP-07:** remains blocked and was not begun.
+
+---
+
+MOD-W v5.0.1

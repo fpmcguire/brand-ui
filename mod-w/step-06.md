@@ -1,6 +1,6 @@
 # STEP-06 — Move Card behind the installed atomic package
 
-**Status:** Implementation completed and approved by the Tech Lead for fresh QA. On 2026-10-28, the Moderator approved the Tech Lead implementation review and the Development Team's STEP-06 work and authorized progression to fresh QA. Fresh QA, Product Owner sign-off, and final Moderator acceptance remain required; STEP-07 is not active. The implementation follows the approved Revision 4 plan and bounded source-map/tooling amendment, including the exact producer-test-only `paths` exception, `ui` peer `^1.1.0`, `card-export.spec.ts`, and the single committed equivalence log. **Estimate:** 4 hours.
+**Status:** Implementation completed and approved by the Tech Lead for fresh QA. On 2026-10-28, the Moderator approved the Tech Lead implementation review and the Development Team's STEP-06 work and authorized progression to fresh QA. Fresh QA passed and was accepted by the Moderator on 2026-10-28; Product Owner sign-off was recorded in `mod-w/po-signoff-step-06.md`; the Moderator gave final acceptance of STEP-06 on 2026-10-28. STEP-07 is not active and must be activated and separately planned before it begins. The implementation follows the approved Revision 4 plan and bounded source-map/tooling amendment, including the exact producer-test-only `paths` exception, `ui` peer `^1.1.0`, `card-export.spec.ts`, and the single committed equivalence log. **Estimate:** 4 hours.
 
 ## Goal
 

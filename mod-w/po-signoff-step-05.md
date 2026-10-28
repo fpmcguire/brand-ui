@@ -90,3 +90,7 @@ The verdict is conditional on the Moderator's ruling on N1. The AC-22 peer claus
 ## Moderator disposition
 
 **Date:** 2026-10-28. The Moderator accepted this Product Owner review as input to the final gate. This is acceptance of the review only, not Step acceptance. N1 (AC-22 peer dependencies in an import-free scaffold) has no recorded ruling and remains open. The Moderator's final Step acceptance is still required, and STEP-06 remains blocked.
+
+## Final Moderator approval
+
+**Date:** 2026-10-28. The Moderator gave final approval of STEP-05. The Product Owner's sign-off and the QA review were accepted before this, as recorded above. The approval is the Moderator's; the Product Owner did not accept the Step. The ruling on N1 is not restated in this record and should be entered by the Moderator. STEP-06 may proceed only after the Moderator activates it and separately approves the Development Team's exact plan.

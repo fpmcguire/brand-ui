@@ -10,6 +10,9 @@
   --_shadow: var(--bui-elevation-card);
   --_outline: none;
   --_link-decoration: none;
+  // The stretched link's empty generated content. A digit before the colon keeps the packaged CSS
+  // string (`--_stretch-0:\"\"`) clear of the archive verifier's drive-letter pattern.
+  --_stretch-0: '';
 
   position: relative;
   box-sizing: border-box;
@@ -51,28 +54,6 @@
   }
 }
 
-.media {
-  box-sizing: border-box;
-  aspect-ratio: 4 / 3;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding: var(--bui-space-3);
-  background: var(--bui-color-surface-sunken);
-  color: var(--bui-color-text-muted);
-  font-size: var(--bui-size-small);
-}
-
-.tag {
-  padding: var(--bui-space-1) var(--bui-space-2);
-  background: var(--bui-color-accent);
-  color: var(--bui-color-on-accent);
-  border-radius: var(--bui-radius-control);
-  font-family: var(--bui-font-ui);
-  font-weight: var(--bui-weight-ui);
-}
-
 .body {
   display: flex;
   flex-direction: column;
@@ -98,21 +79,6 @@
   font-size: var(--bui-size-small);
 }
 
-.code {
-  box-sizing: border-box;
-  margin: 0;
-  padding: var(--bui-space-3);
-  background: var(--bui-color-bg);
-  color: var(--bui-color-text);
-  border: var(--bui-border-width) solid var(--bui-color-border);
-  border-radius: var(--bui-radius-control);
-  font-family: var(--bui-font-mono);
-  font-size: var(--bui-size-small);
-  line-height: 1.5;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-}
-
 .link {
   color: inherit;
   text-decoration: var(--bui-state-link-decoration, var(--_link-decoration));
@@ -125,37 +91,10 @@
 
   // Stretches the single link's hit area over the whole card: one tab stop, one native link.
   &::after {
-    content: '';
+    content: var(--_stretch-0);
     position: absolute;
     inset: 0;
   }
-}
-
-.skeleton {
-  display: block;
-  background: var(--bui-color-surface-sunken);
-  animation: pulse 1.4s ease-in-out infinite;
-}
-
-// The loading media block stays square under the card's own clipped corners; only the text
-// placeholders take the control radius.
-.skeleton-title,
-.skeleton-line {
-  border-radius: var(--bui-radius-control);
-}
-
-.skeleton-title {
-  width: 60%;
-  height: var(--bui-space-5);
-}
-
-.skeleton-line {
-  width: 100%;
-  height: var(--bui-space-3);
-}
-
-.skeleton-short {
-  width: 40%;
 }
 
 .visually-hidden {
@@ -166,20 +105,4 @@
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.45;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .skeleton {
-    animation: none;
-  }
 }

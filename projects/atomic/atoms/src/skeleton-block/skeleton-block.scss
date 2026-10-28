@@ -1,0 +1,22 @@
+// Tokens only. No box-sizing, radius, width or height: those belong to the arrangement.
+:host {
+  display: block;
+  background: var(--bui-color-surface-sunken);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    animation: none;
+  }
+}

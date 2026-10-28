@@ -1,0 +1,114 @@
+STEP-06 behavior-equivalence evidence
+
+Original clean-start baseline commit: 60b195c5b2c3fd5c75a75f66c9a149ab84000d58
+Approved tooling amendment commit:    c52e50a (Card source at both commits is identical)
+Node v26.0.0; npm 11.12.1
+
+Labels note: the seven comparison-kind identifiers below are implementation labels derived from
+the assertions in the harness. They are NOT recovered Revision 2 wording and carry no historical
+provenance. The ordered count vector 576 + 16 + 12 + 12 + 4 + 12 + 16 = 648 is preserved.
+
+## Harness inputs (harness is deleted before the final status check; never committed)
+style[0] ../projects/ui/src/lib/theme/tokens/index.css -> projects/ui/src/lib/theme/tokens/index.css sha256 ca26fc2640b26fda98641470b2281c487132e96c712ba1eff13c597527de550a
+style[1] ../projects/ui/src/lib/theme/typography.css -> projects/ui/src/lib/theme/typography.css sha256 697e1850021c92adfb517f7b51e35915062a03a6c1cd7fc78049d837c7deeb54
+style[2] shared/harness.css -> .step06-harness/shared/harness.css sha256 ce06c7cf2f7b96b9c450040a856659428e001280b2cc508463a9db1141a86f8c
+canon passed
+60b195c:projects/ui/src/lib/card/card.ts sha256 c830bfc477efd69e68fa2e4197c9473bc1d904e1fea30be20e5245b5474c289b
+60b195c:projects/ui/src/lib/card/card.html sha256 bb7b7c7174331eb9ee283bb811c2c2ed7115121496919f77edf6e1a40e1d07c2
+60b195c:projects/ui/src/lib/card/card.scss sha256 11dbe4f525f350d1ff8201f93136186a277243624db975281019bc715b407568
+.step06-harness/angular.json sha256 cb829d133b220297d70c4d169d0aea0ecae653ec9ef976aa406e62e2efed906f
+.step06-harness/gen.mjs sha256 7b7075c08a79357bb69c11e28f3d732287f067677b34593241534e5892b3fe2a
+.step06-harness/canon.mjs sha256 d795f104e66b5ec433628bab296125f7603d79b164fbe466d19531ce82388062
+.step06-harness/run.mjs sha256 93a8b0245ec15ad35256d127fb08f901b2246badfaeba475f230b6c8e9fa4a33
+.step06-harness/shared/harness.css sha256 ce06c7cf2f7b96b9c450040a856659428e001280b2cc508463a9db1141a86f8c
+.step06-harness/apps/old/src/main.ts sha256 c311f290f68ee385b6b9a93937fe143f82dab81960a7ca9818ce1846f442b1d8
+.step06-harness/apps/new/src/main.ts sha256 e661c496c05ba369c4126b5b2514d4def8006176b83539b547b00346299f3e94
+.step06-harness/apps/old/tsconfig.app.json sha256 d0b739716eb9e9be8258f737c78fde25fa28ad64b13dfc15b6b87e07da65fe26
+.step06-harness/apps/new/tsconfig.app.json sha256 d0b739716eb9e9be8258f737c78fde25fa28ad64b13dfc15b6b87e07da65fe26
+.step06-harness/apps/old/src/card/card.ts sha256 c830bfc477efd69e68fa2e4197c9473bc1d904e1fea30be20e5245b5474c289b
+.step06-harness/apps/old/src/card/card.html sha256 bb7b7c7174331eb9ee283bb811c2c2ed7115121496919f77edf6e1a40e1d07c2
+.step06-harness/apps/old/src/card/card.scss sha256 11dbe4f525f350d1ff8201f93136186a277243624db975281019bc715b407568
+built bundle @font-face rules: old 7, new 7 (required 7)
+new app resolves @brand-ui/atomic through node_modules; no paths, no relative package-source import
+
+## Installed archive identity
+package-artifacts/brand-ui-atomic-1.1.0.tgz sha256 59893275deda6cf582ad855fac4845bb86b5fb888780392a787612508e372c79
+integrity sha512-2dbAP1Wqjnb3fQHt0O8h9ay5ikBVioujwmLxPshotXfM/IQzLd06nbbVGyjT5yUsA5mC/R4Frl67SrHaE6yVXQ==
+archive inventory: package/package.json, 4 fesm2022/*.mjs, 4 types/*.d.ts (9 files; no maps, CSS or assets)
+
+## Unchanged-file evidence
+projects/ui/src/lib/card/card.spec.ts sha256 61c60833f807db58258fd0008b5cfe0a409600684857d3f49548905bfd5c32b2 (baseline 61c60833f807db58258fd0008b5cfe0a409600684857d3f49548905bfd5c32b2)
+projects/ui/src/public-api.ts sha256 852af2fcc2931d8dd19e22e6774aefb0ea997e190253ebe5a3468316744f5c93 (baseline 852af2fcc2931d8dd19e22e6774aefb0ea997e190253ebe5a3468316744f5c93)
+e2e/long-label-and-bevel.spec.ts before sha256 2fce757096b21ac8e4b7bc55573e376303e77daddf4e8c818db9c7bc1090bf9e
+e2e/long-label-and-bevel.spec.ts after  sha256 386785891a7de546636e2e543d1b13d189aae2c9c3feae986caef2474680ee82
+e2e reverting only the path literal reproduces the before hash: true
+
+## Normalization note
+computed min-width / min-height are not in the per-slot property list: they compute to "auto" only for
+flex items. The relocated code well and loading blocks are no longer flex items by design (their hosts
+are), so those two properties read 0px. The effect on layout is covered by used rects (geometry-at-width,
+including 200px) and by the loading-block rest checks, all of which match.
+
+## Run: control (old-vs-old; must report zero differences)
+variant control
+computed-style-slot: 576 records (expected 576), 0 differences
+geometry-at-width: 16 records (expected 16), 0 differences
+accessibility-snapshot: 12 records (expected 12), 0 differences
+tab-stop-sequence: 12 records (expected 12), 0 differences
+stretched-hit-test: 4 records (expected 4), 0 differences
+loading-semantics: 12 records (expected 12), 0 differences
+pulse-keyframes: 16 records (expected 16), 0 differences
+ordered vector: 576 + 16 + 12 + 12 + 4 + 12 + 16 = 648
+rest: 32 checks, 0 failed
+normal-motion: 128 checks, 0 failed
+reduced-motion: 64 checks, 0 failed
+interaction: 12 checks, 0 failed
+sentinel: 82 checks, 0 failed
+TOTAL differences: 0
+.step06-harness/out/control.json sha256 01f863b3b6550d93f1a24555a726a27c6f780ccc909eb2dc216a4d571a34ca12
+
+## Run: normal (old Card vs installed @brand-ui/atomic Card)
+variant normal
+computed-style-slot: 576 records (expected 576), 0 differences
+geometry-at-width: 16 records (expected 16), 0 differences
+accessibility-snapshot: 12 records (expected 12), 0 differences
+tab-stop-sequence: 12 records (expected 12), 0 differences
+stretched-hit-test: 4 records (expected 4), 0 differences
+loading-semantics: 12 records (expected 12), 0 differences
+pulse-keyframes: 16 records (expected 16), 0 differences
+ordered vector: 576 + 16 + 12 + 12 + 4 + 12 + 16 = 648
+rest: 32 checks, 0 failed
+normal-motion: 128 checks, 0 failed
+reduced-motion: 64 checks, 0 failed
+interaction: 12 checks, 0 failed
+sentinel: 82 checks, 0 failed
+TOTAL differences: 0
+.step06-harness/out/normal.json sha256 01f863b3b6550d93f1a24555a726a27c6f780ccc909eb2dc216a4d571a34ca12
+
+## Run: mutate (deliberate 1px padding-top mutation on bui-media-area; must fail)
+variant mutate
+computed-style-slot: 576 records (expected 576), 20 differences
+  DIFF artanon/static/media: .padding-top: "16px" != "17px"
+  DIFF artanon/interactive/media: .padding-top: "16px" != "17px"
+  DIFF artanon/hover/media: .padding-top: "16px" != "17px"
+  DIFF artanon/focus/media: .padding-top: "16px" != "17px"
+  DIFF artanon/active/media: .padding-top: "16px" != "17px"
+geometry-at-width: 16 records (expected 16), 16 differences
+  DIFF artanon/200px: .static.media-label: [49,49,126.46875,16] != [49,50,126.46875,16] | .interactive.media-label: [49,49,126.46875,16] != [49,50,126.46875,16]
+  DIFF artanon/280px: .static.media-label: [49,49,126.46875,16] != [49,50,126.46875,16] | .interactive.media-label: [49,49,126.46875,16] != [49,50,126.46875,16]
+  DIFF artanon/360px: .static.media-label: [49,49,126.46875,16] != [49,50,126.46875,16] | .interactive.media-label: [49,49,126.46875,16] != [49,50,126.46875,16]
+  DIFF artanon/480px: .static.media-label: [49,49,126.46875,16] != [49,50,126.46875,16] | .interactive.media-label: [49,49,126.46875,16] != [49,50,126.46875,16]
+  DIFF mentor/200px: .static.media-label: [37,37,116.09375,18] != [37,38,116.09375,18] | .interactive.media-label: [37,37,116.09375,18] != [37,38,116.09375,18]
+accessibility-snapshot: 12 records (expected 12), 0 differences
+tab-stop-sequence: 12 records (expected 12), 0 differences
+stretched-hit-test: 4 records (expected 4), 0 differences
+loading-semantics: 12 records (expected 12), 0 differences
+pulse-keyframes: 16 records (expected 16), 0 differences
+ordered vector: 576 + 16 + 12 + 12 + 4 + 12 + 16 = 648
+rest: 32 checks, 0 failed
+normal-motion: 128 checks, 0 failed
+reduced-motion: 64 checks, 0 failed
+interaction: 12 checks, 0 failed
+sentinel: 82 checks, 0 failed
+TOTAL differences: 36
+.step06-harness/out/mutate.json sha256 aaab0d2044d2d9ac93e9e3ea07e0c96dbc19f6519b412b8450e9b4afcb69a7a6

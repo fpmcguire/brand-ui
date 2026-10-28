@@ -7,7 +7,7 @@
     "build": "ng build atomic && ng build ui && ng build gallery",
     "build:subfolder": "ng build gallery --base-href /brand-ui/",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test ui --no-watch && ng test gallery --no-watch",
+    "test": "ng test atomic --no-watch && ng test ui --no-watch && ng test gallery --no-watch",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:report": "playwright show-report",

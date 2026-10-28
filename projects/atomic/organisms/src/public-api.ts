@@ -2,4 +2,4 @@
  * Public API Surface of @brand-ui/atomic/organisms
  */
 
-export {};
+export { Card } from './card/card';

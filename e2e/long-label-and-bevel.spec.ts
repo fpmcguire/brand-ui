@@ -319,7 +319,10 @@ test.describe('CodeCraft bevel', () => {
   });
 
   test('the source declares the rounded radius before the shape, so the fallback comes first', () => {
-    const scss = readFileSync(join(__dirname, '../projects/ui/src/lib/card/card.scss'), 'utf8');
+    const scss = readFileSync(
+      join(__dirname, '../projects/atomic/organisms/src/card/card.scss'),
+      'utf8',
+    );
     const card = scss.slice(scss.indexOf('.card {'));
     const shorthand = card.indexOf('border-radius:');
     const topRight = card.indexOf('border-top-right-radius:');

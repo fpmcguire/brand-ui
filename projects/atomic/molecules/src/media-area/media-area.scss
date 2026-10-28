@@ -1,0 +1,13 @@
+// Tokens only. The host is the 4:3 surface.
+:host {
+  box-sizing: border-box;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: var(--bui-space-3);
+  background: var(--bui-color-surface-sunken);
+  color: var(--bui-color-text-muted);
+  font-size: var(--bui-size-small);
+}

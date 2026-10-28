@@ -1,9 +1,13 @@
 // Self-test for the atomic archive and module-boundary scanners. Every former bypass must be
 // rejected, and the clean cases must still pass. Runs without building or touching the repository.
+import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { crc32, deflateRawSync, gzipSync } from 'node:zlib';
 import { parseArchive } from './atomic-archive.mjs';
 import { consumerImportProblems, outputImportProblems } from './atomic-imports.mjs';
+import { EXEMPT_CONFIG, tsconfigPathProblems } from './atomic-tsconfig.mjs';
+import { sanitizeAtomicDist } from './sanitize-atomic-dist.mjs';
 
 // --- tar fixture writer ------------------------------------------------------------------------
 const pad = (buffer) => Buffer.concat([buffer, Buffer.alloc((512 - (buffer.length % 512)) % 512)]);
@@ -666,11 +670,334 @@ for (const [label, source] of [
   if (problems.length) report(`output ${label} should be clean: ${problems.join('; ')}`);
 }
 
+// --- dist sanitizer cases ----------------------------------------------------------------------
+const bundleNames = ['atoms', 'molecules', 'organisms'].map(
+  (e) => `fesm2022/brand-ui-atomic-${e}.mjs`,
+);
+const bundleText = (name) =>
+  `export {};\n\n//# sourceMappingURL=${name.slice(name.lastIndexOf('/') + 1)}.map`;
+// Builds a dist directory from the clean layout, then lets the case change it.
+function distFixture(change = () => {}) {
+  const dir = mkdtempSync(join(tmpdir(), 'sanitize-selftest-'));
+  const put = (name, text) => {
+    mkdirSync(join(dir, name, '..'), { recursive: true });
+    writeFileSync(join(dir, name), text);
+  };
+  put('package.json', '{}\n');
+  put('fesm2022/brand-ui-atomic.mjs', 'export {};\n');
+  put('types/brand-ui-atomic.d.ts', 'export {};\n');
+  for (const name of bundleNames) {
+    put(name, bundleText(name));
+    put(`${name}.map`, '{}');
+  }
+  change({ dir, put });
+  return dir;
+}
+const sanitizeCases = [
+  [
+    'missing map',
+    ({ dir }) => rmSync(join(dir, `${bundleNames[0]}.map`)),
+    /missing .*atoms\.mjs\.map/,
+  ],
+  [
+    'additional map',
+    ({ put }) => put('types/extra.d.ts.map', '{}'),
+    /unexpected types\/extra\.d\.ts\.map/,
+  ],
+  [
+    'missing reference',
+    ({ put }) => put(bundleNames[1], 'export {};\n'),
+    /expected exactly one sourceMappingURL, found 0/,
+  ],
+  [
+    'duplicate reference',
+    ({ put }) =>
+      put(bundleNames[1], `${bundleText(bundleNames[1])}\n${bundleText(bundleNames[1])}`),
+    /found 2/,
+  ],
+  [
+    'non-terminal reference',
+    ({ put }) => put(bundleNames[2], `${bundleText(bundleNames[2])}\nexport const a = 1;\n`),
+    /malformed or not the terminal line/,
+  ],
+  [
+    'malformed reference',
+    ({ put }) =>
+      put(bundleNames[0], 'export {};\n\n// sourceMappingURL=brand-ui-atomic-atoms.mjs.map'),
+    /malformed or not the terminal line/,
+  ],
+  [
+    'reference to another map',
+    ({ put }) => put(bundleNames[0], 'export {};\n\n//# sourceMappingURL=other.mjs.map'),
+    /not its own map/,
+  ],
+  [
+    'reference in another file',
+    ({ put }) => put('fesm2022/brand-ui-atomic.mjs', 'export {};\n//# sourceMappingURL=x.map\n'),
+    /brand-ui-atomic\.mjs: contains a sourceMappingURL/,
+  ],
+];
+for (const [label, change, expected] of sanitizeCases) {
+  const dir = distFixture(change);
+  try {
+    sanitizeAtomicDist(dir);
+    report(`sanitizer ${label} should be rejected`);
+  } catch (error) {
+    if (!expected.test(error.message))
+      report(`sanitizer ${label} rejected for the wrong reason: ${error.message}`);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+}
+{
+  const dir = distFixture();
+  try {
+    const { removed } = sanitizeAtomicDist(dir);
+    const left = readdirSync(join(dir, 'fesm2022')).sort().join();
+    if (
+      removed.length !== 3 ||
+      left !==
+        'brand-ui-atomic-atoms.mjs,brand-ui-atomic-molecules.mjs,brand-ui-atomic-organisms.mjs,brand-ui-atomic.mjs'
+    ) {
+      report(`sanitizer clean case left ${left}`);
+    }
+    for (const name of bundleNames) {
+      if (readFileSync(join(dir, name), 'utf8') !== 'export {};\n')
+        report(`sanitizer rewrote ${name} wrongly`);
+    }
+    if (readFileSync(join(dir, 'fesm2022/brand-ui-atomic.mjs'), 'utf8') !== 'export {};\n') {
+      report('sanitizer touched an unrelated file');
+    }
+  } catch (error) {
+    report(`sanitizer clean case should pass: ${error.message}`);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+}
+
+// --- tsconfig `paths` cases --------------------------------------------------------------------
+const repoFile = (name) => readFileSync(new URL(`../${name}`, import.meta.url), 'utf8');
+const rootConfig = repoFile('tsconfig.json');
+const exemptConfig = repoFile(EXEMPT_CONFIG);
+const pathsConfig = (paths, extra = {}, extend = '../../tsconfig.json') =>
+  JSON.stringify({ extends: extend, compilerOptions: { paths, ...extra } });
+const configs = (extra = {}) =>
+  new Map([
+    ['tsconfig.json', rootConfig],
+    [EXEMPT_CONFIG, exemptConfig],
+    ['projects/ui/tsconfig.lib.json', '{ "extends": "../../tsconfig.json" }'],
+    ...Object.entries(extra),
+  ]);
+const exempt = JSON.parse(exemptConfig.replace(/\/\*[\s\S]*?\*\//g, ''));
+const withExempt = (change) => {
+  const copy = structuredClone(exempt);
+  change(copy);
+  return JSON.stringify(copy);
+};
+const tsconfigRejected = [
+  [
+    'N1 key shadowing with an atomic source target',
+    {
+      'projects/ui/tsconfig.x.json': pathsConfig({
+        '@brand-ui/atomic/atoms': ['../atomic/atoms/src/public-api.ts'],
+      }),
+    },
+    /key shadowing/,
+  ],
+  [
+    'N1b the same key also reports its target',
+    {
+      'projects/ui/tsconfig.x.json': pathsConfig({
+        '@brand-ui/atomic/atoms': ['../atomic/atoms/src/public-api.ts'],
+      }),
+    },
+    /resolves into projects\/atomic/,
+  ],
+  [
+    'N2 key shadowing with a harmless target',
+    { 'projects/ui/tsconfig.x.json': pathsConfig({ '@brand-ui/atomic': ['./stubs/x.ts'] }) },
+    /key shadowing/,
+  ],
+  [
+    'N3 non-brand key to atomic source',
+    {
+      'projects/ui/tsconfig.x.json': pathsConfig({
+        'atomic-parts': ['../../projects/atomic/atoms/src/public-api.ts'],
+      }),
+    },
+    /resolves into projects\/atomic/,
+    /key shadowing/,
+  ],
+  [
+    'N4 wildcard to dist/atomic',
+    { 'projects/ui/tsconfig.x.json': pathsConfig({ 'parts/*': ['../../dist/atomic/*'] }) },
+    /resolves into dist\/atomic/,
+  ],
+  [
+    'N5 non-brand key to the installed package',
+    {
+      'projects/ui/tsconfig.x.json': pathsConfig({
+        'installed-atomic': ['../../node_modules/@brand-ui/atomic/types/brand-ui-atomic.d.ts'],
+      }),
+    },
+    /"\.\.\/\.\.\/node_modules\/@brand-ui\/atomic\/types\/brand-ui-atomic\.d\.ts" resolves into node_modules\/@brand-ui\/atomic/,
+    /key shadowing/,
+  ],
+  [
+    'N5a wildcard to the installed package',
+    {
+      'projects/ui/tsconfig.x.json': pathsConfig({
+        'installed-atomic/*': ['../../node_modules/@brand-ui/atomic/*'],
+      }),
+    },
+    /resolves into node_modules\/@brand-ui\/atomic/,
+  ],
+  [
+    'N5b nested config with a .. escape',
+    {
+      'projects/ui/tsconfig.x.json': pathsConfig({ a: ['../../node_modules/@brand-ui/atomic'] }),
+    },
+    /resolves into node_modules\/@brand-ui\/atomic/,
+  ],
+  [
+    'N5c case variation',
+    {
+      'projects/ui/tsconfig.x.json': pathsConfig({ a: ['../../Node_Modules/@Brand-UI/Atomic'] }),
+    },
+    /resolves into node_modules\/@brand-ui\/atomic/,
+  ],
+  [
+    'N5d baseUrl into the installed package',
+    {
+      'tsconfig.y.json': pathsConfig(
+        { a: ['@brand-ui/atomic'] },
+        { baseUrl: 'node_modules' },
+        './tsconfig.json',
+      ),
+    },
+    /resolves into node_modules\/@brand-ui\/atomic/,
+  ],
+  [
+    'N5e inherited effective values',
+    {
+      'projects/ui/tsconfig.parent.json': pathsConfig({
+        a: ['../../node_modules/@brand-ui/atomic'],
+      }),
+      'projects/ui/tsconfig.child.json': '{ "extends": "./tsconfig.parent.json" }',
+    },
+    /projects\/ui\/tsconfig\.child\.json: paths target .*resolves into node_modules/,
+  ],
+  [
+    'N6 exempt file with a 4th key',
+    {
+      [EXEMPT_CONFIG]: withExempt((c) => {
+        c.compilerOptions.paths['@brand-ui/atomic'] = ['./src/public-api.ts'];
+      }),
+    },
+    /exact-structure/,
+  ],
+  [
+    'N7 exempt file with a second target',
+    {
+      [EXEMPT_CONFIG]: withExempt((c) => {
+        c.compilerOptions.paths['@brand-ui/atomic/atoms'].push('./x.ts');
+      }),
+    },
+    /exact-structure/,
+  ],
+  [
+    'N8 exempt file with baseUrl',
+    {
+      [EXEMPT_CONFIG]: withExempt((c) => {
+        c.compilerOptions.baseUrl = '.';
+      }),
+    },
+    /exact-structure/,
+  ],
+  [
+    'N9 exempt file with an array extends',
+    {
+      [EXEMPT_CONFIG]: withExempt((c) => {
+        c.extends = ['../../tsconfig.json'];
+      }),
+    },
+    /exact-structure/,
+  ],
+  [
+    'N10 exempt content copied elsewhere',
+    { 'projects/ui/tsconfig.spec.json': exemptConfig },
+    /non-exempt config/,
+  ],
+  [
+    'N11 non-exempt config extending the exempt file',
+    { 'projects/ui/tsconfig.z.json': '{ "extends": "../atomic/tsconfig.spec.json" }' },
+    /inheritance/,
+  ],
+  [
+    'N12 configDir template target',
+    {
+      'projects/ui/tsconfig.x.json': pathsConfig({
+        a: ['$' + '{configDir}/../atomic/atoms/src/x.ts'],
+      }),
+    },
+    /unanalyzable template/,
+  ],
+  [
+    'N13 comments, trailing commas and a unicode-escaped key',
+    {
+      'projects/ui/tsconfig.x.json':
+        '{ // "paths": {} is not here\n "compilerOptions": { /* "paths" */ "paths": { "\\u0040brand-ui/atomic/atoms": ["./a.ts",], }, }, }',
+    },
+    /key shadowing/,
+  ],
+  [
+    'N14a missing extends',
+    { 'projects/ui/tsconfig.x.json': '{ "extends": "./nope.json" }' },
+    /unanalyzable extends/,
+  ],
+  [
+    'N14b package-style extends',
+    { 'projects/ui/tsconfig.x.json': '{ "extends": "@angular/x/tsconfig" }' },
+    /unanalyzable extends/,
+  ],
+  [
+    'N14c cyclic extends',
+    {
+      'projects/ui/tsconfig.a.json': '{ "extends": "./tsconfig.b.json" }',
+      'projects/ui/tsconfig.b.json': '{ "extends": "./tsconfig.a.json" }',
+    },
+    /cyclic extends/,
+  ],
+];
+for (const [label, extra, expected, notExpected] of tsconfigRejected) {
+  const problems = tsconfigPathProblems(configs(extra));
+  if (!problems.some((problem) => expected.test(problem))) {
+    report(`tsconfig ${label} should be rejected for ${expected}: ${problems.join('; ')}`);
+  } else if (notExpected && problems.some((problem) => notExpected.test(problem))) {
+    report(`tsconfig ${label} must not be reported with ${notExpected}`);
+  }
+}
+for (const [label, extra] of [
+  ['the real root, the real exempt config and the real ui mapping', {}],
+  [
+    'configs without paths',
+    { 'projects/ui/tsconfig.n.json': '{ "compilerOptions": { "strict": true } }' },
+  ],
+  [
+    'a harmless local mapping',
+    { 'projects/ui/tsconfig.m.json': pathsConfig({ '@app/*': ['./src/app/*'] }, { baseUrl: '.' }) },
+  ],
+]) {
+  const problems = tsconfigPathProblems(configs(extra));
+  if (problems.length) report(`tsconfig ${label} should be clean: ${problems.join('; ')}`);
+}
+
 if (failures) {
   console.error(`verify-atomic-archive selftest failed (${failures}).`);
   process.exit(1);
 }
 console.log(
   `verify-atomic-archive selftest passed (${cases.length} archive, ` +
-    `${consumerRejected.length + 4} consumer and ${outputRejected.length + 5} output fixtures).`,
+    `${consumerRejected.length + 4} consumer, ${outputRejected.length + 5} output, ` +
+    `${sanitizeCases.length + 1} sanitizer and ${tsconfigRejected.length + 3} tsconfig fixtures).`,
 );

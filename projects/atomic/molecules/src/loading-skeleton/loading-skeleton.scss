@@ -1,0 +1,44 @@
+// Tokens only. A block ancestor keeps the old sibling stacking inside the card's flex column.
+:host {
+  display: block;
+}
+
+// The old `.media` rule minus what `.skeleton` owned in the old cascade: no display, background
+// or animation here, so the block host keeps `display: block`. The block stays square under the
+// card's clipped corners.
+.media {
+  box-sizing: border-box;
+  aspect-ratio: 4 / 3;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: var(--bui-space-3);
+  color: var(--bui-color-text-muted);
+  font-size: var(--bui-size-small);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bui-space-2);
+  padding: var(--bui-space-4);
+}
+
+.skeleton-title,
+.skeleton-line {
+  border-radius: var(--bui-radius-control);
+}
+
+.skeleton-title {
+  width: 60%;
+  height: var(--bui-space-5);
+}
+
+.skeleton-line {
+  width: 100%;
+  height: var(--bui-space-3);
+}
+
+.skeleton-short {
+  width: 40%;
+}

@@ -49,6 +49,13 @@
             }
           },
           "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/atomic/tsconfig.spec.json",
+            "include": ["../**/*.spec.ts"]
+          }
         }
       }
     },

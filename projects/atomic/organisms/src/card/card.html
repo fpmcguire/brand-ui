@@ -4,22 +4,10 @@
   [attr.aria-busy]="loading() ? 'true' : null"
 >
   @if (loading()) {
-    <div class="media skeleton" aria-hidden="true"></div>
-    <div class="body" aria-hidden="true">
-      <span class="skeleton skeleton-title"></span>
-      <span class="skeleton skeleton-line"></span>
-      <span class="skeleton skeleton-line skeleton-short"></span>
-    </div>
+    <bui-loading-skeleton />
     <span class="visually-hidden">Loading</span>
   } @else {
-    <div class="media">
-      @if (mediaLabel(); as mediaLabel) {
-        <span class="media-label">{{ mediaLabel }}</span>
-      }
-      @if (tag(); as tag) {
-        <span class="tag">{{ tag }}</span>
-      }
-    </div>
+    <bui-media-area [label]="mediaLabel()" [tag]="tag()" />
     <div class="body">
       <h3 class="title">
         @if (interactive()) {
@@ -32,7 +20,7 @@
         <p class="text">{{ description }}</p>
       }
       @if (codeSample(); as codeSample) {
-        <pre class="code"><code>{{ codeSample }}</code></pre>
+        <bui-code-well>{{ codeSample }}</bui-code-well>
       }
       @if (meta(); as meta) {
         <p class="meta">{{ meta }}</p>

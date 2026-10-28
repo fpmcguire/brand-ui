@@ -1,0 +1,10 @@
+// Tokens only. In a flex column the inline-block host is blockified, exactly like the span it replaces.
+:host {
+  display: inline-block;
+  padding: var(--bui-space-1) var(--bui-space-2);
+  background: var(--bui-color-accent);
+  color: var(--bui-color-on-accent);
+  border-radius: var(--bui-radius-control);
+  font-family: var(--bui-font-ui);
+  font-weight: var(--bui-weight-ui);
+}

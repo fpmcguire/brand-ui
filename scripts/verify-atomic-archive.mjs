@@ -14,9 +14,11 @@ import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join, relative } from 'node:path';
+import { join } from 'node:path';
 import { parseArchive } from './atomic-archive.mjs';
 import { consumerImportProblems, outputImportProblems } from './atomic-imports.mjs';
+import { collectConfigs, tsconfigPathProblems } from './atomic-tsconfig.mjs';
+import { sanitizeAtomicDist } from './sanitize-atomic-dist.mjs';
 
 const root = new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const ARCHIVE = 'package-artifacts/brand-ui-atomic-1.1.0.tgz';
@@ -55,6 +57,8 @@ if (!npm || !existsSync(npm)) {
 let rebuilt;
 try {
   execFileSync(process.execPath, [ng, 'build', 'atomic'], { cwd: root, stdio: 'pipe' });
+  // The same helper the manual pack flow uses: ng-packagr always emits FESM source maps.
+  sanitizeAtomicDist(join(root, 'dist/atomic'));
   execFileSync(process.execPath, [npm, 'pack', './dist/atomic', '--pack-destination', tmp], {
     cwd: root,
     stdio: 'pipe',
@@ -207,14 +211,8 @@ const walk = (dir) =>
     const path = join(dir, name);
     return statSync(path).isDirectory() ? walk(path) : [path];
   });
-for (const config of [
-  'tsconfig.json',
-  ...walk(join(root, 'projects')).map((p) => relative(root, p)),
-]) {
-  if (!/(?:^|[\\/])tsconfig[\w.]*\.json$/.test(config)) continue;
-  const text = readFileSync(join(root, config), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
-  if (/"paths"[\s\S]*?(?:@brand-ui|atomic)/.test(text)) fail(`${config}: path alias to atomic`);
-}
+// Structural `paths` check (JSONC parse, `extends` resolution, target inspection).
+for (const problem of tsconfigPathProblems(collectConfigs(root))) fail(problem);
 for (const file of [
   join(root, 'playwright.config.ts'),
   ...['projects/ui', 'projects/gallery', 'e2e'].flatMap((dir) => walk(join(root, dir))),

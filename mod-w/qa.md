@@ -209,3 +209,13 @@ The STEP-08 D-12 threshold check result is **BREACH**. TBT is **809.362275 ms** 
 4. **Release, publish or deploy:** not authorized. The consolidated study-review gate must be completed by the Moderator's own-words demonstration before any release, publish or deployment decision.
 
 **QA does not accept STEP-09.**
+
+---
+
+## Moderator disposition (recorded)
+
+**Date:** 2026-10-29
+
+The Moderator accepts this fresh QA review (PASS WITH NOTES, commit `01a1804`), including notes C-1, C-2 and N1 to N6 as recorded above.
+
+This acceptance covers the QA review only. It does not accept STEP-09, does not record Product Owner sign-off, and does not authorize any release, publish or deploy action. The next gate is Product Owner sign-off on STEP-09, followed by final Moderator acceptance. The consolidated study-review gate remains required before any release, publish or deployment decision.

@@ -1,6 +1,6 @@
 # STEP-09 — v1.1.0 documentation and release-candidate truth
 
-**Status:** Active for implementation. On 2026-10-29 the Tech Lead passed Revision 2 and the Moderator approved the exact `mod-w/step-09-plan.md` Revision 2, its O-1 through O-6 dispositions, and its revised 5.25-hour estimate. Implementation is authorized only for R1 to R9 under that plan and its stop conditions. This is not STEP-09 acceptance or release authority. **Estimate:** 5.25 hours.
+**Status:** Accepted 2026-10-29. Implemented at `01a1804` under the approved Revision 2 plan. The Tech Lead returned PASS, fresh QA returned PASS WITH NOTES (accepted by the Moderator), the Product Owner returned Accepted with notes in `mod-w/po-signoff-step-09.md`, and the Moderator accepted the sign-off and determined STEP-09 complete. The recorded notes are later items, not Step blockers. This is not release, publish or deploy authority. The consolidated written study-review gate remains required before any release, publish or deployment decision. **Estimate:** 5.25 hours.
 
 ## Goal
 

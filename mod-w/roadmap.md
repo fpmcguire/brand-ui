@@ -2,7 +2,7 @@
 
 **Project:** brand-ui  
 **Date:** 2026-10-29
-**Status:** STEP-08 accepted under the bounded threshold-breach amendment; STEP-09 Revision 2 approved and active for implementation; written study-review gate required after STEP-09
+**Status:** STEP-08 and STEP-09 accepted; STEP-09 complete; written study-review gate required before any release, publish or deployment decision
 
 ---
 
@@ -24,7 +24,7 @@ The accepted v1.0.0 spike is followed by a Moderator-initiated Atomic Design ext
 | STEP-06 | Move Card behind installed atomic package | S-14 to S-16; AC-20 to AC-24 | Development Team | Accepted 2026-10-28 | Tech Lead, fresh QA, Product Owner, and Moderator reviews complete; 39 paths at `6cfef8a` |
 | STEP-07 | Gallery Card structure view | S-17; AC-20, AC-23 to AC-25 | Development Team | Accepted 2026-10-29 | Implemented at `8397fe8` under Revision 5 plan; Tech Lead, fresh QA, Product Owner, and Moderator reviews complete; Tag-stretch fix applied 2026-10-29 (uncommitted, one declaration in `card-structure.component.scss`) and verified; Product Owner sign-off in `mod-w/po-signoff-step-07.md` |
 | STEP-08 | Regression measurement and hardened gates | S-18; AC-22 to AC-26 | Development Team | Accepted 2026-10-29 | Implemented at `62dac02`; Tech Lead, fresh QA, Product Owner, and Moderator reviews complete; authoritative TBT breach retained as a failed threshold under the bounded amendment |
-| STEP-09 | v1.1.0 documentation and release-candidate truth | AC-12, AC-17, AC-20 to AC-27; Atomic Design documentation-priority amendment | Development Team | Active; Revision 2 approved 2026-10-29 | Exactly nine implementation paths; 5.25h; no publish/deploy; frozen STEP-08 evidence preserved |
+| STEP-09 | v1.1.0 documentation and release-candidate truth | AC-12, AC-17, AC-20 to AC-27; Atomic Design documentation-priority amendment | Development Team | Accepted 2026-10-29 | Implemented at `01a1804`; Tech Lead PASS, fresh QA PASS WITH NOTES, Product Owner Accepted with notes, and Moderator acceptance complete; tag `step-09-complete`; no publish/deploy; authoritative TBT breach retained as a failed threshold |
 | Gate | Consolidated written full-project study review | Moderator decisions of 2026-10-19 and 2026-10-28 | Moderator | Required after STEP-09 | Written guides in `study-guides/`; Moderator explains the workspace and library in their own words before deciding completion |
 
 ## STEP-01

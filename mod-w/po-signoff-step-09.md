@@ -54,6 +54,14 @@ The STEP-09 documentation does not mention the TBT figure, and the requirement d
 
 The Moderator accepts the Product Owner's review of STEP-09 with notes, and determines STEP-09 complete. Notes N-PO1 to N-PO4 and QA's C-1 and C-2 are recorded as later items. None was fixed in this acceptance. The authoritative STEP-08 TBT breach remains a failed threshold. This acceptance is not release, publish or deploy authority, and the consolidated study-review gate remains required before any release decision.
 
+### Moderator release override and acceptance
+
+**Date:** 2026-10-29
+
+The Moderator overrides the consolidated written study-review gate as a precondition for release. Release of v1.1.0 is authorized without that gate. The written guides under `study-guides/` are retained for post-release study. The Moderator's own-words demonstration and the decision that the gate is complete remain the Moderator's alone and are not a release precondition.
+
+The Moderator accepts STEP-09 and the release of v1.1.0 under this override. The release tag is `v1.1.0`. This override does not authorize publishing to a registry, client delivery or deployment, and it does not change the non-production status recorded in the README and About panel.
+
 ---
 
 MOD-W v5.0.1

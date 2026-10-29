@@ -2,13 +2,13 @@
 
 **Project:** brand-ui  
 **Date:** 2026-10-29
-**Status:** STEP-08 and STEP-09 accepted; STEP-09 complete; written study-review gate required before any release, publish or deployment decision
+**Status:** STEP-08 and STEP-09 accepted and complete; Moderator override 2026-10-29 allows release v1.1.0 without the consolidated study-review gate, which is kept for post-release study
 
 ---
 
 ## Summary
 
-The accepted v1.0.0 spike is followed by a Moderator-initiated Atomic Design extension. The Moderator accepted origin's annotated `v1.0.0` dereference to `bd241525a93afa468d069ca42bc300f62af3bd91`, the `feature/atomic-design` descent from that frozen reference, and the D-12 before-measurement. Five small Steps then scaffold the package, move Card without behavior change, add the structure view, enforce measurement/gates, and reconcile v1.1.0 documentation. By Moderator decisions on 2026-10-28, all study-review gates are consolidated as one additional final gate after STEP-09 and use written guides under `study-guides/` rather than an interactive quiz. The gate remains required before any release, publish, or deployment decision. S-10, S-12, and S-19 remain excluded.
+The accepted v1.0.0 spike is followed by a Moderator-initiated Atomic Design extension. The Moderator accepted origin's annotated `v1.0.0` dereference to `bd241525a93afa468d069ca42bc300f62af3bd91`, the `feature/atomic-design` descent from that frozen reference, and the D-12 before-measurement. Five small Steps then scaffold the package, move Card without behavior change, add the structure view, enforce measurement/gates, and reconcile v1.1.0 documentation. By Moderator decisions on 2026-10-28, all study-review gates are consolidated as one additional final gate after STEP-09 and use written guides under `study-guides/` rather than an interactive quiz. On 2026-10-29 the Moderator overrode the gate as a release precondition for v1.1.0; the guides are kept for post-release study. S-10, S-12, and S-19 remain excluded.
 
 ## Steps
 
@@ -25,7 +25,7 @@ The accepted v1.0.0 spike is followed by a Moderator-initiated Atomic Design ext
 | STEP-07 | Gallery Card structure view | S-17; AC-20, AC-23 to AC-25 | Development Team | Accepted 2026-10-29 | Implemented at `8397fe8` under Revision 5 plan; Tech Lead, fresh QA, Product Owner, and Moderator reviews complete; Tag-stretch fix applied 2026-10-29 (uncommitted, one declaration in `card-structure.component.scss`) and verified; Product Owner sign-off in `mod-w/po-signoff-step-07.md` |
 | STEP-08 | Regression measurement and hardened gates | S-18; AC-22 to AC-26 | Development Team | Accepted 2026-10-29 | Implemented at `62dac02`; Tech Lead, fresh QA, Product Owner, and Moderator reviews complete; authoritative TBT breach retained as a failed threshold under the bounded amendment |
 | STEP-09 | v1.1.0 documentation and release-candidate truth | AC-12, AC-17, AC-20 to AC-27; Atomic Design documentation-priority amendment | Development Team | Accepted 2026-10-29 | Implemented at `01a1804`; Tech Lead PASS, fresh QA PASS WITH NOTES, Product Owner Accepted with notes, and Moderator acceptance complete; tag `step-09-complete`; no publish/deploy; authoritative TBT breach retained as a failed threshold |
-| Gate | Consolidated written full-project study review | Moderator decisions of 2026-10-19 and 2026-10-28 | Moderator | Required after STEP-09 | Written guides in `study-guides/`; Moderator explains the workspace and library in their own words before deciding completion |
+| Gate | Consolidated written full-project study review | Moderator decisions of 2026-10-19 and 2026-10-28 | Moderator | Overridden as a release precondition 2026-10-29; guides kept for post-release study | Written guides in `study-guides/`; Moderator's own-words demonstration and completion decision remain the Moderator's; release v1.1.0 authorized by the Moderator override |
 
 ## STEP-01
 

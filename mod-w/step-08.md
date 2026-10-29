@@ -1,6 +1,6 @@
 # STEP-08 — Regression measurement and hardened extension gates
 
-**Status:** Fresh QA accepted by the Moderator on 2026-10-29 with verdict PASS WITH NOTES under the bounded threshold-breach amendment (`mod-w/qa.md`). The TBT breach (809.362275 ms against 692.9999999999998 ms) remains an authoritative failed threshold, not a passing check. The clean STEP-08 workspace is committed for Product Owner review. This is not STEP-08 acceptance; Product Owner sign-off (`mod-w/po-signoff-step-08.md`, not yet recorded) and final Moderator acceptance remain required, and STEP-09 stays blocked. **Estimate:** 4 hours. **Additional dependency:** valid pre-Step before-measurement.
+**Status:** Accepted 2026-10-29. Implemented at `62dac02` (`feat(d12): automate regression measurement and threshold check`) under the approved Revision 2 plan and the Moderator's bounded threshold-breach amendment. The Tech Lead returned PASS, fresh QA returned PASS WITH NOTES, the Product Owner returned Accepted with notes in `mod-w/po-signoff-step-08.md`, and the Moderator accepted the sign-off and determined STEP-08 complete. The TBT breach (809.362275 ms against 692.9999999999998 ms) remains an authoritative failed threshold, not a passing check, is not attributed to the code, and supports no performance-benefit claim. STEP-09 is not activated. **Estimate:** 4 hours. **Additional dependency:** valid pre-Step before-measurement.
 
 ## Goal
 
@@ -48,13 +48,13 @@ git status --short
 
 ## Acceptance checks
 
-- [ ] AC-26 before/after results are comparable, complete, and make no benefit claim.
-- [ ] AC-26 automated threshold passes or the Step stops for Moderator decision.
-- [ ] AC-22/23 archive and installed consumption checks pass cleanly.
-- [ ] AC-24 package self-test, assets, contrast, axe, exactly three specs, format, units, and builds pass.
-- [ ] AC-20 and AC-25 behavior/structure coverage remains green without assertion weakening.
+- [x] AC-26 before/after results are comparable, complete, and make no benefit claim. Accepted 2026-10-29 with the recorded host and power-state caveats.
+- [x] AC-26 automated threshold passes or the Step stops for Moderator decision. The check stopped with the authoritative TBT breach; the Moderator's bounded amendment accepted the recorded breach without converting it to a pass.
+- [x] AC-22/23 archive and installed consumption checks pass cleanly. Accepted 2026-10-29.
+- [x] AC-24 package self-test, assets, contrast, axe, exactly three specs, format, units, and builds pass. Accepted 2026-10-29.
+- [x] AC-20 and AC-25 behavior/structure coverage remains green without assertion weakening. Accepted 2026-10-29.
 
 ## Stop conditions and sequence
 
-Stop for missing/contaminated baseline, different conditions, flaky/unpinned measurement, any threshold breach, assertion weakening, or failed gate. Exact Team plan → Moderator approval → implementation/evidence → Tech Lead review → fresh QA → Product Owner sign-off → Moderator acceptance. Do not begin STEP-09.
+The STEP-08 sequence is complete through final Moderator acceptance. Do not rerun the measurement or `check:performance` without new authority. Do not begin STEP-09 until the Moderator separately activates it and approves the Development Team's exact plan.
 

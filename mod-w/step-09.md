@@ -1,6 +1,6 @@
 # STEP-09 — v1.1.0 documentation and release-candidate truth
 
-**Status:** Activated by the Moderator on 2026-10-29 for planning only, under the roadmap Step approved on 2026-10-28 and the stakeholder-directed Atomic Design documentation-priority amendment recorded on 2026-10-29. The Development Team may inspect and submit `mod-w/step-09-plan.md`. No implementation is authorized until Tech Lead review and separate Moderator approval of the exact plan. **Estimate:** 3 hours, to be re-estimated in the exact plan for the amended documentation and test scope.
+**Status:** Active for implementation. On 2026-10-29 the Tech Lead passed Revision 2 and the Moderator approved the exact `mod-w/step-09-plan.md` Revision 2, its O-1 through O-6 dispositions, and its revised 5.25-hour estimate. Implementation is authorized only for R1 to R9 under that plan and its stop conditions. This is not STEP-09 acceptance or release authority. **Estimate:** 5.25 hours.
 
 ## Goal
 

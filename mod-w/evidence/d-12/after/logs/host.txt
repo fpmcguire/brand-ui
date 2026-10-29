@@ -1,0 +1,23 @@
+CPU=Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz logical=4
+RAMGB=15.9 OS=Windows_NT 10.0.19045
+POWER=Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)
+BatteryStatus=2 (2 = AC power; "none" = no battery)
+Recorded: 2026-10-29T04:36:19.819Z
+Top processes by cumulative CPU time at measurement start (other programs were not closed by this script):
+Name                     CPU
+----                     ---
+SnagitEditor     27744.71875
+ChatGPT         24634.953125
+Code             5308.921875
+ChatGPT Classic      4153.25
+Code             3250.203125
+LiveUpdate       2567.765625
+perplexity       1491.359375
+Code             1209.078125
+ChatGPT           1189.59375
+ChatGPT Classic  1032.984375
+explorer         1010.890625
+Code               974.53125
+Code                  944.25
+ChatGPT           893.859375
+Code              748.359375

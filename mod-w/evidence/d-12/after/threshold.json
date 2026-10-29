@@ -1,0 +1,53 @@
+{
+  "result": "BREACH",
+  "rows": [
+    {
+      "key": "lcpMs",
+      "label": "LCP",
+      "unit": "ms",
+      "baseline": 2559.6461,
+      "after": 2642.81095,
+      "limit": 2815.61071,
+      "breach": false
+    },
+    {
+      "key": "tbtMs",
+      "label": "TBT",
+      "unit": "ms",
+      "baseline": 629.9999999999998,
+      "after": 809.362275,
+      "limit": 692.9999999999998,
+      "breach": true
+    },
+    {
+      "key": "cls",
+      "label": "CLS",
+      "unit": "",
+      "baseline": 0.03502823531995759,
+      "after": 0.03502823531995759,
+      "limit": 0.0550282353199576,
+      "breach": false
+    },
+    {
+      "key": "gzipBytes",
+      "label": "JS+CSS gzip",
+      "unit": "B",
+      "baseline": 89050,
+      "after": 90954,
+      "limit": 99290,
+      "breach": false
+    }
+  ],
+  "host": {
+    "baselineBenchmarkIndex": [
+      775.5,
+      856.5
+    ],
+    "afterBenchmarkIndex": [
+      825,
+      996.5
+    ]
+  },
+  "baselineSha256": "c8f447446ec874233440f71b72a2b659d28506e59a237ae9c8a50857470a8592",
+  "configHash": "80bad53803f8f14b469b4f6e19a31ec73d81d51084d16a6dba0707aafa285eaf"
+}

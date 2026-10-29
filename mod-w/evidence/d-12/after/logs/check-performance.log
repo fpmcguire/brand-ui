@@ -1,0 +1,25 @@
+
+> brand-ui@1.0.0 check:performance
+> node scripts/d12/check-performance.selftest.mjs && node scripts/d12/check-performance.mjs
+
+check-performance self-test: all assertions passed
+# D-12 regression threshold check
+
+Result: **BREACH**
+
+Figures only. This check makes no performance-benefit claim, and a timing breach is not attributed to the code.
+
+| Metric | Baseline | After | Limit | Result |
+|---|---:|---:|---:|---|
+| LCP | 2559.6461 ms | 2642.8110 ms | 2815.6107 ms | within |
+| TBT | 630.0000 ms | 809.3623 ms | 693.0000 ms | BREACH |
+| CLS | 0.035028 | 0.035028 | 0.055028 | within |
+| JS+CSS gzip | 89050 B | 90954 B | 99290 B | within |
+
+Rules: LCP +max(10%, 150 ms); TBT +max(10%, 50 ms); CLS +0.02 with a hard ceiling of 0.10; JS+CSS gzip +max(5%, 10 KiB). A value equal to its limit passes.
+
+Baseline summary.json SHA-256: c8f447446ec874233440f71b72a2b659d28506e59a237ae9c8a50857470a8592
+Shared Lighthouse config hash: 80bad53803f8f14b469b4f6e19a31ec73d81d51084d16a6dba0707aafa285eaf
+Host benchmarkIndex range: baseline 775.5 to 856.5, after 825 to 996.5 (recorded, not a pass/fail input; Lighthouse's slow-host threshold is 1000).
+
+check:performance: 1 threshold breach(es): TBT

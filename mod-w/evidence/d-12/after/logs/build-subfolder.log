@@ -1,0 +1,20 @@
+
+> brand-ui@1.0.0 build:subfolder
+> ng build gallery --base-href /brand-ui/
+
+❯ Building...
+✔ Building...
+Initial chunk files | Names                  |  Raw size | Estimated transfer size
+chunk-AHKUZRML.js   | -                      | 137.04 kB |                40.90 kB
+main-OBQRVPEI.js    | main                   |  88.45 kB |                22.44 kB
+styles-MWHECO2O.css | styles                 |   8.26 kB |                 1.39 kB
+
+                    | Initial total          | 233.75 kB |                64.74 kB
+
+Lazy chunk files    | Names                  |  Raw size | Estimated transfer size
+chunk-K4FCJLNG.js   | gallery-page-component |  72.57 kB |                15.59 kB
+
+Application bundle generation complete. [7.786 seconds] - 2026-10-29T04:33:48.427Z
+
+Output location: C:\Users\User\Documents\_projects-angular\brand-ui\dist\gallery
+

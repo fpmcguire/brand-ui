@@ -1,110 +1,85 @@
-# Tech Lead Plan Re-review — STEP-07 Revision 5
+# Tech Lead Implementation Review — STEP-08
 
 ## Verdict
 
-**APPROVE PLAN FOR MODERATOR CONSIDERATION.** Revision 5 resolves the Revision 4 runner lifecycle, embedded-checker, deterministic-path, ignore-check, K3 containment, status-language, and dry-run-evidence findings. The proposed ten-file implementation and two-phase verification plan are coherent, executable in the governed Windows PowerShell 5.1 environment once the required toolchain and approved planning SHA exist, and ready for the Moderator's separate decisions.
+**PASS under the Moderator's bounded amendment.** The implementation correctly records a TBT threshold breach rather than claiming that `check:performance` passed. The authoritative five-run measurement was not rerun or replaced, the remaining extension gates passed, and the evidence set is complete and internally hash-consistent.
 
-This is Tech Lead advice only—not Moderator approval, STEP-07 activation, implementation authorization, STEP acceptance, or acceptance of the AC-20 exception. No implementation gate was run during this review.
+This is Tech Lead advice only. It is not fresh QA, Product Owner sign-off, Moderator acceptance, permission to commit, or authorization to begin STEP-09.
 
-**Moderator disposition:** Approved on 2026-10-28. The Moderator approved this Tech Lead review and the exact Development Team Revision 5 plan, recorded in `mod-w/step-07-plan.md`, including its five decisions: AC-20 Option A with its recorded reason, the caption-visibility rule, the token-derived responsive track rule, the static-check policy with its two-phase PowerShell execution plan, and the DS-035 no-heading correction. STEP-07 is active and implementation is authorized under that exact plan. The two non-blocking Tech Lead clarifications (Phase B label order and literal hash-comparison evidence) are recorded as approval conditions in the plan. This is plan approval, not STEP-07 acceptance; Tech Lead implementation review, fresh QA, Product Owner sign-off, and final Moderator acceptance remain required.
+**Moderator disposition:** Accepted on 2026-10-29 as the STEP-08 Tech Lead review and released to fresh QA. The recorded TBT breach remains authoritative and is not converted into a passing performance check. This disposition is not fresh QA, Product Owner sign-off, STEP-08 acceptance, commit authorization, or permission to begin STEP-09.
 
 ## Scope check
 
-- The implementation remains exactly five created and five edited paths. No atomic source, archive, manifest, lockfile, `ui`, token, Design-ID, brand/scope, helper, script, `mod-w/**`, or fourth Playwright specification change is proposed (`mod-w/step-07.md:15-21`).
-- The two PowerShell scripts are temporary verification machinery at fixed paths outside the repository. Their submitted LF/UTF-8-without-BOM SHA-256 values match the Appendix A text.
-- Installed secondary-entry imports, gallery ownership, eight figures plus DS-061, P1–P3 normalization, exact captions, the token-derived responsive track, and DS-035's no-heading correction remain conformant.
-- AC-20 Option A remains exactly two selector-only edits retaining the six-card count and `[0,1,1,1,1,0]` vector. No structure element carries `data-specimen`.
-- STEP-06 received final Moderator acceptance and is tagged `step-06-complete`; it is not a STEP-07 blocker.
+- `git status --short --untracked-files=all` shows only the edited root `package.json`, the created `scripts/d12/` files, and `mod-w/evidence/d-12/after/`, plus this Tech Lead-owned review after review writing.
+- No `projects/**`, public API, component, gallery, token, asset, Design-ID, test assertion, `mod-w/design/**`, publish, or deployment path changed.
+- The root `package-lock.json` is unchanged; `env.json` records the same SHA-256 before and after measurement.
+- The Moderator-ratified implementation deviations are bounded and recorded in `commands.md`: direct use of the hash-verified frozen server, temporary installation from the pinned tooling files, and tooling installation inside `measure-after.mjs`.
+- No Reference Implementation exists for this extension. AC-20 remains the behavior baseline.
 
 ## Findings
 
-### Must fix before approval
+### Must fix
 
 None.
 
-### Should fix
+### Recorded exception
 
-- Align the Phase B table labels with Appendix A2: the script validates PowerShell/repository state, checks B1 toolchain versions, and then performs the B0 HEAD equality check. This is non-mutating and functionally safe, but the table currently lists the complete B0 check before B1.
-- In implementation evidence, show the two literal `Get-FileHash` commands and their comparisons with the recorded hashes immediately before each invocation. Section 7 already makes a mismatch a stop condition; spelling out the comparisons will make that evidence self-contained.
+- `check:performance` exited 1 because median TBT is 809.362275 ms against the full-precision limit 692.9999999999998 ms. LCP, CLS, and compressed JS+CSS remain within their limits. The Moderator accepted the breach as authoritative evidence, not as a passing check, and authorized bounded continuation without another measurement or threshold run.
+- Cause is not attributed to the code. All five before and after runs carry the accepted slow-host warning; baseline TBT is bimodal; the after benchmarkIndex range differs; other applications were running; and baseline AC-power state is unknown. These caveats are stated in `commands.md`, `summary.md`, `threshold.md`, and `logs/host.txt` without a benefit claim.
 
-These are documentation/evidence clarifications, not plan blockers and do not change the approved commands, scope, tests, or acceptance mapping.
+### Should or could fix later
 
-### Could fix later
+None within STEP-08. Any performance investigation or optimization requires separate Moderator scope and must not rewrite this evidence.
 
-None.
+## Implementation review
 
-## Revision 4 finding disposition
-
-| Revision 4 finding | Revision 5 disposition |
-|---|---|
-| Impossible clean-tree/ten-change lifecycle | **Resolved.** Phase A validates the clean approved baseline and exits; Phase B verifies the dirty implementation tree using the same explicit approved SHA |
-| G8 placeholder | **Resolved.** Appendix A2 embeds the complete checker with exactly one `TOKEN_DIR`; no splice remains |
-| Non-deterministic runner path/working directory | **Resolved.** Fixed temporary paths, validated `RepoPath`, pre-Git `Set-Location`, fixed hashes, invocations and cleanup are specified |
-| Missing `node_modules` ignore proof | **Resolved.** All four ignored paths are checked independently using the working trailing-slash form |
-| Missing K3 viewport-left assertion | **Resolved.** Left, top, right and bottom viewport bounds are now explicit |
-| Incorrect pre-review blocker title | **Resolved.** Preconditions are correctly classified as pre-implementation conditions |
-| Dry-run claims did not match exact submitted text | **Resolved.** Claims identify submitted versus derivative scripts and retain implementation-evidence limits |
-
-## Command and evidence review
-
-- Both Appendix scripts parse with zero errors under the installed Windows PowerShell 5.1 parser.
-- The preflight script hash is `359844fa8c91b3f9367f2177ec1af3d5894f349b450b650645fd3e70169717af`, matching the plan.
-- The verification script hash is `d2677ed93916dac93849610820582f2803f3dca843cfd3683bbbb2c979f70081`, matching the plan.
-- The embedded 114-line checker is byte-identical to Revision 3 lines 2874–2987 and contains one `TOKEN_DIR` declaration.
-- `git check-ignore -q` returns zero for `dist/`, `test-results/`, `playwright-report/`, and `node_modules/` in the current repository.
-- Phase A stops after the clean-baseline checks. Phase B assigns `$BASE` from the approved SHA, does not demand a clean tree, and rechecks HEAD and exact scope at G3 and G18.
-- Native-command exit checks, exact-ten comparison, deletion detection, excluded-path detection, five-new/five-modified identities, tracked/untracked whitespace checks, and unchanged `card.spec.ts` proof are exact and fail closed.
-- The Team's fixture evidence is appropriately bounded. Node 26/npm 11.12.1, the real implementation files, and G1–G18 remain unverified until authorized implementation.
-
-## Test-feasibility review
-
-- The Vitest plan proves the exact groups, captions, headings, semantics, counts, Code-well differences and ID uniqueness without a component API change.
-- B1–B3 prove placement, exact cross-scope structure under P1–P3, captions/IDs and token paint in all four scopes.
-- K1–K5 cover the sole link/tab stop, hidden skeletons, busy/Loading ownership, geometry/paint/motion, reduced motion, narrow layout, Card usability, axe and four-scope heading order.
-- K3 now establishes figure and per-block visibility before geometry, figure containment, all four viewport edges, token paint, 1.4-second infinite CSS animation, reduced-motion removal and restoration.
-- The static checker retains its self-tests, token discovery, source checks, missing-file failure and non-zero exit behavior without adding a repository file.
+- `check-performance.mjs` verifies the frozen baseline summary hash, rejects incomplete or inconsistent evidence, requires a shared config hash, computes all four limits from the baseline at full precision, and uses strict `after > limit` breach semantics.
+- `check-performance.selftest.mjs` covers the frozen reference values, equality, adjacent floating-point boundary values, percentage/absolute selection, the CLS ceiling, invalid evidence, and baseline self-comparison.
+- `measure-after.mjs` asserts Node 26.0.0, npm 11.12.1, pinned tooling hashes, all baseline hashes, Chrome 156.0.8078.4, Balanced power, the build base href, and free ports. It owns and verifies the server, uses separate processes and fresh profiles, permits replacements only after invalid evidence, preserves all reports, and checks the root lock and Lighthouse config hash.
+- The new extractor retains the baseline extraction and size-set rules. The recorded equivalence run reproduced the frozen baseline summaries byte for byte with its default label.
+- The tooling manifests are byte-identical to the frozen baseline copies: SHA-256 `7bb6a856…` and `d1051146…`.
+- The evidence hash manifest has 23 entries for the other 23 evidence files. Independent SHA-256 verification found zero missing or mismatched entries.
 
 ## Acceptance and Design-ID evidence mapping
 
-| Check | Plan disposition | Implementation evidence still required |
-|---|---|---|
-| AC-20 | Ready for separate Moderator exception decision | Exact two-selector reason; retained count/vector; unchanged Card spec; all unit/E2E gates |
-| AC-23 | Plan complete | Phase A baseline; installed imports; clean install/archive verification; exact scope; production/subfolder builds |
-| AC-24 | Plan complete | Format, token, asset, typecheck, unit, exactly-three-spec E2E/axe, G8 and final hygiene |
-| AC-25 / DS-061 | Plan complete | Last placement, exact groups/captions/IDs/order, token-only shell and gallery ownership |
-| DS-062 | Plan complete | Installed Tag and four-scope token paint |
-| DS-063 | Plan complete | Non-zero contained hidden block, sunken paint and normal/reduced motion |
-| DS-064 | Plan complete | Installed CodeWell for CodeCraft and exact fallback elsewhere |
-| DS-065 | Plan complete | Installed MediaArea and sunken paint |
-| DS-066 | Plan complete | Four contained hidden blocks and normal/reduced motion |
-| DS-030 | Plan complete | Static Card, h3, captions/ID and no link |
-| DS-031 | Plan complete | h3, one native link/tab stop and focus ring |
-| DS-035 | Ready for separate no-heading decision | No heading; sole busy/Loading Card; four hidden animated blocks and reduced-motion stop |
+| Criterion                             | Evidence                                                                                                                                                             | Disposition                                                                                        |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| AC-22                                 | Archive self-test/rebuild, exact nine-file inventory, manifest/security checks, no drift                                                                             | Pass                                                                                               |
+| AC-23                                 | Clean `npm ci`, installed archive boundary, subfolder and production builds, unchanged root lock                                                                     | Pass                                                                                               |
+| AC-24                                 | Format, token self-test/scan, asset/provenance check, E2E typecheck, 160 unit tests, axe/contrast E2E, exactly three specifications                                  | Pass                                                                                               |
+| AC-20                                 | Atomic/UI/gallery unit suites and existing E2E suites; no assertion edit or weakening                                                                                | Pass as regression coverage                                                                        |
+| AC-25 / DS-061–066 and DS-030/031/035 | 87 passing E2E tests across the existing three specifications; no structure implementation change in STEP-08                                                         | Pass as regression coverage                                                                        |
+| AC-26                                 | Frozen before evidence; five valid after runs; production size set; LCP, CLS and TBT; deterministic failing threshold; reported breach and caveats; no benefit claim | Requirement behavior satisfied under the Moderator decision; performance result remains **BREACH** |
+
+## Command and evidence review
+
+Development Team evidence, hash-verified in `logs/gates.log` and `commands.md`:
+
+- `verify:atomic-archive`: exit 0; self-test passed; nine files; no drift.
+- `format:check`, `lint:tokens`, `check:assets`, `typecheck:e2e`: exit 0.
+- `npm test`: exit 0; atomic 15, UI 69, gallery 76.
+- `test:e2e`: exit 0; 87 passed across exactly three specifications.
+- `npm run build`: exit 0 for atomic, UI, and gallery.
+- `git diff --check`: exit 0.
+- `check:performance`: exit 1, intentionally retained as the TBT breach.
+
+Independent Tech Lead checks under Node 26.0.0:
+
+- Evidence SHA-256 verification: 23 entries, zero mismatches; 24 evidence files including the manifest.
+- `format:check`: pass.
+- `check-performance.selftest.mjs`: pass.
+- `lint:tokens`: pass after rerun outside the process sandbox; the first isolated attempt could not spawn its fixture child process (`EPERM`).
+- `check:assets`: pass after rerun outside the process sandbox; the first isolated attempt could not spawn `git` (`EPERM`).
+- `typecheck:e2e`: pass.
+- Measurement and `check:performance` were deliberately not rerun.
 
 ## Reference Implementation compliance
 
-No Reference Implementation exists for the Atomic Design extension. The prototype remains rejected and is not used as technical authority. Revision 5 proposes no prototype, `mod-w/design/**`, token-value, public-API, or Design-ID change.
-
-## Moderator decisions
-
-The following are ready for separate Moderator consideration; none is approved by this review:
-
-1. AC-20 Option A and its exact recorded reason.
-2. The caption-visibility rule.
-3. The token-derived responsive track rule.
-4. The static-check policy and complete two-phase PowerShell execution plan.
-5. The DS-035 no-heading correction.
-
-## Evidence reviewed
-
-- Development Team STEP-07 Implementation Plan Revision 5, including complete proposed source/test bodies and Appendices A1/A2.
-- `mod-w/product.md`, `mod-w/architecture.md`, `mod-w/domain-language.md`, `mod-w/step-07.md`, current source/tests, and prior STEP-07 reviews.
-- STEP-06 final acceptance at HEAD `74dbd2e`, tagged `step-06-complete`.
-- Read-only PowerShell parsing, SHA-256 calculation, checker comparison, command discovery and ignore probes. No implementation gate was run.
+No Reference Implementation exists for the Atomic Design extension. The rejected prototype was not used as technical authority. STEP-08 changes no prototype, design artifact, UI structure, token value, component API, or Design ID.
 
 ## Next action
 
-The Moderator approved Revision 5 and its five decisions on 2026-10-28. The review and approval record are committed as the planning baseline, and that commit's full SHA is passed unchanged to both scripts. Phase A must pass under Node 26.x/npm 11.12.1 before any implementation edit. The Development Team may implement only the exact approved plan in `mod-w/step-07-plan.md`, must stop on any recorded stop condition, and must then provide the complete implementation evidence for Tech Lead review. STEP-08 remains blocked until STEP-07 receives Tech Lead review, fresh QA, Product Owner sign-off, and Moderator acceptance.
+The Moderator accepted this review and released STEP-08 to fresh QA. QA must preserve the authoritative measurement and TBT breach without rerunning `measure:gallery:after` or `check:performance`, then report its independent review. Product Owner sign-off and final Moderator acceptance remain required. The TBT breach must remain visible in every downstream review; no reviewer should describe the performance check as passing or attribute the breach to the code without new authorized evidence. Commit only if the Moderator directs it. STEP-09 remains blocked until STEP-08 receives final Moderator acceptance.
 
 ---
 

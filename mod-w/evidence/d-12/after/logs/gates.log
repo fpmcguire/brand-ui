@@ -1,0 +1,286 @@
+# STEP-08 remaining gates, Node v26.0.0, npm 11.12.1
+
+## npm run verify:atomic-archive
+
+> brand-ui@1.0.0 verify:atomic-archive
+> node scripts/verify-atomic-archive.selftest.mjs && node scripts/verify-atomic-archive.mjs
+
+verify-atomic-archive selftest passed (70 archive, 19 consumer, 17 output, 9 sanitizer and 25 tsconfig fixtures).
+verify:atomic-archive passed (@brand-ui/atomic@1.1.0; 9 files; archive sha256 59893275deda6cf582ad855fac4845bb86b5fb888780392a787612508e372c79; no drift from rebuilt package).
+## exit 0: npm run verify:atomic-archive
+
+## npm run format:check
+
+> brand-ui@1.0.0 format:check
+> prettier --check "projects/**/*.{ts,html,scss,css,md,json}" "scripts/**/*.mjs" "e2e/**/*.{ts,json}" angular.json package.json tsconfig.json playwright.config.ts
+
+Checking formatting...
+All matched files use Prettier code style!
+## exit 0: npm run format:check
+
+## npm run lint:tokens
+
+> brand-ui@1.0.0 lint:tokens
+> node scripts/lint-tokens.selftest.mjs && node scripts/lint-tokens.mjs
+
+lint:tokens self-test passed (88 evasion fixtures detected; 21 clean fixtures accepted; 4 atomic-package discovery fixtures rejected).
+lint:tokens passed (51 contract tokens; 4 scopes; components clean).
+## exit 0: npm run lint:tokens
+
+## npm run check:assets
+
+> brand-ui@1.0.0 check:assets
+> node scripts/check-assets.mjs
+
+check:assets passed (6 font families with OFL.txt and SOURCE.md; 9 atomic archive files; no restricted assets).
+## exit 0: npm run check:assets
+
+## npm run typecheck:e2e
+
+> brand-ui@1.0.0 typecheck:e2e
+> tsc -p e2e/tsconfig.json
+
+## exit 0: npm run typecheck:e2e
+
+## npm run test
+
+> brand-ui@1.0.0 test
+> ng test atomic --no-watch && ng test ui --no-watch && ng test gallery --no-watch
+
+❯ Building...
+✔ Building...
+Application bundle generation complete. [4.923 seconds] - 2026-10-29T05:08:47.339Z
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.5 [39m[90mC:/Users/User/Documents/_projects-angular/brand-ui[39m
+
+
+[2m Test Files [22m [1m[32m6 passed[39m[22m[90m (6)[39m
+[2m      Tests [22m [1m[32m15 passed[39m[22m[90m (15)[39m
+[2m   Start at [22m 06:08:48
+[2m   Duration [22m 5.30s[2m (environment 78%, setup 13%, tests 4%, transform 3%, import 2%)[22m
+
+❯ Building...
+✔ Building...
+Application bundle generation complete. [5.343 seconds] - 2026-10-29T05:09:00.545Z
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.5 [39m[90mC:/Users/User/Documents/_projects-angular/brand-ui[39m
+
+
+[2m Test Files [22m [1m[32m6 passed[39m[22m[90m (6)[39m
+[2m      Tests [22m [1m[32m69 passed[39m[22m[90m (69)[39m
+[2m   Start at [22m 06:09:01
+[2m   Duration [22m 6.49s[2m (environment 67%, setup 14%, tests 14%, import 2%, transform 2%)[22m
+
+❯ Building...
+✔ Building...
+Application bundle generation complete. [5.328 seconds] - 2026-10-29T05:09:14.837Z
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.5 [39m[90mC:/Users/User/Documents/_projects-angular/brand-ui[39m
+
+
+[2m Test Files [22m [1m[32m6 passed[39m[22m[90m (6)[39m
+[2m      Tests [22m [1m[32m76 passed[39m[22m[90m (76)[39m
+[2m   Start at [22m 06:09:15
+[2m   Duration [22m 14.66s[2m (environment 72%, tests 17%, setup 6%, import 3%, transform 1%)[22m
+
+## exit 0: npm run test
+
+## npm run test:e2e
+
+> brand-ui@1.0.0 test:e2e
+> playwright test
+
+[WebServer] Prebundling has been configured but will not be used because scripts optimization is enabled.
+[WebServer] Hot Module Replacement (HMR) is disabled because the 'outputHashing' option is set to 'all'. HMR is incompatible with this setting.
+
+Running 87 tests using 2 workers
+
+  ok  2 [chromium] › e2e\brand-and-contrast.spec.ts:62:7 › brand switching › shows three brands across four simultaneous scopes (2.5s)
+  ok  1 [chromium] › e2e\brand-and-contrast.spec.ts:24:7 › brand switching › restyles the same components from tokens without a reload (3.3s)
+  ok  3 [chromium] › e2e\brand-and-contrast.spec.ts:101:7 › brand switching › keeps CodeCraft Light and Dark as modes of one brand (2.9s)
+  ok  5 [chromium] › e2e\brand-and-contrast.spec.ts:146:7 › contrast › documents an explicit usage-pair list covering text, non-text and focus pairs (6ms)
+  ok  4 [chromium] › e2e\brand-and-contrast.spec.ts:126:7 › brand switching › changes tokens only: component structure is identical in every scope (2.1s)
+  ok  6 [chromium] › e2e\brand-and-contrast.spec.ts:157:9 › contrast › every usage pair meets its threshold in ArtAnon Shop (2.8s)
+  ok  7 [chromium] › e2e\brand-and-contrast.spec.ts:157:9 › contrast › every usage pair meets its threshold in IT English Mentor (3.0s)
+  ok  8 [chromium] › e2e\brand-and-contrast.spec.ts:157:9 › contrast › every usage pair meets its threshold in CodeCraft Academy Light (2.6s)
+  ok  9 [chromium] › e2e\brand-and-contrast.spec.ts:157:9 › contrast › every usage pair meets its threshold in CodeCraft Academy Dark (2.8s)
+  ok 10 [chromium] › e2e\brand-and-contrast.spec.ts:183:7 › contrast › protects the approved Mentor 4.62:1 boundary pair (1.3s)
+  ok 11 [chromium] › e2e\brand-and-contrast.spec.ts:201:9 › contrast › components paint the listed token pairs in ArtAnon Shop (1.4s)
+  ok 12 [chromium] › e2e\brand-and-contrast.spec.ts:201:9 › contrast › components paint the listed token pairs in IT English Mentor (1.6s)
+  ok 13 [chromium] › e2e\brand-and-contrast.spec.ts:201:9 › contrast › components paint the listed token pairs in CodeCraft Academy Light (1.8s)
+  ok 14 [chromium] › e2e\brand-and-contrast.spec.ts:201:9 › contrast › components paint the listed token pairs in CodeCraft Academy Dark (1.8s)
+  ok 15 [chromium] › e2e\brand-and-contrast.spec.ts:270:9 › About panel tokens › paints only listed token pairs, and every one passes, in ArtAnon Shop (2.6s)
+  ok 16 [chromium] › e2e\brand-and-contrast.spec.ts:270:9 › About panel tokens › paints only listed token pairs, and every one passes, in IT English Mentor (2.9s)
+  ok 17 [chromium] › e2e\brand-and-contrast.spec.ts:270:9 › About panel tokens › paints only listed token pairs, and every one passes, in CodeCraft Academy Light (2.9s)
+  ok 18 [chromium] › e2e\brand-and-contrast.spec.ts:270:9 › About panel tokens › paints only listed token pairs, and every one passes, in CodeCraft Academy Dark (2.9s)
+  ok 19 [chromium] › e2e\brand-and-contrast.spec.ts:375:9 › About panel tokens › follows the retained selection (mentor) while All brands is displayed (1.9s)
+  ok 20 [chromium] › e2e\brand-and-contrast.spec.ts:375:9 › About panel tokens › follows the retained selection (codecraft-dark) while All brands is displayed (1.9s)
+  ok 21 [chromium] › e2e\brand-and-contrast.spec.ts:397:7 › About panel tokens › changes tokens only: the dialog has one structure in every scope (2.9s)
+  ok 23 [chromium] › e2e\brand-and-contrast.spec.ts:498:7 › Card structure view › keeps the view identical across scopes, except the authorized P1 and P2 differences (1.8s)
+  ok 22 [chromium] › e2e\brand-and-contrast.spec.ts:459:7 › Card structure view › places the view last, with groups, captions and Design IDs, in every scope (4.5s)
+  ok 25 [chromium] › e2e\keyboard-and-accessibility.spec.ts:41:7 › keyboard operation › tab order follows the page and reaches only enabled controls (1.8s)
+  ok 24 [chromium] › e2e\brand-and-contrast.spec.ts:528:7 › Card structure view › paints each structure specimen from its own tokens in every scope (3.9s)
+  ok 26 [chromium] › e2e\keyboard-and-accessibility.spec.ts:69:7 › keyboard operation › a disabled button and a disabled input cannot be focused (932ms)
+  ok 27 [chromium] › e2e\keyboard-and-accessibility.spec.ts:80:7 › keyboard operation › a disabled navigation item is plain text, not a link and not in the tab order (971ms)
+  ok 28 [chromium] › e2e\keyboard-and-accessibility.spec.ts:97:7 › keyboard operation › Enter and Space activate a button; loading suppresses key, pointer and submission (2.3s)
+  ok 29 [chromium] › e2e\keyboard-and-accessibility.spec.ts:132:7 › keyboard operation › Enter follows a navigation link and a card link by keyboard (3.0s)
+  ok 30 [chromium] › e2e\keyboard-and-accessibility.spec.ts:165:9 › genuine focus-visible › button, input, card and navigation show a keyboard focus ring in ArtAnon Shop (3.3s)
+  ok 31 [chromium] › e2e\keyboard-and-accessibility.spec.ts:165:9 › genuine focus-visible › button, input, card and navigation show a keyboard focus ring in IT English Mentor (2.9s)
+  ok 32 [chromium] › e2e\keyboard-and-accessibility.spec.ts:165:9 › genuine focus-visible › button, input, card and navigation show a keyboard focus ring in CodeCraft Academy Light (2.5s)
+  ok 33 [chromium] › e2e\keyboard-and-accessibility.spec.ts:165:9 › genuine focus-visible › button, input, card and navigation show a keyboard focus ring in CodeCraft Academy Dark (2.4s)
+  ok 34 [chromium] › e2e\keyboard-and-accessibility.spec.ts:198:7 › text input semantics › every state is named by its visible label (1.0s)
+  ok 35 [chromium] › e2e\keyboard-and-accessibility.spec.ts:208:7 › text input semantics › helper text describes a valid input; error text replaces it, with icon and text (1.4s)
+  ok 36 [chromium] › e2e\keyboard-and-accessibility.spec.ts:230:7 › text input semantics › typing updates the value and the echo of the working sample (1.6s)
+  ok 37 [chromium] › e2e\keyboard-and-accessibility.spec.ts:241:7 › text input semantics › a disabled input keeps its value and its description (1.1s)
+  ok 38 [chromium] › e2e\keyboard-and-accessibility.spec.ts:251:7 › card and navigation semantics › a static card has no link; an interactive card has exactly one native link and one tab stop (938ms)
+  ok 39 [chromium] › e2e\keyboard-and-accessibility.spec.ts:265:7 › card and navigation semantics › clicking anywhere on an interactive card follows its single link (1.1s)
+  ok 40 [chromium] › e2e\keyboard-and-accessibility.spec.ts:291:7 › card and navigation semantics › a loading card is busy and has nothing to focus (942ms)
+  ok 41 [chromium] › e2e\keyboard-and-accessibility.spec.ts:299:7 › card and navigation semantics › navigation is a named landmark with native links and a single current page (1.2s)
+  ok 42 [chromium] › e2e\keyboard-and-accessibility.spec.ts:358:7 › automated accessibility › the complete gallery has no serious or critical axe violations (23.6s)
+  ok 43 [chromium] › e2e\keyboard-and-accessibility.spec.ts:368:7 › automated accessibility › the complete gallery has no serious or critical axe violations once the About panel is dismissed (24.4s)
+  ok 44 [chromium] › e2e\keyboard-and-accessibility.spec.ts:384:9 › automated accessibility › the open About panel has no serious or critical axe violations in ArtAnon Shop (3.4s)
+  ok 45 [chromium] › e2e\keyboard-and-accessibility.spec.ts:384:9 › automated accessibility › the open About panel has no serious or critical axe violations in IT English Mentor (3.2s)
+  ok 46 [chromium] › e2e\keyboard-and-accessibility.spec.ts:384:9 › automated accessibility › the open About panel has no serious or critical axe violations in CodeCraft Academy Light (3.5s)
+  ok 48 [chromium] › e2e\keyboard-and-accessibility.spec.ts:435:7 › About panel › opens by itself on a first visit: modal, named by its heading, focused on Close (1.7s)
+  ok 47 [chromium] › e2e\keyboard-and-accessibility.spec.ts:384:9 › automated accessibility › the open About panel has no serious or critical axe violations in CodeCraft Academy Dark (3.8s)
+  ok 49 [chromium] › e2e\keyboard-and-accessibility.spec.ts:475:7 › About panel › the source-repository link is reached and opened in a new tab from the keyboard (1.5s)
+  ok 50 [chromium] › e2e\keyboard-and-accessibility.spec.ts:506:7 › About panel › Tab and Shift+Tab never reach the page behind the open dialog (1.8s)
+  ok 51 [chromium] › e2e\keyboard-and-accessibility.spec.ts:536:9 › About panel › the Close button closes it and returns focus to About, on a first visit and on a manual reopen (1.5s)
+  ok 52 [chromium] › e2e\keyboard-and-accessibility.spec.ts:536:9 › About panel › Esc closes it and returns focus to About, on a first visit and on a manual reopen (1.1s)
+  ok 53 [chromium] › e2e\keyboard-and-accessibility.spec.ts:536:9 › About panel › a click outside the dialog closes it and returns focus to About, on a first visit and on a manual reopen (1.1s)
+  ok 54 [chromium] › e2e\keyboard-and-accessibility.spec.ts:555:7 › About panel › reopens from the keyboard with Enter and with Space (1.3s)
+  ok 55 [chromium] › e2e\keyboard-and-accessibility.spec.ts:569:7 › About panel › does not close from interaction inside the dialog (1.2s)
+  ok 56 [chromium] › e2e\keyboard-and-accessibility.spec.ts:590:7 › About panel › opens on the first visit only: the seen value persists across a reload (1.6s)
+  ok 57 [chromium] › e2e\keyboard-and-accessibility.spec.ts:629:9 › About panel › when Storage reads and writes throw, it opens once per page load, works by hand, and opens again after a reload (1.7s)
+  ok 58 [chromium] › e2e\keyboard-and-accessibility.spec.ts:629:9 › About panel › when the localStorage getter throws, it opens once per page load, works by hand, and opens again after a reload (1.4s)
+  ok 60 [chromium] › e2e\keyboard-and-accessibility.spec.ts:714:9 › Card structure view › hides the isolated skeletons and gives busy and Loading only to the DS-035 card, in ArtAnon Shop (830ms)
+  ok 59 [chromium] › e2e\keyboard-and-accessibility.spec.ts:688:9 › Card structure view › the structure view has one link and one tab stop, on the interactive card, in ArtAnon Shop (2.9s)
+  ok 61 [chromium] › e2e\keyboard-and-accessibility.spec.ts:734:9 › Card structure view › the isolated skeletons are visible, contained, sunken, animate normally and stop under reduced motion, in ArtAnon Shop (2.8s)
+  ok 63 [chromium] › e2e\keyboard-and-accessibility.spec.ts:714:9 › Card structure view › hides the isolated skeletons and gives busy and Loading only to the DS-035 card, in IT English Mentor (1.2s)
+  ok 62 [chromium] › e2e\keyboard-and-accessibility.spec.ts:688:9 › Card structure view › the structure view has one link and one tab stop, on the interactive card, in IT English Mentor (3.5s)
+  ok 64 [chromium] › e2e\keyboard-and-accessibility.spec.ts:734:9 › Card structure view › the isolated skeletons are visible, contained, sunken, animate normally and stop under reduced motion, in IT English Mentor (2.2s)
+  ok 66 [chromium] › e2e\keyboard-and-accessibility.spec.ts:714:9 › Card structure view › hides the isolated skeletons and gives busy and Loading only to the DS-035 card, in CodeCraft Academy Light (1.1s)
+  ok 65 [chromium] › e2e\keyboard-and-accessibility.spec.ts:688:9 › Card structure view › the structure view has one link and one tab stop, on the interactive card, in CodeCraft Academy Light (2.8s)
+  ok 67 [chromium] › e2e\keyboard-and-accessibility.spec.ts:734:9 › Card structure view › the isolated skeletons are visible, contained, sunken, animate normally and stop under reduced motion, in CodeCraft Academy Light (2.6s)
+  ok 68 [chromium] › e2e\keyboard-and-accessibility.spec.ts:688:9 › Card structure view › the structure view has one link and one tab stop, on the interactive card, in CodeCraft Academy Dark (3.2s)
+  ok 69 [chromium] › e2e\keyboard-and-accessibility.spec.ts:714:9 › Card structure view › hides the isolated skeletons and gives busy and Loading only to the DS-035 card, in CodeCraft Academy Dark (1.6s)
+  ok 71 [chromium] › e2e\keyboard-and-accessibility.spec.ts:841:7 › Card structure view › the view stacks to one column with no horizontal overflow, and its Cards stay usable, at phone width (2.7s)
+  ok 70 [chromium] › e2e\keyboard-and-accessibility.spec.ts:734:9 › Card structure view › the isolated skeletons are visible, contained, sunken, animate normally and stop under reduced motion, in CodeCraft Academy Dark (3.8s)
+  ok 73 [chromium] › e2e\long-label-and-bevel.spec.ts:26:9 › DS-050 button long label › wraps, grows and never truncates or overflows in ArtAnon Shop (932ms)
+  ok 72 [chromium] › e2e\keyboard-and-accessibility.spec.ts:908:7 › Card structure view › heading order, the panel h2, the h3 Card structure heading, the h3 organism titles, the absent DS-035 heading and non-heading group labels are explicit in every scope (1.9s)
+  ok 74 [chromium] › e2e\long-label-and-bevel.spec.ts:26:9 › DS-050 button long label › wraps, grows and never truncates or overflows in IT English Mentor (1.1s)
+  ok 75 [chromium] › e2e\long-label-and-bevel.spec.ts:26:9 › DS-050 button long label › wraps, grows and never truncates or overflows in CodeCraft Academy Light (1.3s)
+  ok 76 [chromium] › e2e\long-label-and-bevel.spec.ts:26:9 › DS-050 button long label › wraps, grows and never truncates or overflows in CodeCraft Academy Dark (1.2s)
+  ok 77 [chromium] › e2e\long-label-and-bevel.spec.ts:120:9 › DS-051 navigation long label › clamps to two lines at no more than 16rem, keeping the full name, in ArtAnon Shop (1.0s)
+  ok 78 [chromium] › e2e\long-label-and-bevel.spec.ts:120:9 › DS-051 navigation long label › clamps to two lines at no more than 16rem, keeping the full name, in IT English Mentor (1.2s)
+  ok 79 [chromium] › e2e\long-label-and-bevel.spec.ts:120:9 › DS-051 navigation long label › clamps to two lines at no more than 16rem, keeping the full name, in CodeCraft Academy Light (1.2s)
+  ok 80 [chromium] › e2e\long-label-and-bevel.spec.ts:120:9 › DS-051 navigation long label › clamps to two lines at no more than 16rem, keeping the full name, in CodeCraft Academy Dark (1.3s)
+  ok 81 [chromium] › e2e\long-label-and-bevel.spec.ts:232:9 › DS-045 narrow navigation › wraps onto further rows without a collapsed menu in ArtAnon Shop (847ms)
+  ok 82 [chromium] › e2e\long-label-and-bevel.spec.ts:232:9 › DS-045 narrow navigation › wraps onto further rows without a collapsed menu in IT English Mentor (1.2s)
+  ok 83 [chromium] › e2e\long-label-and-bevel.spec.ts:232:9 › DS-045 narrow navigation › wraps onto further rows without a collapsed menu in CodeCraft Academy Light (1.2s)
+  ok 84 [chromium] › e2e\long-label-and-bevel.spec.ts:232:9 › DS-045 narrow navigation › wraps onto further rows without a collapsed menu in CodeCraft Academy Dark (1.1s)
+  ok 85 [chromium] › e2e\long-label-and-bevel.spec.ts:266:7 › CodeCraft bevel › Chromium supports corner-top-right-shape and applies the bevel only where tokens ask (1.6s)
+  ok 87 [chromium] › e2e\long-label-and-bevel.spec.ts:321:7 › CodeCraft bevel › the source declares the rounded radius before the shape, so the fallback comes first (5ms)
+  ok 86 [chromium] › e2e\long-label-and-bevel.spec.ts:305:7 › CodeCraft bevel › the rounded fallback radius is in force even when the shape is not (1.0s)
+
+  87 passed (2.0m)
+## exit 0: npm run test:e2e
+
+## npm run build
+
+> brand-ui@1.0.0 build
+> ng build atomic && ng build ui && ng build gallery
+
+Building Angular Package
+
+------------------------------------------------------------------------------
+Building entry point '@brand-ui/atomic'
+------------------------------------------------------------------------------
+- Compiling with Angular sources in partial compilation mode.
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+- Copying assets
+[32m✔[39m Copying assets
+- Writing package manifest
+[32m✔[39m Writing package manifest
+[32m✔[39m Built @brand-ui/atomic
+
+------------------------------------------------------------------------------
+Building entry point '@brand-ui/atomic/atoms'
+------------------------------------------------------------------------------
+- Compiling with Angular sources in partial compilation mode.
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+[32m✔[39m Built @brand-ui/atomic/atoms
+
+------------------------------------------------------------------------------
+Building entry point '@brand-ui/atomic/molecules'
+------------------------------------------------------------------------------
+- Compiling with Angular sources in partial compilation mode.
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+[32m✔[39m Built @brand-ui/atomic/molecules
+
+------------------------------------------------------------------------------
+Building entry point '@brand-ui/atomic/organisms'
+------------------------------------------------------------------------------
+- Compiling with Angular sources in partial compilation mode.
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+[32m✔[39m Built @brand-ui/atomic/organisms
+
+------------------------------------------------------------------------------
+Built Angular Package
+- from: C:/Users/User/Documents/_projects-angular/brand-ui/projects/atomic
+- to:   C:/Users/User/Documents/_projects-angular/brand-ui/dist/atomic
+------------------------------------------------------------------------------
+
+Build at: 2026-10-29T05:11:43.051Z - Time: 3882ms
+
+Building Angular Package
+
+------------------------------------------------------------------------------
+Building entry point 'ui'
+------------------------------------------------------------------------------
+- Compiling with Angular sources in partial compilation mode.
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+- Copying assets
+[32m✔[39m Copying assets
+- Writing package manifest
+[32m✔[39m Writing package manifest
+[32m✔[39m Built ui
+
+------------------------------------------------------------------------------
+Built Angular Package
+- from: C:/Users/User/Documents/_projects-angular/brand-ui/projects/ui
+- to:   C:/Users/User/Documents/_projects-angular/brand-ui/dist/ui
+------------------------------------------------------------------------------
+
+Build at: 2026-10-29T05:11:49.155Z - Time: 3732ms
+
+❯ Building...
+✔ Building...
+Initial chunk files | Names                  |  Raw size | Estimated transfer size
+chunk-AHKUZRML.js   | -                      | 137.04 kB |                40.90 kB
+main-OBQRVPEI.js    | main                   |  88.45 kB |                22.44 kB
+styles-MWHECO2O.css | styles                 |   8.26 kB |                 1.39 kB
+
+                    | Initial total          | 233.75 kB |                64.74 kB
+
+Lazy chunk files    | Names                  |  Raw size | Estimated transfer size
+chunk-K4FCJLNG.js   | gallery-page-component |  72.57 kB |                15.59 kB
+
+Application bundle generation complete. [6.034 seconds] - 2026-10-29T05:11:57.024Z
+
+Output location: C:\Users\User\Documents\_projects-angular\brand-ui\dist\gallery
+
+## exit 0: npm run build

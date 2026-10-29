@@ -1,6 +1,6 @@
 # STEP-08 — Regression measurement and hardened extension gates
 
-**Status:** Active. Step plan approved by the Moderator, 2026-10-28; STEP-07 accepted 2026-10-29; the Development Team's exact Revision 2 plan (`mod-w/step-08-plan.md`) approved by the Moderator on 2026-10-29. Implementation is authorized under that plan only; this is not Step acceptance. **Estimate:** 4 hours. **Additional dependency:** valid pre-Step before-measurement.
+**Status:** Fresh QA accepted by the Moderator on 2026-10-29 with verdict PASS WITH NOTES under the bounded threshold-breach amendment (`mod-w/qa.md`). The TBT breach (809.362275 ms against 692.9999999999998 ms) remains an authoritative failed threshold, not a passing check. The clean STEP-08 workspace is committed for Product Owner review. This is not STEP-08 acceptance; Product Owner sign-off (`mod-w/po-signoff-step-08.md`, not yet recorded) and final Moderator acceptance remain required, and STEP-09 stays blocked. **Estimate:** 4 hours. **Additional dependency:** valid pre-Step before-measurement.
 
 ## Goal
 

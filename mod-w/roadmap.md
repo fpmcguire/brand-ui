@@ -2,7 +2,7 @@
 
 **Project:** brand-ui  
 **Date:** 2026-10-28
-**Status:** STEP-06 accepted; STEP-07 Revision 5 approved for implementation; written study-review gate required after STEP-09
+**Status:** STEP-07 accepted; STEP-08 Revision 2 plan approved and STEP-08 active; written study-review gate required after STEP-09
 
 ---
 
@@ -23,7 +23,7 @@ The accepted v1.0.0 spike is followed by a Moderator-initiated Atomic Design ext
 | STEP-05 | Atomic package scaffold, pack, and installed consumption | S-15, S-16; AC-22 to AC-24 | Development Team | Accepted 2026-10-28 | Tech Lead, fresh QA, Product Owner, and Moderator reviews complete |
 | STEP-06 | Move Card behind installed atomic package | S-14 to S-16; AC-20 to AC-24 | Development Team | Accepted 2026-10-28 | Tech Lead, fresh QA, Product Owner, and Moderator reviews complete; 39 paths at `6cfef8a` |
 | STEP-07 | Gallery Card structure view | S-17; AC-20, AC-23 to AC-25 | Development Team | Accepted 2026-10-29 | Implemented at `8397fe8` under Revision 5 plan; Tech Lead, fresh QA, Product Owner, and Moderator reviews complete; Tag-stretch fix applied 2026-10-29 (uncommitted, one declaration in `card-structure.component.scss`) and verified; Product Owner sign-off in `mod-w/po-signoff-step-07.md` |
-| STEP-08 | Regression measurement and hardened gates | S-18; AC-22 to AC-26 | Development Team | Plan approved; blocked by STEP-07 | 4h; after run and threshold |
+| STEP-08 | Regression measurement and hardened gates | S-18; AC-22 to AC-26 | Development Team | Active; Revision 2 plan approved 2026-10-29 | 4h; after run and threshold; exact plan in `mod-w/step-08-plan.md` |
 | STEP-09 | v1.1.0 documentation and release-candidate truth | AC-12, AC-17, AC-20 to AC-27 | Development Team | Plan approved; blocked by STEP-08 | 3h; no publish/deploy |
 | Gate | Consolidated written full-project study review | Moderator decisions of 2026-10-19 and 2026-10-28 | Moderator | Required after STEP-09 | Written guides in `study-guides/`; Moderator explains the workspace and library in their own words before deciding completion |
 
@@ -130,10 +130,12 @@ The estimated implementation effort is 21 hours over 4–5 working days, within 
 - **2026-10-28 — STEP-06 Revision 4 approval:** the Moderator approved the Tech Lead re-review, the exact Development Team plan, and all four recommendations: the exact producer-test-only `paths` exception, `ui` peer `^1.1.0`, `card-export.spec.ts`, and the single committed equivalence log. Implementation is authorized; this is not Step acceptance.
 - **2026-10-28 — STEP-06 source-map/tooling amendment:** after the Development Team stopped on ng-packagr's unavoidable secondary-entry source maps, the Moderator approved a strict shared dist sanitizer as the 39th path, the atomic test include needed for secondary-entry specs, and behavioral Card requiredness/transform evidence with complete optional-default assertions. The nine-file, no-source-path archive contract remains unchanged.
 - **2026-10-28 — STEP-07 Revision 5 approval:** the Moderator approved the Tech Lead's Revision 5 review and the exact Development Team plan recorded in `mod-w/step-07-plan.md`, including AC-20 Option A (two selector-only edits), the caption-visibility rule, the token-derived responsive track rule, the static-check policy with its two-phase PowerShell execution plan, and the DS-035 no-heading correction. STEP-07 is active and implementation is authorized under that exact plan; this is not Step acceptance.
+- **2026-10-29 — STEP-07 acceptance:** accepted by the Moderator after Tech Lead review, fresh QA, and Product Owner sign-off; tagged `step-07-complete`.
+- **2026-10-29 — STEP-08 Revision 2 approval:** the Moderator activated STEP-08 and approved the Development Team's exact Revision 2 plan recorded in `mod-w/step-08-plan.md`, which adopts the Tech Lead's PASS WITH CONDITIONS plan review (full-precision thresholds, Node 26.0.0/npm 11.12.1 parity, the named after-evidence set, owned server and port checks, the Phase A gate audit, and the AC-power caveat) and the three open-decision recommendations (`scripts/d12/tooling/`, host drift recorded without invalidation, labelled copy of the extractor). Implementation is authorized; this is not Step acceptance. A threshold breach stops the Step for a Moderator decision. STEP-09 stays blocked.
 - **2026-10-28 — study-review sequencing:** the Moderator rescheduled all study-review gates as one additional final gate after STEP-09 and before any release, publish, or deployment decision. The gate remains pending and was not declared complete.
 - **2026-10-28 — study-review format:** the Moderator replaced interactive quizzes with written guides under `study-guides/`. The own-words demonstration and Moderator-only completion decision remain required.
 - **2026-10-28 — study-review sequencing clarification:** the Moderator determined that the own-words demonstration does not block work through STEP-09; it remains part of the later consolidated gate before release, publish, or deployment.
-- **Limit:** approval of the roadmap Step plan is not implementation approval. STEP-06 is accepted, and STEP-07 has received separate approval of its exact Revision 5 Development Team plan. STEP-08 remains blocked until STEP-07 implementation, Tech Lead review, fresh QA, Product Owner sign-off, and Moderator acceptance are complete.
+- **Limit:** approval of the roadmap Step plan is not implementation approval. STEP-06 is accepted, and STEP-07 has received separate approval of its exact Revision 5 Development Team plan. STEP-07 is accepted and STEP-08 has received separate approval of its exact Revision 2 plan. STEP-09 remains blocked until STEP-08 Tech Lead review, fresh QA, Product Owner sign-off, and Moderator acceptance are complete.
 
 ## Cut order
 

@@ -1,6 +1,6 @@
 # STEP-08 — Regression measurement and hardened extension gates
 
-**Status:** Step plan approved by the Moderator, 2026-10-28; blocked by STEP-07 acceptance and separate approval of the Development Team's exact plan. **Estimate:** 4 hours. **Additional dependency:** valid pre-Step before-measurement.
+**Status:** Active. Step plan approved by the Moderator, 2026-10-28; STEP-07 accepted 2026-10-29; the Development Team's exact Revision 2 plan (`mod-w/step-08-plan.md`) approved by the Moderator on 2026-10-29. Implementation is authorized under that plan only; this is not Step acceptance. **Estimate:** 4 hours. **Additional dependency:** valid pre-Step before-measurement.
 
 ## Goal
 

@@ -457,6 +457,13 @@ test.describe('About panel', () => {
     ]);
     await expect(dialog.getByText(/DS-/)).toHaveCount(0);
 
+    const library = dialog.locator('section[aria-labelledby="gal-about-library"]');
+    await expect(library).toContainText('Atomic Design');
+    await expect(library).toContainText('Tag, SkeletonBlock and CodeWell are atoms');
+    await expect(library).toContainText('MediaArea and LoadingSkeleton are molecules');
+    await expect(library).toContainText('Card is the organism');
+    await expect(library.locator('a')).toHaveCount(0);
+
     // Exactly two external links, each opening in a new tab and saying so.
     await expect(dialog.getByRole('link')).toHaveCount(2);
     for (const { name, text, href } of EXTERNAL_LINKS) {

@@ -276,6 +276,53 @@ describe('AboutPanel', () => {
       }
     });
 
+    it("explains the Card's Atomic Design implementation in the ui library section (AC-17.3, AC-27)", async () => {
+      const { element } = await text();
+      const library = element.querySelector('section[aria-labelledby="gal-about-library"]')!;
+      const clean = (node: Element) => (node.textContent ?? '').replace(/\s+/g, ' ').trim();
+      expect(library.querySelector('h3')?.textContent?.trim()).toBe('The ui library');
+      expect(library.querySelectorAll('a, img, svg, ul, ol')).toHaveLength(0);
+
+      const paragraphs = Array.from(library.querySelectorAll('p'));
+      expect(paragraphs).toHaveLength(4);
+      const [concept, mapping, components, tokens] = paragraphs.map(clean);
+      for (const statement of [
+        'Atomic Design',
+        'small parts into larger compositions',
+        'atoms',
+        'molecules',
+        'organism',
+      ]) {
+        expect(concept).toContain(statement);
+      }
+      for (const statement of [
+        'Tag, SkeletonBlock and CodeWell are atoms',
+        'MediaArea and LoadingSkeleton are molecules',
+        'Card is the organism',
+        'separately built and installed',
+        'not published',
+        're-exports that same Card',
+        'one Card, not two separate implementations',
+      ]) {
+        expect(mapping).toContain(statement);
+      }
+      expect(paragraphs[1].querySelector('code')?.textContent).toBe('@brand-ui/atomic');
+      for (const statement of [
+        'four components: Button, TextInput, Card and Navigation',
+        'Button, TextInput and Navigation are established ui components and were not moved',
+        'ThemeService',
+        'ThemeScopeDirective',
+      ]) {
+        expect(components).toContain(statement);
+      }
+      expect(tokens).toContain('same set of semantic token names');
+
+      const panelSections = Array.from(element.querySelectorAll('li')).find((item) =>
+        clean(item).startsWith('Panel sections:'),
+      )!;
+      expect(clean(panelSections)).toMatch(/Contrast evidence and Card structure\.$/);
+    });
+
     it('states the gallery and library boundary (AC-17.4)', async () => {
       const { content } = await text();
       for (const statement of [
@@ -377,7 +424,18 @@ describe('AboutPanel', () => {
       expect(content).not.toMatch(/DS-/);
       expect(content).not.toMatch(/no design id/i);
       expect(content).not.toMatch(/MW-OBS/);
-      expect(content).not.toMatch(/install|tutorial|npm |ng add/i);
+      // Product prohibits installation steps, not the truthful word "installed" (O-1).
+      expect(content).not.toMatch(
+        /install(?:ation)? (?:instructions|steps|guide)|npm (?:i|ci|install|pack|run)\b|ng add|tutorial/i,
+      );
+      const installWords = content.match(/install\w*/gi) ?? [];
+      expect(installWords).toEqual(['installed']);
+      expect(content.match(/separately built and installed/g)).toHaveLength(1);
+      expect(content.replace('separately built and installed', '')).not.toMatch(/install/i);
+      expect(content).not.toMatch(
+        /\b(?:faster|smaller|improv\w*|performance|maintainab\w*|benefit\w*|production-ready)\b/i,
+      );
+      expect(content).not.toMatch(/npm publish|publish (?:the|it|this)\b/i);
       expect(element.querySelector('img, svg, picture, video, [class~="id"]')).toBeNull();
     });
   });

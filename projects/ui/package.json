@@ -1,6 +1,6 @@
 {
   "name": "ui",
-  "version": "0.0.1",
+  "version": "1.1.0",
   "peerDependencies": {
     "@brand-ui/atomic": "^1.1.0",
     "@angular/common": "^22.2.0",

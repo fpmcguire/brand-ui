@@ -55,9 +55,24 @@
     <section class="section" aria-labelledby="gal-about-library">
       <h3 class="section-title" id="gal-about-library">The ui library</h3>
       <p>
-        The ui library has four components: Button, TextInput, Card and Navigation. It also has
-        ThemeService, which owns the selected theme, and ThemeScopeDirective, which attaches a theme
-        to one part of a page.
+        The Card in the ui library is built with Atomic Design, a way of organizing an interface
+        from small parts into larger compositions. Small parts called atoms combine into molecules,
+        and atoms and molecules combine into an organism, a distinct section of an interface that
+        owns its behavior.
+      </p>
+      <p>
+        Here, Tag, SkeletonBlock and CodeWell are atoms. MediaArea and LoadingSkeleton are
+        molecules. Card is the organism that composes them. These parts come from the separately
+        built and installed <code>@brand-ui/atomic</code> package, which is built and packed locally
+        and is not published, and ui re-exports that same Card, so there is one Card, not two
+        separate implementations. The Card structure view in each scope shows the atoms, molecules
+        and organism.
+      </p>
+      <p>
+        The ui public entry point exports four components: Button, TextInput, Card and Navigation.
+        Button, TextInput and Navigation are established ui components and were not moved. It also
+        has ThemeService, which owns the selected theme, and ThemeScopeDirective, which attaches a
+        theme to one part of a page.
       </p>
       <p>
         Every brand fills the same set of semantic token names (<code>--bui-*</code>), and the
@@ -94,7 +109,8 @@
         </li>
         <li>
           <strong>Panel sections:</strong> each scope shows its tokens read from the computed style,
-          then Button, Text input, Card, Navigation bar, Long label and Contrast evidence.
+          then Button, Text input, Card, Navigation bar, Long label, Contrast evidence and Card
+          structure.
         </li>
         <li>
           <strong>About:</strong> this panel opens by itself on a browser's first visit. The About

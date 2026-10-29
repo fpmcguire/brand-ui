@@ -1,6 +1,8 @@
 # STEP-07 — Gallery Card structure view
 
-**Status:** Active. STEP-06 is accepted (`step-06-complete`). On 2026-10-28 the Moderator approved the Tech Lead's Revision 5 review and the exact Development Team Revision 5 plan recorded in `mod-w/step-07-plan.md`, including AC-20 Option A, the caption-visibility rule, the token-derived responsive track rule, the static-check policy with its two-phase PowerShell execution plan, and the DS-035 no-heading correction. Implementation is authorized under that exact plan only: ten paths (five created, five edited), Phase A preflight before any edit, Phase B verification after. Stop on any recorded stop condition, then stop for Tech Lead review; fresh QA, Product Owner sign-off, and final Moderator acceptance remain required. Do not begin STEP-08. **Estimate:** 5 hours.
+**Status:** Accepted 2026-10-29. Implemented at HEAD `8397fe8` (`feat(gallery): add card structure view`) under the exact Revision 5 plan in `mod-w/step-07-plan.md`, including AC-20 Option A, the caption-visibility rule, the token-derived responsive track rule, the static-check policy with its two-phase PowerShell execution plan, and the DS-035 no-heading correction. Fresh QA and the Product Owner review passed; the Moderator accepted STEP-07 and determined it complete. STEP-08 is not activated and must be activated and separately planned before it begins. **Estimate:** 5 hours.
+
+Product Owner review, 2026-10-29: verdict CHANGES REQUESTED for one bounded Tag fix, with the skeleton-contrast decision and the Could-fix-later items accepted or deferred as recorded in `mod-w/po-signoff-step-07.md`. The Moderator then directed the Tag fix: one declaration, `align-self: flex-start` on `.specimen bui-tag` in `projects/gallery/src/app/gallery/structure/card-structure.component.scss`, applied in the working tree on 2026-10-29 (uncommitted) and verified as recorded in the sign-off file.
 
 The exact gate sequence, scripts, and file bodies are in `mod-w/step-07-plan.md`. Where the command list below differs, that plan controls.
 
@@ -53,11 +55,11 @@ git status --short
 
 ## Acceptance checks
 
-- [ ] AC-25 all approved specimens/IDs/captions render in all four scopes from installed parts using tokens only.
-- [ ] AC-20 existing unit and Playwright assertions are unchanged and pass.
-- [ ] AC-23 no source alias/import enters gallery or `ui`.
-- [ ] AC-24 axe, explicit four-scope heading-order QA, hidden isolated skeletons, exactly three specs, and all gates pass.
-- [ ] Structure surface remains gallery-owned and no fourth specification exists.
+- [x] AC-25 all approved specimens/IDs/captions render in all four scopes from installed parts using tokens only. Accepted 2026-10-29.
+- [x] AC-20 existing unit and Playwright assertions are unchanged and pass. Accepted 2026-10-29.
+- [x] AC-23 no source alias/import enters gallery or `ui`. Accepted 2026-10-29.
+- [x] AC-24 axe, explicit four-scope heading-order QA, hidden isolated skeletons, exactly three specs, and all gates pass. Accepted 2026-10-29.
+- [x] Structure surface remains gallery-owned and no fourth specification exists. Accepted 2026-10-29.
 
 ## Stop conditions and sequence
 

@@ -60,6 +60,11 @@
   padding: 0;
 }
 
+// DS-062 is the pill alone: the column's stretch would make the Tag a full-width bar.
+.specimen bui-tag {
+  align-self: flex-start;
+}
+
 .caption,
 .not-used {
   margin: 0;

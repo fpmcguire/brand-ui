@@ -2,7 +2,7 @@
 
 **Project:** brand-ui  
 **Date:** 2026-10-29
-**Status:** STEP-08 accepted under the bounded threshold-breach amendment; STEP-09 not activated; written study-review gate required after STEP-09
+**Status:** STEP-08 accepted under the bounded threshold-breach amendment; STEP-09 activated for planning only; written study-review gate required after STEP-09
 
 ---
 
@@ -24,7 +24,7 @@ The accepted v1.0.0 spike is followed by a Moderator-initiated Atomic Design ext
 | STEP-06 | Move Card behind installed atomic package | S-14 to S-16; AC-20 to AC-24 | Development Team | Accepted 2026-10-28 | Tech Lead, fresh QA, Product Owner, and Moderator reviews complete; 39 paths at `6cfef8a` |
 | STEP-07 | Gallery Card structure view | S-17; AC-20, AC-23 to AC-25 | Development Team | Accepted 2026-10-29 | Implemented at `8397fe8` under Revision 5 plan; Tech Lead, fresh QA, Product Owner, and Moderator reviews complete; Tag-stretch fix applied 2026-10-29 (uncommitted, one declaration in `card-structure.component.scss`) and verified; Product Owner sign-off in `mod-w/po-signoff-step-07.md` |
 | STEP-08 | Regression measurement and hardened gates | S-18; AC-22 to AC-26 | Development Team | Accepted 2026-10-29 | Implemented at `62dac02`; Tech Lead, fresh QA, Product Owner, and Moderator reviews complete; authoritative TBT breach retained as a failed threshold under the bounded amendment |
-| STEP-09 | v1.1.0 documentation and release-candidate truth | AC-12, AC-17, AC-20 to AC-27 | Development Team | Plan approved; not activated | 3h; no publish/deploy; separate Moderator activation and exact-plan approval required |
+| STEP-09 | v1.1.0 documentation and release-candidate truth | AC-12, AC-17, AC-20 to AC-27; Atomic Design documentation-priority amendment | Development Team | Activated for planning only | Development Team exact plan, Tech Lead review and separate Moderator approval required before implementation; no publish/deploy |
 | Gate | Consolidated written full-project study review | Moderator decisions of 2026-10-19 and 2026-10-28 | Moderator | Required after STEP-09 | Written guides in `study-guides/`; Moderator explains the workspace and library in their own words before deciding completion |
 
 ## STEP-01
@@ -136,10 +136,12 @@ The estimated implementation effort is 21 hours over 4–5 working days, within 
 - **2026-10-29 — STEP-08 Tech Lead review:** the Moderator accepted the completed Development Team work for Tech Lead review, then accepted the Tech Lead PASS under the bounded amendment and released STEP-08 to fresh QA. This is not STEP-08 acceptance; fresh QA, Product Owner sign-off, and final Moderator acceptance remain required. STEP-09 stays blocked.
 - **2026-10-29 — STEP-08 fresh QA and Moderator disposition:** fresh QA returned PASS WITH NOTES under the bounded amendment (`mod-w/qa.md`), with the TBT breach retained as an authoritative failed threshold (809.362275 ms against 692.9999999999998 ms) and not attributed to the code. The Moderator accepted the QA review, confirmed the `mod-w/qa.md` overwrite, and directed the clean STEP-08 workspace to be committed for Product Owner review. No Product Owner sign-off exists yet; final Moderator acceptance is held until `mod-w/po-signoff-step-08.md` is recorded. This is not STEP-08 acceptance. STEP-09 stays blocked.
 - **2026-10-29 — STEP-08 acceptance:** the Product Owner returned Accepted with notes in `mod-w/po-signoff-step-08.md`, explicitly accepting the authoritative TBT breach as recorded under the Moderator's bounded amendment without treating it as a passing threshold, attributing it to the code, or claiming a performance benefit. The Moderator accepted the Product Owner sign-off and accepted STEP-08 as complete after Tech Lead review and fresh QA. The completion commit is tagged `step-08-complete`. STEP-09 was not activated.
+- **2026-10-29 — STEP-09 Atomic Design documentation-priority amendment:** stakeholders and the Moderator identified the UI Card's Atomic Design implementation as a significant project feature and required it to be explained and ranked highly across canonical user-facing and developer-facing product documentation, including the About panel, root README and `projects/ui/README.md`. The bounded amendment and acceptance checks are recorded in `mod-w/step-09.md`. This records scope only: STEP-09 is not activated, and implementation still requires a Development Team exact plan and separate Moderator approval.
+- **2026-10-29 — STEP-09 planning activation:** the Moderator activated STEP-09 for planning only. The Development Team may inspect the repository and submit `mod-w/step-09-plan.md`; implementation remains unauthorized until Tech Lead review and separate Moderator approval of that exact plan.
 - **2026-10-28 — study-review sequencing:** the Moderator rescheduled all study-review gates as one additional final gate after STEP-09 and before any release, publish, or deployment decision. The gate remains pending and was not declared complete.
 - **2026-10-28 — study-review format:** the Moderator replaced interactive quizzes with written guides under `study-guides/`. The own-words demonstration and Moderator-only completion decision remain required.
 - **2026-10-28 — study-review sequencing clarification:** the Moderator determined that the own-words demonstration does not block work through STEP-09; it remains part of the later consolidated gate before release, publish, or deployment.
-- **Limit:** approval of the roadmap Step plan is not implementation approval. STEP-06, STEP-07, and STEP-08 are accepted. STEP-09 is not activated and requires separate Moderator activation and approval of the Development Team's exact plan before implementation begins.
+- **Limit:** approval of the roadmap Step plan and planning activation are not implementation approval. STEP-06, STEP-07, and STEP-08 are accepted. STEP-09 is active for planning only and requires Tech Lead review and separate Moderator approval of the Development Team's exact plan before implementation begins.
 
 ## Cut order
 
